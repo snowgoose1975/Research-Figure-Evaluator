@@ -45,6 +45,7 @@
 | `artifacts/` | 非敏感、经审查的可分享报告、截图和演示回放；默认不纳入用户私图 |
 | `artifacts/web-preview/<version>/` | 由白名单源码构建的只读静态网页包；新版本新增，默认不进Git；实际发布另行授权 |
 | `scripts/`、`tests/` | 必需的开发/验证工具与有实际风险覆盖的测试 |
+| `adapters/huggingface/` | 免费ZeroGPU候选适配：Python会话编排、Node语义桥和部署说明；新协议独立标记，不改旧模型统计，不含凭据 |
 | `public/examples/` | 可公开自绘的示例 SVG/PNG；SVG 仅由内置生成程序输出，上传仍仅收 PNG/JPEG |
 | `public/case-studies/<case-id>/` | 经审核公开论文图的历史真实回放白名单 JSON 与重建 PNG；不复制私有运行目录，不包含配置、请求或上传；版本新增不覆盖 |
 | `src/lib/examples/` | 经主代理审核的跨领域示例配方与明确标注的脚本演示记忆；不得冒充真实读图 |

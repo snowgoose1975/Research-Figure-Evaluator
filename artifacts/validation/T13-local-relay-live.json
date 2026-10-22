@@ -1,0 +1,30 @@
+{
+  "scope": "One real LOCAL Ollama integration of the candidate Python/Node relay. NOT a ZeroGPU/HF hardware test, not part of fixed-protocol 8/12. Keypoints remain project-curated, not independently author-confirmed.",
+  "source": "materials-lattice-design",
+  "model": "qwen3-vl:4b-instruct-16k",
+  "candidate_protocol": "hf-zerogpu-0.1",
+  "attempts": [
+    {
+      "stage": "reading_a",
+      "outcome": "response_received",
+      "duration_seconds": 12.66,
+      "usage": {
+        "prompt_tokens": 5074,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "completion_tokens": 129,
+        "total_tokens": 5203
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "status": "failed",
+  "error": {
+    "type": "error",
+    "stage": "reading_a",
+    "code": "incomplete_memory",
+    "message": "The analysis bridge reported an error."
+  },
+  "duration_seconds": 13.28
+}

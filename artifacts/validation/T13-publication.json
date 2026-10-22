@@ -1,0 +1,27 @@
+{
+  "scope": "Public read-only recorded-case website; not online new-image inference",
+  "url": "https://figure-relay.chicchair5.chatgpt.site",
+  "status": "succeeded",
+  "audience": "public",
+  "project_id": "appgprj_6ad9acebaf7081918c9ec818c1421b67",
+  "version_id": "appgprj_6ad9acebaf7081918c9ec818c1421b67~appgver_53e9cbcfee0481918266b524cf755e1f",
+  "deployment_id": "appgdep_6ad9b5850fcc81919e37b20e44423137",
+  "site_source_commit": "a18f16ee7d2ea7277c1fd823e17ec8ab79cf63a8",
+  "browser_evidence": "T13-public-online.json",
+  "validation": {
+    "npm_run_validate": "passed; first sandbox build EPERM, complete rerun succeeded",
+    "test_files": 14,
+    "tests": 94,
+    "python_relay_tests": 6,
+    "public_browser_checks": "13/13",
+    "local_production_browser_checks": "13/13"
+  },
+  "hf_candidate": {
+    "protocol": "hf-zerogpu-0.1",
+    "gpu_validated": false,
+    "repo_created": false,
+    "creation_error": "Default Gradio cpu-basic creation requires PRO; user screenshot also shows Gradio/Docker Paid",
+    "paid_resources_started": false,
+    "local_first_attempt": "failed at reading_a; T13-local-relay-live.json; not part of original 8/12"
+  }
+}

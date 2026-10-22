@@ -14,3 +14,6 @@ artifacts/browser/
 playwright-report/
 test-results/
 npm-debug.log*
+__pycache__/
+*.pyc
+.venv/

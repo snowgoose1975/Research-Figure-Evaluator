@@ -16,7 +16,7 @@ const check = (name, pass, detail = "") => { checks.push({ name, pass: Boolean(p
 const noOverflow = () => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth);
 try {
   await page.goto(base, { waitUntil: "networkidle" });
-  await page.getByRole("heading", { name: "See how AI reads your scientific figure." }).waitFor();
+  await page.getByRole("heading", { name: "Will readers understand your scientific figure?" }).waitFor();
   await page.getByRole("button", { name: /Inspect this replay/ }).first().waitFor();
   check("four reviewed cases load without any private API", await page.getByRole("button", { name: /Inspect this replay/ }).count() === 4 && apiRequests.length === 0);
   await page.screenshot({ path: files.home, fullPage: true });

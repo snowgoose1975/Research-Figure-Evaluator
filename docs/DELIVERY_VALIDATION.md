@@ -1,5 +1,7 @@
 # Delivery validation · 2026-10-22
 
+T13增量（最新）：公开案例站 https://figure-relay.chicchair5.chatgpt.site 已成功部署。`T13-public-online.json`外网Edge13/13、无console/page错误；静态v3本地13/13，早期失败保留。图片关闭/手机交互和作者预期信息的首页目标已修。最终`npm run validate`：14文件94测试、typecheck/lint/build通过。首次沙箱构建EPERM，同命令完整复验通过。Python relay6项通过；HF候选入口只做语法检查。首次新relay真实本地测试A阶段失败，见`T13-local-relay-live.json`，不混入旧8/12。HF创建被PRO限制拒绝，用户截图确认Gradio/Docker均为Paid，线上新图推理未接通。发布版本、失败和待办见`handoffs/T13-publication.md`。
+
 T12增量（最新）：重整首页/工作台，新增不依赖私有runs的4个真实案例白名单回放（含失败），完整披露12次固定协议。最终 `npm run validate`：13 files / 90 tests，typecheck/lint/build通过；`T12-public-final-browser.json` 15/15、`T12-local-browser-v1.json` 19/19、`T12-history-browser-v1.json` 24/24、`T12-final-visual.json` 3/3（图片无裁边、390px首页无横溢）。初版静态包曾缺favicon产生404，失败记录 `T12-public-browser-v1.json` 保留，最终包已补齐图标且无console/page错误。公开v2投影不声称作者确认；旧run/统计/检查点未改。只读包已经构建和验收，但尚未部署；免费在线新图推理仍未实现。
 
 T11 增量（最新）：完整源码已获授权推送至公开仓库 main；修复忽略规则导致运行 API 漏提交的问题，新增不改写历史结论的报告复核导读。最终 `npm run validate`：12 files / 84 tests、lint/typecheck/build 通过；浏览器20/20、最终生产回放与展开手机布局4/4、真实数学离线回归11/11、真实记录临时副本导读4/4。新证据为 `T11-review-browser-console.json`、`T11-final-review.json`、`T11-scientific-regression.json`、`T11-real-review.json`。一页说明仅更新仓库已公开状态，新 PDF 与源哈希见 `T11-public-writeup-writeup-one-page.json`；其中75项工程测试数字描述此前T10验证，当前完整结果为84项。以下历史实测及固定协议8/12均保留，不混入新的离线/脚本检查。

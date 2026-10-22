@@ -2,17 +2,19 @@
 
 **AI-reader round-trip diagnostics for scientific figures.** An image-only reader extracts a structured memory; a deterministic renderer reconstructs it; a separate image-only request reads the reconstruction. Reports compare author checkpoints, expose record-level scientific differences, and distinguish reconstruction gaps from unchecked content. This is not a measure of human memory or scientific correctness.
 
+**Public website:** [Figure Relay](https://figure-relay.chicchair5.chatgpt.site) — browse four recorded real cases without installing anything. Image previews close with the Close image button, Escape, or the backdrop. **New-image analysis is available locally; free hosted analysis is not connected yet.**
+
 **Evidence:** 4 published, CC BY figures across physics, materials and mathematics; 8/12 attempts completed under a fixed local-model protocol. The 4 failures remain counted. Label retention did not guarantee fidelity: a threshold line changed shape and lattice geometry was lost. See the [English write-up](docs/submission/WRITEUP.md), [latest one-page PDF](artifacts/validation/T11-public-writeup-writeup-one-page.pdf) and [validation record](docs/DELIVERY_VALIDATION.md).
 
 **Try locally:** Node.js >=22.12, then `npm ci` and `npm run dev`; open http://127.0.0.1:3000. Browse four **recorded real cases** immediately, without a model or private run files. Choose **Check my figure** for the three-step workspace. Engineering controls also offer a clearly labeled Scripted tutorial under Advanced options in step 3. For real inference, install Ollama separately, run `ollama pull qwen3-vl:4b-instruct`, then `ollama create qwen3-vl:4b-instruct-16k -f scripts/Modelfile.qwen3-vl-4b-instruct-16k`. The app defaults to that local model. Shareable evidence is in `artifacts/validation/`.
 
-**Public website package:** `node scripts/build-public-demo.mjs --label my-public-version` builds a separate static site in `artifacts/web-preview/my-public-version/`. It includes reviewed historical replays and Hugging Face Static Space metadata; it excludes private APIs, uploads, model access and unreviewed first-export JSON. This edition explicitly does **not** analyze new images online. Free ZeroGPU analysis requires a separate Gradio adaptation and has not been implemented or tested. Do not expose the current single-user workspace server as a multi-user service.
+**Public website package:** `node scripts/build-public-demo.mjs --label my-public-version` builds a separate static site in `artifacts/web-preview/my-public-version/`. It excludes private APIs, uploads, model access and unreviewed first-export JSON. The free ZeroGPU candidate is in `adapters/huggingface/`; prepare it with `node scripts/build-hf-space.mjs --label my-space-v1`. Its GPU runtime is unvalidated: the HF connector cannot select ZeroGPU hardware and default Gradio creation was rejected by the platform's PRO requirement. The first local integration of this new relay failed explicitly at reader A; it is not included in the original 8/12. Do not expose the current single-user workspace server as a multi-user service.
 
 ---
 
 科研图 → AI 阅读 → 显式记忆 → 确定性重建 → AI 再读 → 逐项检查作者的关键信息。
 
-**当前可浏览真实历史案例，也可在本地运行新图分析。** 四张论文图覆盖物理、材料、数学，来源与CC BY许可随图显示；固定协议4图×3次完成8/12，失败均保留，不能当作泛化准确率。新版提供案例首页、三步工作台、大图对照与复核清单，13个测试文件90项通过，生产构建成功。独立静态网页包已验收但尚未部署，新图在线推理尚未接通。教学脚本、历史真实回放和当前真实推理严格区分。具体数字与限制见 `docs/DELIVERY_VALIDATION.md`。
+**公开网页已上线，可浏览真实历史案例；新图分析仍需本地运行。** 四张论文图覆盖物理、材料、数学，来源与CC BY许可随图显示；固定协议4图×3次完成8/12，失败均保留，不能当作泛化准确率。首页围绕作者预期信息、模拟阅读与修改展开；大图支持关闭按钮/Esc/遮罩退出，外网13项交互检查通过。教学脚本、历史真实回放和当前真实推理严格区分。具体数字与限制见 `docs/DELIVERY_VALIDATION.md`。
 
 ## 启动
 

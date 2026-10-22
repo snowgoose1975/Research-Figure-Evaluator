@@ -1,0 +1,60 @@
+{
+  "label": "T13-local-browser-v3",
+  "base": "http://127.0.0.1:3001",
+  "checks": [
+    {
+      "name": "goal concerns the researcher's intended message and revision",
+      "pass": true
+    },
+    {
+      "name": "image opens inside the page with a clear close control",
+      "pass": true
+    },
+    {
+      "name": "no raw-image navigation or extra tab",
+      "pass": true
+    },
+    {
+      "name": "background scrolling is locked",
+      "pass": true
+    },
+    {
+      "name": "keyboard focus remains in the modal",
+      "pass": true
+    },
+    {
+      "name": "close button restores trigger focus and scrolling",
+      "pass": true
+    },
+    {
+      "name": "Escape closes the image without leaving the page",
+      "pass": true
+    },
+    {
+      "name": "clicking the backdrop closes the image",
+      "pass": true
+    },
+    {
+      "name": "case images use the same in-page viewer",
+      "pass": true
+    },
+    {
+      "name": "mobile close control stays visible",
+      "pass": true
+    },
+    {
+      "name": "mobile dialog fits the viewport",
+      "pass": true
+    },
+    {
+      "name": "mobile returns to the same case",
+      "pass": true
+    },
+    {
+      "name": "no console or page errors",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "scope": "Image modal, product wording and mobile browser validation; no model calls."
+}
