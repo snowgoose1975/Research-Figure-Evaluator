@@ -1,0 +1,31 @@
+{
+  "generated_at": "2026-10-22T02:07:38.289Z",
+  "source": "docs/submission/WRITEUP.md",
+  "source_sha256": "a67e4cef5b5487659d72cfabc87fc104332374b982a2af8faa442b158ea301d2",
+  "pdf": "artifacts/validation/T09-writeup-one-page.pdf",
+  "bytes": 41219,
+  "page_count": 1,
+  "format": "A4",
+  "margin_mm": {
+    "top": 14,
+    "right": 15,
+    "bottom": 13,
+    "left": 15
+  },
+  "body_font_pt": 10.1,
+  "renderer": "Microsoft Edge via Playwright page.pdf",
+  "viewport_independent": true,
+  "layout_check": {
+    "viewport_px": {
+      "width": 680,
+      "height": 1020
+    },
+    "content_px": {
+      "scroll_height": 1014,
+      "scroll_width": 680,
+      "client_width": 680
+    },
+    "fits_one_page": true
+  },
+  "preview": "artifacts/validation/T09-writeup-preview.png"
+}

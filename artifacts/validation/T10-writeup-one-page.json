@@ -1,0 +1,31 @@
+{
+  "generated_at": "2026-10-22T02:59:34.907Z",
+  "source": "docs/submission/WRITEUP.md",
+  "source_sha256": "6901f81668b3aee43a3406e4030a9401f1a8a9fecbddc1dc63af88f5ecd48dd7",
+  "pdf": "C:\\Users\\czc12\\OneDrive - HKUST (Guangzhou)\\Documents\\ChatGPT\\hackathon\\artifacts\\validation\\T10-writeup-one-page.pdf",
+  "bytes": 42081,
+  "page_count": 2,
+  "format": "A4",
+  "margin_mm": {
+    "top": 14,
+    "right": 15,
+    "bottom": 13,
+    "left": 15
+  },
+  "body_font_pt": 10.1,
+  "renderer": "Microsoft Edge via Playwright page.pdf",
+  "viewport_independent": true,
+  "layout_check": {
+    "viewport_px": {
+      "width": 680,
+      "height": 1020
+    },
+    "content_px": {
+      "scroll_height": 1032,
+      "scroll_width": 680,
+      "client_width": 680
+    },
+    "fits_one_page": false
+  },
+  "preview": "C:\\Users\\czc12\\OneDrive - HKUST (Guangzhou)\\Documents\\ChatGPT\\hackathon\\artifacts\\validation\\T10-writeup-preview.png"
+}

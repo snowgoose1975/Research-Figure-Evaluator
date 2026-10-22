@@ -1,0 +1,44 @@
+{
+  "evidence_id": "T10-history-browser",
+  "baseURL": "http://127.0.0.1:3000",
+  "realRunId": "1792609657136-e85156a8",
+  "failedRunId": "1792608204732-e4de481f",
+  "missingRunId": "9999999999999-doesnotexist",
+  "checks": [
+    {
+      "name": "history card opens from topbar",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "history lists recent runs",
+      "ok": true,
+      "detail": "rows=10"
+    },
+    {
+      "name": "history shows ID and status columns",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "history filters live runs",
+      "ok": true,
+      "detail": "live rows=10"
+    },
+    {
+      "name": "filter finds requested real run",
+      "ok": false,
+      "detail": "count=0"
+    },
+    {
+      "name": "execution",
+      "ok": false,
+      "detail": "filter finds requested real run: count=0"
+    }
+  ],
+  "consoleErrors": [],
+  "unexpectedConsoleErrors": [],
+  "pageErrors": [],
+  "failedResponses": [],
+  "expectedConsoleErrors": []
+}

@@ -1,0 +1,290 @@
+{
+  "fixture_version": "T08-scientific-v1",
+  "frozen_at": "2026-10-22",
+  "synthetic": true,
+  "note": "Hand-constructed memories for engineering tests. Expectations were frozen before execution and do not represent model accuracy or author confirmation.",
+  "cases": [
+    {
+      "id": "neg-direction-reversal",
+      "synthetic": true,
+      "description": "B reverses a directed promotion relation while keeping both entity labels.",
+      "a": {
+        "schema_version": "0.2.0",
+        "title": "Synthetic direction case A",
+        "domain": "physics",
+        "figure_type": "mechanism",
+        "summary": "p53 promotes apoptosis.",
+        "graph": { "nodes": [], "relations": [], "groups": [], "conditions": [] },
+        "plots": [],
+        "facts": [
+          { "id": "a-f1", "subject": "p53", "predicate": "promotes", "object": "apoptosis", "qualifiers": [], "certainty": "asserted", "source_ids": [] }
+        ],
+        "uncertainties": [],
+        "evidence": [],
+        "completeness": "complete"
+      },
+      "b": {
+        "schema_version": "0.2.0",
+        "title": "Synthetic direction case B",
+        "domain": "physics",
+        "figure_type": "mechanism",
+        "summary": "apoptosis promotes p53.",
+        "graph": { "nodes": [], "relations": [], "groups": [], "conditions": [] },
+        "plots": [],
+        "facts": [
+          { "id": "b-f1", "subject": "apoptosis", "predicate": "promotes", "object": "p53", "qualifiers": [], "certainty": "asserted", "source_ids": [] }
+        ],
+        "uncertainties": [],
+        "evidence": [],
+        "completeness": "complete"
+      },
+      "expected": { "categories": ["relation_direction"], "statuses": { "relation_direction": "confirmed" } }
+    },
+    {
+      "id": "neg-condition-loss",
+      "synthetic": true,
+      "description": "B keeps the assertion but drops the pH qualifier recorded by A.",
+      "a": {
+        "schema_version": "0.2.0",
+        "title": "Synthetic condition case A",
+        "domain": "physics",
+        "figure_type": "mechanism",
+        "summary": "Enzyme X promotes product Y at pH 7.4.",
+        "graph": { "nodes": [], "relations": [], "groups": [], "conditions": [] },
+        "plots": [],
+        "facts": [
+          { "id": "a-f1", "subject": "enzyme X", "predicate": "promotes", "object": "product Y", "qualifiers": ["pH 7.4"], "certainty": "asserted", "source_ids": [] }
+        ],
+        "uncertainties": [],
+        "evidence": [],
+        "completeness": "complete"
+      },
+      "b": {
+        "schema_version": "0.2.0",
+        "title": "Synthetic condition case B",
+        "domain": "physics",
+        "figure_type": "mechanism",
+        "summary": "Enzyme X promotes product Y.",
+        "graph": { "nodes": [], "relations": [], "groups": [], "conditions": [] },
+        "plots": [],
+        "facts": [
+          { "id": "b-f1", "subject": "enzyme X", "predicate": "promotes", "object": "product Y", "qualifiers": [], "certainty": "asserted", "source_ids": [] }
+        ],
+        "uncertainties": [],
+        "evidence": [],
+        "completeness": "complete"
+      },
+      "expected": { "categories": ["condition_loss"], "statuses": { "condition_loss": "confirmed" } }
+    },
+    {
+      "id": "neg-threshold-value",
+      "synthetic": true,
+      "description": "B changes a recorded threshold from 0.05 to 0.01.",
+      "a": {
+        "schema_version": "0.2.0",
+        "title": "Synthetic threshold case A",
+        "domain": "mathematics",
+        "figure_type": "plot",
+        "summary": "Alpha threshold is 0.05.",
+        "graph": { "nodes": [], "relations": [], "groups": [], "conditions": [] },
+        "plots": [],
+        "facts": [
+          { "id": "a-f1", "subject": "alpha", "predicate": "equals", "object": "threshold 0.05", "qualifiers": [], "certainty": "asserted", "source_ids": [] }
+        ],
+        "uncertainties": [],
+        "evidence": [],
+        "completeness": "complete"
+      },
+      "b": {
+        "schema_version": "0.2.0",
+        "title": "Synthetic threshold case B",
+        "domain": "mathematics",
+        "figure_type": "plot",
+        "summary": "Alpha threshold is 0.01.",
+        "graph": { "nodes": [], "relations": [], "groups": [], "conditions": [] },
+        "plots": [],
+        "facts": [
+          { "id": "b-f1", "subject": "alpha", "predicate": "equals", "object": "threshold 0.01", "qualifiers": [], "certainty": "asserted", "source_ids": [] }
+        ],
+        "uncertainties": [],
+        "evidence": [],
+        "completeness": "complete"
+      },
+      "expected": { "categories": ["threshold_value"], "statuses": { "threshold_value": "confirmed" } }
+    },
+    {
+      "id": "neg-axis-unit-scale",
+      "synthetic": true,
+      "description": "B changes the y-axis unit and moves the same panel to a log scale.",
+      "a": {
+        "schema_version": "0.2.0",
+        "title": "Synthetic axis case A",
+        "domain": "physics",
+        "figure_type": "plot",
+        "summary": "Linear a.u. panel.",
+        "graph": { "nodes": [], "relations": [], "groups": [], "conditions": [] },
+        "plots": [
+          {
+            "id": "a-p1",
+            "title": "Panel b",
+            "x_axis": { "label": "time", "unit": "s", "scale": "linear", "min": 0, "max": 3 },
+            "y_axis": { "label": "alpha = 0.05", "unit": "a.u.", "scale": "linear", "min": 0, "max": 1 },
+            "series": [ { "id": "a-s1", "label": "alpha = 0.05", "points": [ { "x": 0, "y": 0.1 }, { "x": 3, "y": 0.1 } ], "style": "line", "approximate": false } ],
+            "notes": []
+          }
+        ],
+        "facts": [],
+        "uncertainties": [],
+        "evidence": [],
+        "completeness": "complete"
+      },
+      "b": {
+        "schema_version": "0.2.0",
+        "title": "Synthetic axis case B",
+        "domain": "physics",
+        "figure_type": "plot",
+        "summary": "Log-scale log10(a.u.) panel.",
+        "graph": { "nodes": [], "relations": [], "groups": [], "conditions": [] },
+        "plots": [
+          {
+            "id": "b-p1",
+            "title": "Panel b",
+            "x_axis": { "label": "time", "unit": "s", "scale": "linear", "min": 0, "max": 3 },
+            "y_axis": { "label": "alpha = 0.05", "unit": "log10(a.u.)", "scale": "log", "min": 0.01, "max": 1 },
+            "series": [ { "id": "b-s1", "label": "alpha = 0.05", "points": [ { "x": 0, "y": 0.1 }, { "x": 3, "y": 0.1 } ], "style": "line", "approximate": false } ],
+            "notes": []
+          }
+        ],
+        "facts": [],
+        "uncertainties": [],
+        "evidence": [],
+        "completeness": "complete"
+      },
+      "expected": { "categories": ["axis_unit_scale"], "statuses": { "axis_unit_scale": "confirmed" } }
+    },
+    {
+      "id": "neg-series-shape",
+      "synthetic": true,
+      "description": "A flat alpha series near 0.05 becomes a falling series from 1 to 0 in B.",
+      "a": {
+        "schema_version": "0.2.0",
+        "title": "Synthetic shape case A",
+        "domain": "mathematics",
+        "figure_type": "plot",
+        "summary": "Flat alpha line.",
+        "graph": { "nodes": [], "relations": [], "groups": [], "conditions": [] },
+        "plots": [
+          {
+            "id": "a-p1",
+            "title": "Panel b",
+            "x_axis": { "label": "time", "unit": "s", "scale": "linear", "min": 0, "max": 3 },
+            "y_axis": { "label": "alpha = 0.05", "unit": "a.u.", "scale": "linear", "min": 0, "max": 1 },
+            "series": [ { "id": "a-s1", "label": "alpha = 0.05", "points": [ { "x": 0, "y": 0.05 }, { "x": 3, "y": 0.05 } ], "style": "line", "approximate": false } ],
+            "notes": []
+          }
+        ],
+        "facts": [],
+        "uncertainties": [],
+        "evidence": [],
+        "completeness": "complete"
+      },
+      "b": {
+        "schema_version": "0.2.0",
+        "title": "Synthetic shape case B",
+        "domain": "mathematics",
+        "figure_type": "plot",
+        "summary": "Falling alpha line.",
+        "graph": { "nodes": [], "relations": [], "groups": [], "conditions": [] },
+        "plots": [
+          {
+            "id": "b-p1",
+            "title": "Panel b",
+            "x_axis": { "label": "time", "unit": "s", "scale": "linear", "min": 0, "max": 3 },
+            "y_axis": { "label": "alpha = 0.05", "unit": "a.u.", "scale": "linear", "min": 0, "max": 1 },
+            "series": [ { "id": "b-s1", "label": "alpha = 0.05", "points": [ { "x": 0, "y": 1 }, { "x": 3, "y": 0 } ], "style": "line", "approximate": true } ],
+            "notes": []
+          }
+        ],
+        "facts": [],
+        "uncertainties": [],
+        "evidence": [],
+        "completeness": "complete"
+      },
+      "expected": { "categories": ["series_shape_change"], "statuses": { "series_shape_change": "confirmed" } }
+    },
+    {
+      "id": "neg-ambiguous-duplicate-series",
+      "synthetic": true,
+      "description": "B contains two series with the same label, so flatness alignment is ambiguous and must not be confirmed.",
+      "a": {
+        "schema_version": "0.2.0",
+        "title": "Synthetic ambiguity case A",
+        "domain": "mathematics",
+        "figure_type": "plot",
+        "summary": "One alpha series.",
+        "graph": { "nodes": [], "relations": [], "groups": [], "conditions": [] },
+        "plots": [
+          {
+            "id": "a-p1",
+            "title": "Panel b",
+            "x_axis": { "label": "time", "unit": "s", "scale": "linear", "min": 0, "max": 3 },
+            "y_axis": { "label": "alpha = 0.05", "unit": "a.u.", "scale": "linear", "min": 0, "max": 1 },
+            "series": [ { "id": "a-s1", "label": "alpha = 0.05", "points": [ { "x": 0, "y": 1 }, { "x": 3, "y": 1 } ], "style": "line", "approximate": false } ],
+            "notes": []
+          }
+        ],
+        "facts": [],
+        "uncertainties": [],
+        "evidence": [],
+        "completeness": "complete"
+      },
+      "b": {
+        "schema_version": "0.2.0",
+        "title": "Synthetic ambiguity case B",
+        "domain": "mathematics",
+        "figure_type": "plot",
+        "summary": "Two alpha series with the same label.",
+        "graph": { "nodes": [], "relations": [], "groups": [], "conditions": [] },
+        "plots": [
+          {
+            "id": "b-p1",
+            "title": "Panel b",
+            "x_axis": { "label": "time", "unit": "s", "scale": "linear", "min": 0, "max": 3 },
+            "y_axis": { "label": "alpha = 0.05", "unit": "a.u.", "scale": "linear", "min": 0, "max": 1 },
+            "series": [
+              { "id": "b-s1", "label": "alpha = 0.05", "points": [ { "x": 0, "y": 0 }, { "x": 3, "y": 1 } ], "style": "line", "approximate": true },
+              { "id": "b-s2", "label": "alpha = 0.05", "points": [ { "x": 0, "y": 1 }, { "x": 3, "y": 1 } ], "style": "line", "approximate": true }
+            ],
+            "notes": []
+          }
+        ],
+        "facts": [],
+        "uncertainties": [],
+        "evidence": [],
+        "completeness": "complete"
+      },
+      "expected": { "categories": ["series_shape_change"], "statuses": { "series_shape_change": "uncertain" } }
+    }
+  ],
+  "checkpoints": [
+    {
+      "id": "t08-kp-math-alpha-threshold",
+      "text": "Project-curated plot check: the alpha series stays near its 0.05 reference level and remains flat across the sampled range. This is not an author-confirmed claim.",
+      "author_confirmed": false,
+      "claim": null,
+      "scientific": {
+        "kind": "plot_reference_line",
+        "series_label": "alpha = 0.05",
+        "expected_y": 0.05,
+        "value_tolerance": 0.05,
+        "flatness_tolerance": 0.05,
+        "expected_unit": null,
+        "expected_scale": "linear",
+        "source": "project_curated"
+      },
+      "case_id": "neg-series-shape",
+      "expected": { "in_a": "retained", "in_b": "contradicted" },
+      "provenance_note": "Project-curated threshold and flatness check, verified against the source panel before freezing. It is not the product owner's item-by-item confirmation and must remain review_required."
+    }
+  ]
+}

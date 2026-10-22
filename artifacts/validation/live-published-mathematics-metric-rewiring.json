@@ -1,0 +1,39 @@
+{
+  "empirical_model_results": false,
+  "example_id": "published-mathematics-metric-rewiring",
+  "run_id": "1792600015913-5039cadb",
+  "mode": "live",
+  "model": "qwen3-vl:4b-instruct-16k",
+  "protocol": "chat",
+  "status": "failed",
+  "duration_ms": 20400,
+  "created_at": "2026-10-21T16:26:55.913Z",
+  "completed_at": "2026-10-21T16:27:15.139Z",
+  "settings_digest": "0321ca09842d6c034377340a5163ffdfeea5f817bc529359cfbf7c4c42574268",
+  "input_digest": "2667ad982e76ef0b6e8dd68c9a444289b0cc2d83dbac57aac24d8fc9036ebd04",
+  "stages": [
+    {
+      "stage": "reading_a",
+      "at": "2026-10-21T16:26:55.916Z",
+      "input_digests": [
+        "2667ad982e76ef0b6e8dd68c9a444289b0cc2d83dbac57aac24d8fc9036ebd04"
+      ],
+      "meta": null
+    }
+  ],
+  "error": {
+    "code": "no_readable_content",
+    "message": "This reader could not produce a complete extraction; keypoint omissions were not scored.",
+    "stage": "reading_a"
+  },
+  "render_audit": null,
+  "report_summary": null,
+  "keypoint_results": null,
+  "a_to_b": null,
+  "unmatched_b_claims": null,
+  "limitations": null,
+  "baseline": null,
+  "assets": {
+    "original": "/api/runs/1792600015913-5039cadb/assets/original.png"
+  }
+}

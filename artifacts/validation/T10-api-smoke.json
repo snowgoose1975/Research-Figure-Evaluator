@@ -1,0 +1,176 @@
+{
+  "evidence_id": "T10-api-smoke",
+  "mode": "mock",
+  "empirical_model_results": false,
+  "published_mock_rejected": true,
+  "rows": [
+    {
+      "id": "1792637846958-67a66abb",
+      "example": "physics-oscillator",
+      "version": "clear",
+      "mode": "mock",
+      "status": "completed",
+      "summary": {
+        "retained_a": 4,
+        "retained_b": 4,
+        "total": 4,
+        "unresolved": 0,
+        "renderer_warnings": 0
+      }
+    },
+    {
+      "id": "1792637848298-4cb4ba82",
+      "example": "physics-oscillator",
+      "version": "challenged",
+      "mode": "mock",
+      "status": "completed",
+      "summary": {
+        "retained_a": 3,
+        "retained_b": 3,
+        "total": 4,
+        "unresolved": 0,
+        "renderer_warnings": 0
+      }
+    },
+    {
+      "id": "1792637849419-14a51602",
+      "example": "physics-resonance",
+      "version": "clear",
+      "mode": "mock",
+      "status": "completed",
+      "summary": {
+        "retained_a": 4,
+        "retained_b": 4,
+        "total": 4,
+        "unresolved": 0,
+        "renderer_warnings": 0
+      }
+    },
+    {
+      "id": "1792637850782-11c89ae7",
+      "example": "physics-resonance",
+      "version": "challenged",
+      "mode": "mock",
+      "status": "completed",
+      "summary": {
+        "retained_a": 3,
+        "retained_b": 3,
+        "total": 4,
+        "unresolved": 0,
+        "renderer_warnings": 0
+      }
+    },
+    {
+      "id": "1792637852069-2d888977",
+      "example": "materials-layered-stack",
+      "version": "clear",
+      "mode": "mock",
+      "status": "completed",
+      "summary": {
+        "retained_a": 4,
+        "retained_b": 4,
+        "total": 4,
+        "unresolved": 0,
+        "renderer_warnings": 0
+      }
+    },
+    {
+      "id": "1792637853336-0d55cee8",
+      "example": "materials-layered-stack",
+      "version": "challenged",
+      "mode": "mock",
+      "status": "completed",
+      "summary": {
+        "retained_a": 3,
+        "retained_b": 3,
+        "total": 4,
+        "unresolved": 2,
+        "renderer_warnings": 0
+      }
+    },
+    {
+      "id": "1792637854503-a724513c",
+      "example": "materials-thermal-expansion",
+      "version": "clear",
+      "mode": "mock",
+      "status": "completed",
+      "summary": {
+        "retained_a": 4,
+        "retained_b": 4,
+        "total": 4,
+        "unresolved": 0,
+        "renderer_warnings": 0
+      }
+    },
+    {
+      "id": "1792637856066-0d7b29e7",
+      "example": "materials-thermal-expansion",
+      "version": "challenged",
+      "mode": "mock",
+      "status": "completed",
+      "summary": {
+        "retained_a": 3,
+        "retained_b": 4,
+        "total": 4,
+        "unresolved": 0,
+        "renderer_warnings": 0
+      }
+    },
+    {
+      "id": "1792637857675-42093680",
+      "example": "mathematics-directed-graph",
+      "version": "clear",
+      "mode": "mock",
+      "status": "completed",
+      "summary": {
+        "retained_a": 4,
+        "retained_b": 4,
+        "total": 4,
+        "unresolved": 0,
+        "renderer_warnings": 0
+      }
+    },
+    {
+      "id": "1792637859032-2bf9e724",
+      "example": "mathematics-directed-graph",
+      "version": "challenged",
+      "mode": "mock",
+      "status": "completed",
+      "summary": {
+        "retained_a": 3,
+        "retained_b": 4,
+        "total": 4,
+        "unresolved": 0,
+        "renderer_warnings": 0
+      }
+    },
+    {
+      "id": "1792637860275-9d0b7fc4",
+      "example": "mathematics-parabola",
+      "version": "clear",
+      "mode": "mock",
+      "status": "completed",
+      "summary": {
+        "retained_a": 4,
+        "retained_b": 4,
+        "total": 4,
+        "unresolved": 0,
+        "renderer_warnings": 0
+      }
+    },
+    {
+      "id": "1792637861519-35d5b39c",
+      "example": "mathematics-parabola",
+      "version": "challenged",
+      "mode": "mock",
+      "status": "completed",
+      "summary": {
+        "retained_a": 3,
+        "retained_b": 3,
+        "total": 4,
+        "unresolved": 0,
+        "renderer_warnings": 0
+      }
+    }
+  ]
+}

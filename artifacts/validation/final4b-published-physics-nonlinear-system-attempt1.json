@@ -1,0 +1,269 @@
+{
+  "empirical_model_results": true,
+  "example_id": "published-physics-nonlinear-system",
+  "run_id": "1792601758718-659307dd",
+  "mode": "live",
+  "model": "qwen3-vl:4b-instruct-16k",
+  "protocol": "chat",
+  "status": "completed",
+  "duration_ms": 105709,
+  "created_at": "2026-10-21T16:55:58.718Z",
+  "completed_at": "2026-10-21T16:57:42.598Z",
+  "settings_digest": "0321ca09842d6c034377340a5163ffdfeea5f817bc529359cfbf7c4c42574268",
+  "input_digest": "2676ce18cf5bee9d4938568030b1abf1a36997453bc801facbf3531feb2adbda",
+  "stages": [
+    {
+      "stage": "reading_a",
+      "at": "2026-10-21T16:55:58.722Z",
+      "input_digests": [
+        "2676ce18cf5bee9d4938568030b1abf1a36997453bc801facbf3531feb2adbda"
+      ],
+      "meta": {
+        "request_id": "chatcmpl-181",
+        "model": "qwen3-vl:4b-instruct-16k",
+        "latency_ms": 41235,
+        "usage": {
+          "prompt_tokens": 5655,
+          "completion_tokens": 2612,
+          "total_tokens": 8267
+        },
+        "attempts": 1,
+        "prompt_version": "reader-0.2.0",
+        "repairs": 0
+      }
+    },
+    {
+      "stage": "reconstructing",
+      "at": "2026-10-21T16:56:39.976Z",
+      "input_digests": [
+        "1f82a3b91ffb06a1c0aac46a958fd3a39fee9f8cded4c1b4ac07d1b3845dcc6e"
+      ],
+      "meta": null
+    },
+    {
+      "stage": "reading_b",
+      "at": "2026-10-21T16:56:41.369Z",
+      "input_digests": [
+        "067f978cfd1265906977db91d966a6ae9343eeba99e9b0862b256c5939b9e83d"
+      ],
+      "meta": {
+        "request_id": "chatcmpl-442",
+        "model": "qwen3-vl:4b-instruct-16k",
+        "latency_ms": 37450,
+        "usage": {
+          "prompt_tokens": 4496,
+          "completion_tokens": 2426,
+          "total_tokens": 6922
+        },
+        "attempts": 1,
+        "prompt_version": "reader-0.2.0",
+        "repairs": 0
+      }
+    },
+    {
+      "stage": "evaluating",
+      "at": "2026-10-21T16:57:18.828Z",
+      "input_digests": [
+        "530cc2c366fc5facaaf8f1134087da028ee59802b20bfecb8a3cd6e618192ef1",
+        "1f82a3b91ffb06a1c0aac46a958fd3a39fee9f8cded4c1b4ac07d1b3845dcc6e",
+        "9e87168122197c377b43fd34fb74a4f82747b99c3932ee6b23f694f08bf141b2"
+      ],
+      "meta": {
+        "request_id": "chatcmpl-101",
+        "model": "qwen3-vl:4b-instruct-16k",
+        "latency_ms": 15450,
+        "usage": {
+          "prompt_tokens": 3762,
+          "completion_tokens": 987,
+          "total_tokens": 4749
+        },
+        "attempts": 1,
+        "prompt_version": "reader-0.2.0"
+      }
+    }
+  ],
+  "error": null,
+  "render_audit": {
+    "width": 1200,
+    "height": 2468,
+    "rendered_item_ids": [
+      "rel1",
+      "rel2",
+      "rel3",
+      "rel4",
+      "rel5",
+      "rel6",
+      "rel7",
+      "rel8",
+      "rel9",
+      "rel10",
+      "rel11",
+      "rel12",
+      "rel13",
+      "rel14",
+      "rel15",
+      "rel16",
+      "rel17",
+      "rel18",
+      "mass1",
+      "mass2",
+      "spring1",
+      "spring2",
+      "spring3",
+      "spring4",
+      "spring5",
+      "displacement1",
+      "displacement2",
+      "ground1",
+      "ground2",
+      "ground3",
+      "ground4",
+      "excitation",
+      "force",
+      "plot1",
+      "series1"
+    ],
+    "unsupported_item_ids": [],
+    "warnings": [],
+    "structural_audit": "complete",
+    "visual_review": "not_reviewed",
+    "renderer_version": "0.2.0"
+  },
+  "report_summary": {
+    "retained_a": 4,
+    "retained_b": 4,
+    "total": 4,
+    "unresolved": 0,
+    "renderer_warnings": 0
+  },
+  "keypoint_results": [
+    {
+      "keypoint_id": "published-physics-k1",
+      "text": "In panel (a), spring k₂ connects masses m₁ and m₂.",
+      "in_a": "retained",
+      "in_b": "retained",
+      "observed_stage": "none",
+      "review_required": true
+    },
+    {
+      "keypoint_id": "published-physics-k2",
+      "text": "In panel (a), the upper and lower transverse springs kᵤ and k_d are attached to m₁.",
+      "in_a": "retained",
+      "in_b": "retained",
+      "observed_stage": "none",
+      "review_required": true
+    },
+    {
+      "keypoint_id": "published-physics-k3",
+      "text": "The transverse support motion is labelled d sin(ωt).",
+      "in_a": "retained",
+      "in_b": "retained",
+      "observed_stage": "none",
+      "review_required": true
+    },
+    {
+      "keypoint_id": "published-physics-k4",
+      "text": "Panel (b) plots restoring force f_nl in newtons against relative displacement x in metres.",
+      "in_a": "retained",
+      "in_b": "retained",
+      "observed_stage": "none",
+      "review_required": true
+    }
+  ],
+  "a_to_b": [],
+  "unmatched_b_claims": [],
+  "limitations": [
+    "AI reader feedback does not establish human readability or scientific correctness.",
+    "Independent requests to the same model do not imply independent errors.",
+    "Unmatched B assertions are candidates for review, not proven hallucinations.",
+    "Plot reconstruction is approximate, not precision digitization.",
+    "Semantic judgments require review of their cited extracted items.",
+    "This reconstruction has not received an independent visual-review pass."
+  ],
+  "baseline": {
+    "result": {
+      "results": [
+        {
+          "keypoint_id": "published-physics-k1",
+          "judgment": {
+            "status": "contradicted",
+            "issue_types": [
+              "relation_type"
+            ],
+            "matched_item_ids": [],
+            "rationale": "The diagram shows spring k₂ connecting mass m₂ to the fixed support on its right, not between m₁ and m₂. The connection between m₁ and m₂ is via spring k₂, but the keypoint incorrectly describes k₂ as connecting m₁ and m₂, while k₁ connects m₁ to the left support.",
+            "method": "manual",
+            "review_required": true
+          }
+        },
+        {
+          "keypoint_id": "published-physics-k2",
+          "judgment": {
+            "status": "retained",
+            "issue_types": [
+              "identity",
+              "direction",
+              "relation_type"
+            ],
+            "matched_item_ids": [],
+            "rationale": "The diagram clearly shows springs kᵤ and k_d attached to the mass m₁, one above and one below, in a transverse configuration. The labels kᵤ and k_d are correctly placed.",
+            "method": "manual",
+            "review_required": true
+          }
+        },
+        {
+          "keypoint_id": "published-physics-k3",
+          "judgment": {
+            "status": "retained",
+            "issue_types": [
+              "identity",
+              "direction",
+              "relation_type"
+            ],
+            "matched_item_ids": [],
+            "rationale": "The diagram explicitly labels the transverse support motion as 'd sin(ωt)' with an arrow indicating the direction of motion. The label is correctly placed.",
+            "method": "manual",
+            "review_required": true
+          }
+        },
+        {
+          "keypoint_id": "published-physics-k4",
+          "judgment": {
+            "status": "retained",
+            "issue_types": [
+              "identity",
+              "direction",
+              "relation_type",
+              "value",
+              "unit",
+              "scale",
+              "geometry"
+            ],
+            "matched_item_ids": [],
+            "rationale": "Panel (b) is explicitly labeled 'Restoring force f_nl (N)' on the y-axis and 'Relative displacement x (m)' on the x-axis. The plot shows a nonlinear relationship between these two quantities, consistent with the keypoint's description.",
+            "method": "manual",
+            "review_required": true
+          }
+        }
+      ]
+    },
+    "meta": {
+      "request_id": "chatcmpl-94",
+      "model": "qwen3-vl:4b-instruct-16k",
+      "latency_ms": 8314,
+      "usage": {
+        "prompt_tokens": 4604,
+        "completion_tokens": 534,
+        "total_tokens": 5138
+      },
+      "attempts": 1,
+      "prompt_version": "reader-0.2.0"
+    },
+    "error": null
+  },
+  "assets": {
+    "original": "/api/runs/1792601758718-659307dd/assets/original.png",
+    "reconstruction": "/api/runs/1792601758718-659307dd/assets/reconstruction.png",
+    "svg": "/api/runs/1792601758718-659307dd/assets/reconstruction.svg"
+  }
+}

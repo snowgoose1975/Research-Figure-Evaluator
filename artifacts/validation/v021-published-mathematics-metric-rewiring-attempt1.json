@@ -1,0 +1,269 @@
+{
+  "empirical_model_results": true,
+  "example_id": "published-mathematics-metric-rewiring",
+  "run_id": "1792601317142-79722706",
+  "mode": "live",
+  "model": "qwen3-vl:4b-instruct-16k",
+  "protocol": "chat",
+  "status": "completed",
+  "duration_ms": 65700,
+  "created_at": "2026-10-21T16:48:37.142Z",
+  "completed_at": "2026-10-21T16:49:41.984Z",
+  "settings_digest": "40c140e0a28e757778447538f395151dd370a9098ef8663b360f9070857f223b",
+  "input_digest": "2667ad982e76ef0b6e8dd68c9a444289b0cc2d83dbac57aac24d8fc9036ebd04",
+  "stages": [
+    {
+      "stage": "reading_a",
+      "at": "2026-10-21T16:48:37.146Z",
+      "input_digests": [
+        "2667ad982e76ef0b6e8dd68c9a444289b0cc2d83dbac57aac24d8fc9036ebd04"
+      ],
+      "meta": {
+        "request_id": "chatcmpl-516",
+        "model": "qwen3-vl:4b-instruct-16k",
+        "latency_ms": 15718,
+        "usage": {
+          "prompt_tokens": 2657,
+          "completion_tokens": 1072,
+          "total_tokens": 3729
+        },
+        "attempts": 1,
+        "prompt_version": "reader-0.2.1",
+        "repairs": 0
+      }
+    },
+    {
+      "stage": "reconstructing",
+      "at": "2026-10-21T16:48:52.879Z",
+      "input_digests": [
+        "330e48377274664dd176e1be6d1359339622221f6d874d6386ffdb81536dc91d"
+      ],
+      "meta": null
+    },
+    {
+      "stage": "reading_b",
+      "at": "2026-10-21T16:48:54.060Z",
+      "input_digests": [
+        "7a42103d850548c5c668a473fc966d47902fae5b4e013e5d07c7908f725be6b4"
+      ],
+      "meta": {
+        "request_id": "chatcmpl-88",
+        "model": "qwen3-vl:4b-instruct-16k",
+        "latency_ms": 12487,
+        "usage": {
+          "prompt_tokens": 2791,
+          "completion_tokens": 995,
+          "total_tokens": 3786
+        },
+        "attempts": 1,
+        "prompt_version": "reader-0.2.1",
+        "repairs": 1
+      }
+    },
+    {
+      "stage": "evaluating",
+      "at": "2026-10-21T16:49:20.579Z",
+      "input_digests": [
+        "a320a0f9e780b2c8844c00cefe003cd5251a8e46e17343ee74e36f408e828426",
+        "330e48377274664dd176e1be6d1359339622221f6d874d6386ffdb81536dc91d",
+        "37daa3dab61ab8e7e6e7b6a5b5da289a246aa872f794a93e4d7337135d3bd57e"
+      ],
+      "meta": {
+        "request_id": "chatcmpl-945",
+        "model": "qwen3-vl:4b-instruct-16k",
+        "latency_ms": 13362,
+        "usage": {
+          "prompt_tokens": 1909,
+          "completion_tokens": 1046,
+          "total_tokens": 2955
+        },
+        "attempts": 1,
+        "prompt_version": "reader-0.2.1"
+      }
+    }
+  ],
+  "error": null,
+  "render_audit": {
+    "width": 1200,
+    "height": 766,
+    "rendered_item_ids": [
+      "plot_a",
+      "series_a_original",
+      "series_a_random",
+      "series_a_controlled",
+      "plot_b",
+      "series_b_alpha",
+      "series_b_controlled",
+      "series_b_permutation",
+      "series_b_random"
+    ],
+    "unsupported_item_ids": [],
+    "warnings": [],
+    "structural_audit": "complete",
+    "visual_review": "not_reviewed",
+    "renderer_version": "0.2.0"
+  },
+  "report_summary": {
+    "retained_a": 4,
+    "retained_b": 4,
+    "total": 4,
+    "unresolved": 0,
+    "renderer_warnings": 0
+  },
+  "keypoint_results": [
+    {
+      "keypoint_id": "published-mathematics-rewiring-k1",
+      "text": "Panel (a) plots Metric Value against the number of rewirings from 0 to 3.",
+      "in_a": "retained",
+      "in_b": "retained",
+      "observed_stage": "none",
+      "review_required": true
+    },
+    {
+      "keypoint_id": "published-mathematics-rewiring-k2",
+      "text": "Panel (a) compares the Original, Random Rewiring and Controlled Rewiring series.",
+      "in_a": "retained",
+      "in_b": "retained",
+      "observed_stage": "none",
+      "review_required": true
+    },
+    {
+      "keypoint_id": "published-mathematics-rewiring-k3",
+      "text": "Panel (b) plots p-value against the number of rewirings.",
+      "in_a": "retained",
+      "in_b": "retained",
+      "observed_stage": "none",
+      "review_required": true
+    },
+    {
+      "keypoint_id": "published-mathematics-rewiring-k4",
+      "text": "Panel (b) includes a reference line labelled alpha = 0.05.",
+      "in_a": "retained",
+      "in_b": "retained",
+      "observed_stage": "none",
+      "review_required": true
+    }
+  ],
+  "a_to_b": [],
+  "unmatched_b_claims": [],
+  "limitations": [
+    "AI reader feedback does not establish human readability or scientific correctness.",
+    "Independent requests to the same model do not imply independent errors.",
+    "Unmatched B assertions are candidates for review, not proven hallucinations.",
+    "Plot reconstruction is approximate, not precision digitization.",
+    "Semantic judgments require review of their cited extracted items.",
+    "This reconstruction has not received an independent visual-review pass."
+  ],
+  "baseline": {
+    "result": {
+      "results": [
+        {
+          "keypoint_id": "published-mathematics-rewiring-k1",
+          "judgment": {
+            "status": "retained",
+            "issue_types": [
+              "identity",
+              "direction",
+              "relation_type",
+              "condition",
+              "scope",
+              "evidence_status",
+              "value",
+              "unit",
+              "scale",
+              "geometry"
+            ],
+            "matched_item_ids": [],
+            "rationale": "Panel (a) explicitly plots 'Metric Value' on the y-axis against 'Number of rewirings' on the x-axis, ranging from 0 to 3. The visual structure confirms this description.",
+            "method": "semantic_assist",
+            "review_required": true
+          }
+        },
+        {
+          "keypoint_id": "published-mathematics-rewiring-k2",
+          "judgment": {
+            "status": "retained",
+            "issue_types": [
+              "identity",
+              "direction",
+              "relation_type",
+              "condition",
+              "scope",
+              "evidence_status",
+              "value",
+              "unit",
+              "scale",
+              "geometry"
+            ],
+            "matched_item_ids": [],
+            "rationale": "Panel (a) contains three distinct lines: 'Original' (black), 'Random Rewiring' (blue), and 'Controlled Rewiring' (orange), as labeled in the legend. The comparison is visually evident.",
+            "method": "semantic_assist",
+            "review_required": true
+          }
+        },
+        {
+          "keypoint_id": "published-mathematics-rewiring-k3",
+          "judgment": {
+            "status": "retained",
+            "issue_types": [
+              "identity",
+              "direction",
+              "relation_type",
+              "condition",
+              "scope",
+              "evidence_status",
+              "value",
+              "unit",
+              "scale",
+              "geometry"
+            ],
+            "matched_item_ids": [],
+            "rationale": "Panel (b) has 'p-value' on the y-axis and 'Number of rewirings' on the x-axis, matching the description. The plot structure confirms this.",
+            "method": "semantic_assist",
+            "review_required": true
+          }
+        },
+        {
+          "keypoint_id": "published-mathematics-rewiring-k4",
+          "judgment": {
+            "status": "retained",
+            "issue_types": [
+              "identity",
+              "direction",
+              "relation_type",
+              "condition",
+              "scope",
+              "evidence_status",
+              "value",
+              "unit",
+              "scale",
+              "geometry"
+            ],
+            "matched_item_ids": [],
+            "rationale": "Panel (b) includes a red horizontal line labeled 'alpha = 0.05' at the bottom, consistent with the keypoint description.",
+            "method": "semantic_assist",
+            "review_required": true
+          }
+        }
+      ]
+    },
+    "meta": {
+      "request_id": "chatcmpl-351",
+      "model": "qwen3-vl:4b-instruct-16k",
+      "latency_ms": 8038,
+      "usage": {
+        "prompt_tokens": 1567,
+        "completion_tokens": 631,
+        "total_tokens": 2198
+      },
+      "attempts": 1,
+      "prompt_version": "reader-0.2.1"
+    },
+    "error": null
+  },
+  "assets": {
+    "original": "/api/runs/1792601317142-79722706/assets/original.png",
+    "reconstruction": "/api/runs/1792601317142-79722706/assets/reconstruction.png",
+    "svg": "/api/runs/1792601317142-79722706/assets/reconstruction.svg"
+  }
+}

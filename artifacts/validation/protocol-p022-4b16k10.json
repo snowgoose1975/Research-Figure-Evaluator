@@ -1,0 +1,288 @@
+{
+  "captured_at": "2026-10-21T19:04:14.643Z",
+  "model": "qwen3-vl:4b-instruct-16k",
+  "prompt_version": "reader-0.2.2",
+  "attempts_per_figure": 3,
+  "baseline": true,
+  "figure_count": 4,
+  "completed": 8,
+  "failed": 4,
+  "rows": [
+    {
+      "example_id": "published-physics-nonlinear-system",
+      "attempt": 1,
+      "run_id": "1792608047857-c8a1d56c",
+      "status": "completed",
+      "duration_ms": 156908,
+      "prompt_version": "reader-0.2.2",
+      "engine_version": "b7b534bf90861521bbb2620a6b9806115cd0becc28d6c1f582ae197b955f0f49",
+      "error": null,
+      "summary": {
+        "retained_a": 4,
+        "retained_b": 4,
+        "total": 4,
+        "unresolved": 0,
+        "renderer_warnings": 0
+      },
+      "keypoints": [
+        "physics-k1:retained/retained",
+        "physics-k2:retained/retained",
+        "physics-k3:retained/retained",
+        "physics-k4:retained/retained"
+      ],
+      "repairs": [
+        1,
+        1,
+        null
+      ]
+    },
+    {
+      "example_id": "published-physics-nonlinear-system",
+      "attempt": 2,
+      "run_id": "1792608204732-e4de481f",
+      "status": "failed",
+      "duration_ms": 298282,
+      "prompt_version": "reader-0.2.2",
+      "engine_version": "b7b534bf90861521bbb2620a6b9806115cd0becc28d6c1f582ae197b955f0f49",
+      "error": "incomplete",
+      "summary": null,
+      "keypoints": null,
+      "repairs": []
+    },
+    {
+      "example_id": "published-physics-nonlinear-system",
+      "attempt": 3,
+      "run_id": "1792608503063-73d05c68",
+      "status": "completed",
+      "duration_ms": 183972,
+      "prompt_version": "reader-0.2.2",
+      "engine_version": "b7b534bf90861521bbb2620a6b9806115cd0becc28d6c1f582ae197b955f0f49",
+      "error": null,
+      "summary": {
+        "retained_a": 4,
+        "retained_b": 4,
+        "total": 4,
+        "unresolved": 0,
+        "renderer_warnings": 0
+      },
+      "keypoints": [
+        "physics-k1:retained/retained",
+        "physics-k2:retained/retained",
+        "physics-k3:retained/retained",
+        "physics-k4:retained/retained"
+      ],
+      "repairs": [
+        1,
+        1,
+        null
+      ]
+    },
+    {
+      "example_id": "published-materials-lattice-design",
+      "attempt": 1,
+      "run_id": "1792608686957-9d86b9df",
+      "status": "completed",
+      "duration_ms": 36317,
+      "prompt_version": "reader-0.2.2",
+      "engine_version": "b7b534bf90861521bbb2620a6b9806115cd0becc28d6c1f582ae197b955f0f49",
+      "error": null,
+      "summary": {
+        "retained_a": 4,
+        "retained_b": 4,
+        "total": 4,
+        "unresolved": 0,
+        "renderer_warnings": 0
+      },
+      "keypoints": [
+        "materials-k1:retained/retained",
+        "materials-k2:retained/retained",
+        "materials-k3:retained/retained",
+        "materials-k4:retained/retained"
+      ],
+      "repairs": [
+        0,
+        0,
+        null
+      ]
+    },
+    {
+      "example_id": "published-materials-lattice-design",
+      "attempt": 2,
+      "run_id": "1792608723258-34a4e217",
+      "status": "completed",
+      "duration_ms": 30266,
+      "prompt_version": "reader-0.2.2",
+      "engine_version": "b7b534bf90861521bbb2620a6b9806115cd0becc28d6c1f582ae197b955f0f49",
+      "error": null,
+      "summary": {
+        "retained_a": 4,
+        "retained_b": 4,
+        "total": 4,
+        "unresolved": 0,
+        "renderer_warnings": 0
+      },
+      "keypoints": [
+        "materials-k1:retained/retained",
+        "materials-k2:retained/retained",
+        "materials-k3:retained/retained",
+        "materials-k4:retained/retained"
+      ],
+      "repairs": [
+        0,
+        0,
+        null
+      ]
+    },
+    {
+      "example_id": "published-materials-lattice-design",
+      "attempt": 3,
+      "run_id": "1792608753655-a21c6ed7",
+      "status": "completed",
+      "duration_ms": 33433,
+      "prompt_version": "reader-0.2.2",
+      "engine_version": "b7b534bf90861521bbb2620a6b9806115cd0becc28d6c1f582ae197b955f0f49",
+      "error": null,
+      "summary": {
+        "retained_a": 4,
+        "retained_b": 4,
+        "total": 4,
+        "unresolved": 0,
+        "renderer_warnings": 0
+      },
+      "keypoints": [
+        "materials-k1:retained/retained",
+        "materials-k2:retained/retained",
+        "materials-k3:retained/retained",
+        "materials-k4:retained/retained"
+      ],
+      "repairs": [
+        0,
+        0,
+        null
+      ]
+    },
+    {
+      "example_id": "published-mathematics-network-permutation",
+      "attempt": 1,
+      "run_id": "1792608787008-590ca715",
+      "status": "failed",
+      "duration_ms": 156793,
+      "prompt_version": "reader-0.2.2",
+      "engine_version": "b7b534bf90861521bbb2620a6b9806115cd0becc28d6c1f582ae197b955f0f49",
+      "error": "incomplete",
+      "summary": null,
+      "keypoints": null,
+      "repairs": []
+    },
+    {
+      "example_id": "published-mathematics-network-permutation",
+      "attempt": 2,
+      "run_id": "1792608943836-62bfa1db",
+      "status": "failed",
+      "duration_ms": 156886,
+      "prompt_version": "reader-0.2.2",
+      "engine_version": "b7b534bf90861521bbb2620a6b9806115cd0becc28d6c1f582ae197b955f0f49",
+      "error": "incomplete",
+      "summary": null,
+      "keypoints": null,
+      "repairs": []
+    },
+    {
+      "example_id": "published-mathematics-network-permutation",
+      "attempt": 3,
+      "run_id": "1792609100745-3ac6ea48",
+      "status": "failed",
+      "duration_ms": 153889,
+      "prompt_version": "reader-0.2.2",
+      "engine_version": "b7b534bf90861521bbb2620a6b9806115cd0becc28d6c1f582ae197b955f0f49",
+      "error": "incomplete",
+      "summary": null,
+      "keypoints": null,
+      "repairs": []
+    },
+    {
+      "example_id": "published-mathematics-metric-rewiring",
+      "attempt": 1,
+      "run_id": "1792609254557-2193eadd",
+      "status": "completed",
+      "duration_ms": 73367,
+      "prompt_version": "reader-0.2.2",
+      "engine_version": "b7b534bf90861521bbb2620a6b9806115cd0becc28d6c1f582ae197b955f0f49",
+      "error": null,
+      "summary": {
+        "retained_a": 4,
+        "retained_b": 4,
+        "total": 4,
+        "unresolved": 0,
+        "renderer_warnings": 0
+      },
+      "keypoints": [
+        "mathematics-rewiring-k1:retained/retained",
+        "mathematics-rewiring-k2:retained/retained",
+        "mathematics-rewiring-k3:retained/retained",
+        "mathematics-rewiring-k4:retained/retained"
+      ],
+      "repairs": [
+        1,
+        1,
+        null
+      ]
+    },
+    {
+      "example_id": "published-mathematics-metric-rewiring",
+      "attempt": 2,
+      "run_id": "1792609327940-b1927d5f",
+      "status": "completed",
+      "duration_ms": 69486,
+      "prompt_version": "reader-0.2.2",
+      "engine_version": "b7b534bf90861521bbb2620a6b9806115cd0becc28d6c1f582ae197b955f0f49",
+      "error": null,
+      "summary": {
+        "retained_a": 4,
+        "retained_b": 4,
+        "total": 4,
+        "unresolved": 0,
+        "renderer_warnings": 0
+      },
+      "keypoints": [
+        "mathematics-rewiring-k1:retained/retained",
+        "mathematics-rewiring-k2:retained/retained",
+        "mathematics-rewiring-k3:retained/retained",
+        "mathematics-rewiring-k4:retained/retained"
+      ],
+      "repairs": [
+        1,
+        1,
+        null
+      ]
+    },
+    {
+      "example_id": "published-mathematics-metric-rewiring",
+      "attempt": 3,
+      "run_id": "1792609397425-6006b47b",
+      "status": "completed",
+      "duration_ms": 57423,
+      "prompt_version": "reader-0.2.2",
+      "engine_version": "b7b534bf90861521bbb2620a6b9806115cd0becc28d6c1f582ae197b955f0f49",
+      "error": null,
+      "summary": {
+        "retained_a": 4,
+        "retained_b": 4,
+        "total": 4,
+        "unresolved": 0,
+        "renderer_warnings": 0
+      },
+      "keypoints": [
+        "mathematics-rewiring-k1:retained/retained",
+        "mathematics-rewiring-k2:retained/retained",
+        "mathematics-rewiring-k3:retained/retained",
+        "mathematics-rewiring-k4:retained/retained"
+      ],
+      "repairs": [
+        1,
+        0,
+        null
+      ]
+    }
+  ]
+}

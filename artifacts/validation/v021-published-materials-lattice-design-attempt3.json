@@ -1,0 +1,39 @@
+{
+  "empirical_model_results": false,
+  "example_id": "published-materials-lattice-design",
+  "run_id": "1792601310611-bd04fd0d",
+  "mode": "live",
+  "model": "qwen3-vl:4b-instruct-16k",
+  "protocol": "chat",
+  "status": "failed",
+  "duration_ms": 6276,
+  "created_at": "2026-10-21T16:48:30.611Z",
+  "completed_at": "2026-10-21T16:48:34.768Z",
+  "settings_digest": "40c140e0a28e757778447538f395151dd370a9098ef8663b360f9070857f223b",
+  "input_digest": "11b9f3479785b0e51c7d1a8577248d00148c5b7ece618ca9b48b8646cd92e173",
+  "stages": [
+    {
+      "stage": "reading_a",
+      "at": "2026-10-21T16:48:30.616Z",
+      "input_digests": [
+        "11b9f3479785b0e51c7d1a8577248d00148c5b7ece618ca9b48b8646cd92e173"
+      ],
+      "meta": null
+    }
+  ],
+  "error": {
+    "code": "no_readable_content",
+    "message": "This reader could not produce a complete extraction; keypoint omissions were not scored.",
+    "stage": "reading_a"
+  },
+  "render_audit": null,
+  "report_summary": null,
+  "keypoint_results": null,
+  "a_to_b": null,
+  "unmatched_b_claims": null,
+  "limitations": null,
+  "baseline": null,
+  "assets": {
+    "original": "/api/runs/1792601310611-bd04fd0d/assets/original.png"
+  }
+}

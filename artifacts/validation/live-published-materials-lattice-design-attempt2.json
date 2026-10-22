@@ -1,0 +1,243 @@
+{
+  "empirical_model_results": true,
+  "example_id": "published-materials-lattice-design",
+  "run_id": "1792600374037-912161ff",
+  "mode": "live",
+  "model": "qwen3-vl:4b-instruct-16k",
+  "protocol": "chat",
+  "status": "completed",
+  "duration_ms": 32794,
+  "created_at": "2026-10-21T16:32:54.038Z",
+  "completed_at": "2026-10-21T16:33:26.026Z",
+  "settings_digest": "0321ca09842d6c034377340a5163ffdfeea5f817bc529359cfbf7c4c42574268",
+  "input_digest": "11b9f3479785b0e51c7d1a8577248d00148c5b7ece618ca9b48b8646cd92e173",
+  "stages": [
+    {
+      "stage": "reading_a",
+      "at": "2026-10-21T16:32:54.041Z",
+      "input_digests": [
+        "11b9f3479785b0e51c7d1a8577248d00148c5b7ece618ca9b48b8646cd92e173"
+      ],
+      "meta": {
+        "request_id": "chatcmpl-474",
+        "model": "qwen3-vl:4b-instruct-16k",
+        "latency_ms": 7076,
+        "usage": {
+          "prompt_tokens": 4546,
+          "completion_tokens": 462,
+          "total_tokens": 5008
+        },
+        "attempts": 1,
+        "prompt_version": "reader-0.2.0",
+        "repairs": 0
+      }
+    },
+    {
+      "stage": "reconstructing",
+      "at": "2026-10-21T16:33:01.132Z",
+      "input_digests": [
+        "8bb7532a4aedc2f16b09b463b80f1c33816e2cd95eca8713a27bd0ff548873f3"
+      ],
+      "meta": null
+    },
+    {
+      "stage": "reading_b",
+      "at": "2026-10-21T16:33:02.240Z",
+      "input_digests": [
+        "f02325fecec95e559247e73199d358b73e40557904a021aff8d6cd92ec522200"
+      ],
+      "meta": {
+        "request_id": "chatcmpl-435",
+        "model": "qwen3-vl:4b-instruct-16k",
+        "latency_ms": 6716,
+        "usage": {
+          "prompt_tokens": 2938,
+          "completion_tokens": 473,
+          "total_tokens": 3411
+        },
+        "attempts": 1,
+        "prompt_version": "reader-0.2.0",
+        "repairs": 0
+      }
+    },
+    {
+      "stage": "evaluating",
+      "at": "2026-10-21T16:33:08.962Z",
+      "input_digests": [
+        "9d6cf34623a9a044ff79a6153a306c45853532cf50e247331004f787d660fca0",
+        "8bb7532a4aedc2f16b09b463b80f1c33816e2cd95eca8713a27bd0ff548873f3",
+        "cab5af64f191bbe45ca5420850e0ffedd76c1b990fc54aadfb49a51e8d6d5ddc"
+      ],
+      "meta": {
+        "request_id": "chatcmpl-93",
+        "model": "qwen3-vl:4b-instruct-16k",
+        "latency_ms": 9871,
+        "usage": {
+          "prompt_tokens": 1293,
+          "completion_tokens": 789,
+          "total_tokens": 2082
+        },
+        "attempts": 1,
+        "prompt_version": "reader-0.2.0"
+      }
+    }
+  ],
+  "error": null,
+  "render_audit": {
+    "width": 1200,
+    "height": 1142,
+    "rendered_item_ids": [
+      "R1",
+      "R2",
+      "A",
+      "B",
+      "C"
+    ],
+    "unsupported_item_ids": [],
+    "warnings": [],
+    "structural_audit": "complete",
+    "visual_review": "not_reviewed",
+    "renderer_version": "0.2.0"
+  },
+  "report_summary": {
+    "retained_a": 4,
+    "retained_b": 4,
+    "total": 4,
+    "unresolved": 0,
+    "renderer_warnings": 0
+  },
+  "keypoint_results": [
+    {
+      "keypoint_id": "published-materials-k1",
+      "text": "Panel A represents the unit-cell topology, before beam thickness is specified.",
+      "in_a": "retained",
+      "in_b": "retained",
+      "observed_stage": "none",
+      "review_required": true
+    },
+    {
+      "keypoint_id": "published-materials-k2",
+      "text": "Panel B represents a unit cell with specified porosity.",
+      "in_a": "retained",
+      "in_b": "retained",
+      "observed_stage": "none",
+      "review_required": true
+    },
+    {
+      "keypoint_id": "published-materials-k3",
+      "text": "Panel C shows a repeated lattice associated with the desired pore size.",
+      "in_a": "retained",
+      "in_b": "retained",
+      "observed_stage": "none",
+      "review_required": true
+    },
+    {
+      "keypoint_id": "published-materials-k4",
+      "text": "The figure links A to B and then B to C, in that order.",
+      "in_a": "retained",
+      "in_b": "retained",
+      "observed_stage": "none",
+      "review_required": true
+    }
+  ],
+  "a_to_b": [],
+  "unmatched_b_claims": [],
+  "limitations": [
+    "AI reader feedback does not establish human readability or scientific correctness.",
+    "Independent requests to the same model do not imply independent errors.",
+    "Unmatched B assertions are candidates for review, not proven hallucinations.",
+    "Plot reconstruction is approximate, not precision digitization.",
+    "Semantic judgments require review of their cited extracted items.",
+    "This reconstruction has not received an independent visual-review pass."
+  ],
+  "baseline": {
+    "result": {
+      "results": [
+        {
+          "keypoint_id": "published-materials-k1",
+          "judgment": {
+            "status": "retained",
+            "issue_types": [
+              "identity",
+              "evidence_status"
+            ],
+            "matched_item_ids": [
+              "A"
+            ],
+            "rationale": "Panel A is explicitly labeled 'Unit cell topology' and shows a 3D lattice structure with nodes and edges, consistent with a unit cell topology before any thickness or porosity is specified.",
+            "method": "semantic_assist",
+            "review_required": true
+          }
+        },
+        {
+          "keypoint_id": "published-materials-k2",
+          "judgment": {
+            "status": "retained",
+            "issue_types": [
+              "identity",
+              "evidence_status"
+            ],
+            "matched_item_ids": [
+              "B"
+            ],
+            "rationale": "Panel B is explicitly labeled 'Specified porosity' and shows a hollow cube structure, indicating removal of material to achieve porosity, consistent with the description.",
+            "method": "semantic_assist",
+            "review_required": true
+          }
+        },
+        {
+          "keypoint_id": "published-materials-k3",
+          "judgment": {
+            "status": "retained",
+            "issue_types": [
+              "identity",
+              "evidence_status"
+            ],
+            "matched_item_ids": [
+              "C"
+            ],
+            "rationale": "Panel C is explicitly labeled 'Desired pore size' and shows a 3D lattice structure composed of multiple unit cells, indicating a repeated lattice structure with defined pore size, consistent with the description.",
+            "method": "semantic_assist",
+            "review_required": true
+          }
+        },
+        {
+          "keypoint_id": "published-materials-k4",
+          "judgment": {
+            "status": "retained",
+            "issue_types": [
+              "direction",
+              "relation_type"
+            ],
+            "matched_item_ids": [
+              "A",
+              "B",
+              "C"
+            ],
+            "rationale": "The figure shows a clear sequential flow from A to B via a right arrow, and from B to C via another right arrow, indicating the progression from unit cell topology to specified porosity to desired pore size.",
+            "method": "semantic_assist",
+            "review_required": true
+          }
+        }
+      ]
+    },
+    "meta": {
+      "request_id": "chatcmpl-661",
+      "model": "qwen3-vl:4b-instruct-16k",
+      "latency_ms": 7184,
+      "usage": {
+        "prompt_tokens": 3477,
+        "completion_tokens": 513,
+        "total_tokens": 3990
+      },
+      "attempts": 1,
+      "prompt_version": "reader-0.2.0"
+    },
+    "error": null
+  },
+  "assets": {
+    "original": "/api/runs/1792600374037-912161ff/assets/original.png",
+    "reconstruction": "/api/runs/1792600374037-912161ff/assets/reconstruction.png",
+    "svg": "/api/runs/1792600374037-912161ff/assets/reconstruction.svg"
+  }
+}

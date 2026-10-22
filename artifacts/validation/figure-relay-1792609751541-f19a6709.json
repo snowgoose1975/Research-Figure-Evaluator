@@ -1,0 +1,603 @@
+{
+  "id": "1792609751541-f19a6709",
+  "created_at": "2026-10-21T19:09:11.541Z",
+  "completed_at": "2026-10-21T19:09:11.991Z",
+  "mode": "mock",
+  "status": "completed",
+  "example_id": "physics-oscillator",
+  "example_version": "clear",
+  "parent_run_id": null,
+  "input_digest": "53805f8991f5504a411da37e8cf8dc1f2818f63c570472ce0aed457c8ccdb653",
+  "intent_digest": "b2ae3a9641631c8d4061c9acb63c6bdab1e319070876a139a428c691401765f1",
+  "settings_digest": "4e4566d192382adcd0bc8ee9a05efb75cb397c61ffaf5522946e1cee6d9346a6",
+  "model": "scripted-teaching-data-v1",
+  "protocol": "scripted",
+  "schema_version": "0.2.0",
+  "prompt_version": "reader-0.2.2",
+  "engine_version": "b7b534bf90861521bbb2620a6b9806115cd0becc28d6c1f582ae197b955f0f49",
+  "keypoints": [
+    {
+      "id": "osc-k1",
+      "text": "The spring force follows Fs = −kx for a linear spring.",
+      "claim": {
+        "subject": "Spring force Fs",
+        "predicate": "equals",
+        "object": "−kx",
+        "qualifiers": [
+          "linear spring"
+        ],
+        "certainty": "asserted"
+      },
+      "author_confirmed": true
+    },
+    {
+      "id": "osc-k2",
+      "text": "The damping force follows Fd = −cv for viscous damping.",
+      "claim": {
+        "subject": "Damping force Fd",
+        "predicate": "equals",
+        "object": "−cv",
+        "qualifiers": [
+          "viscous damping"
+        ],
+        "certainty": "asserted"
+      },
+      "author_confirmed": true
+    },
+    {
+      "id": "osc-k3",
+      "text": "The mass equation is m x′′ = Fs + Fd.",
+      "claim": {
+        "subject": "Mass acceleration m x′′",
+        "predicate": "equals",
+        "object": "Fs + Fd",
+        "qualifiers": [],
+        "certainty": "asserted"
+      },
+      "author_confirmed": true
+    },
+    {
+      "id": "osc-k4",
+      "text": "No external driving force is shown.",
+      "claim": {
+        "subject": "External driving force",
+        "predicate": "is",
+        "object": "absent",
+        "qualifiers": [],
+        "certainty": "asserted"
+      },
+      "author_confirmed": true
+    }
+  ],
+  "a": {
+    "schema_version": "0.2.0",
+    "title": "Mass–spring–damper oscillator",
+    "domain": "physics",
+    "figure_type": "mechanism",
+    "summary": "An unforced mass is connected to a fixed support by a linear spring and a viscous damper. The restoring and damping forces sum to m x′′; no driving force is shown.",
+    "graph": {
+      "nodes": [
+        {
+          "id": "osc-wall",
+          "label": "Fixed support",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.13,
+            "y": 0.5
+          }
+        },
+        {
+          "id": "osc-spring",
+          "label": "Linear spring k",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.4,
+            "y": 0.35
+          }
+        },
+        {
+          "id": "osc-damper",
+          "label": "Viscous damper c",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.4,
+            "y": 0.68
+          }
+        },
+        {
+          "id": "osc-mass",
+          "label": "Mass m",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.76,
+            "y": 0.5
+          }
+        }
+      ],
+      "relations": [
+        {
+          "id": "osc-attach-spring",
+          "source_id": "osc-wall",
+          "target_id": "osc-mass",
+          "kind": "associated_with",
+          "direction": "directed",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "spring force Fs = −kx"
+        },
+        {
+          "id": "osc-attach-damper",
+          "source_id": "osc-wall",
+          "target_id": "osc-mass",
+          "kind": "associated_with",
+          "direction": "directed",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "damping force Fd = −cv"
+        }
+      ],
+      "groups": [],
+      "conditions": [
+        {
+          "id": "osc-cond-linear",
+          "text": "Spring response assumes a linear spring: Fs = −kx.",
+          "scope": "fact",
+          "target_ids": [
+            "osc-f-spring"
+          ]
+        },
+        {
+          "id": "osc-cond-viscous",
+          "text": "Damping force assumes viscous damping: Fd = −cv.",
+          "scope": "fact",
+          "target_ids": [
+            "osc-f-damper"
+          ]
+        }
+      ]
+    },
+    "plots": [],
+    "facts": [
+      {
+        "id": "osc-f-spring",
+        "subject": "Spring force Fs",
+        "predicate": "equals",
+        "object": "−kx",
+        "qualifiers": [
+          "linear spring"
+        ],
+        "certainty": "asserted",
+        "source_ids": [
+          "osc-spring",
+          "osc-attach-spring"
+        ]
+      },
+      {
+        "id": "osc-f-damper",
+        "subject": "Damping force Fd",
+        "predicate": "equals",
+        "object": "−cv",
+        "qualifiers": [
+          "viscous damping"
+        ],
+        "certainty": "asserted",
+        "source_ids": [
+          "osc-damper",
+          "osc-attach-damper"
+        ]
+      },
+      {
+        "id": "osc-equation",
+        "subject": "Mass acceleration m x′′",
+        "predicate": "equals",
+        "object": "Fs + Fd",
+        "qualifiers": [],
+        "certainty": "asserted",
+        "source_ids": [
+          "osc-f-spring",
+          "osc-f-damper"
+        ]
+      },
+      {
+        "id": "osc-drive",
+        "subject": "External driving force",
+        "predicate": "is",
+        "object": "absent",
+        "qualifiers": [],
+        "certainty": "asserted",
+        "source_ids": [
+          "osc-equation"
+        ]
+      }
+    ],
+    "uncertainties": [],
+    "evidence": [],
+    "completeness": "complete"
+  },
+  "b": {
+    "schema_version": "0.2.0",
+    "title": "Mass–spring–damper oscillator",
+    "domain": "physics",
+    "figure_type": "mechanism",
+    "summary": "An unforced mass is connected to a fixed support by a linear spring and a viscous damper. The restoring and damping forces sum to m x′′; no driving force is shown.",
+    "graph": {
+      "nodes": [
+        {
+          "id": "osc-wall",
+          "label": "Fixed support",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.13,
+            "y": 0.5
+          }
+        },
+        {
+          "id": "osc-spring",
+          "label": "Linear spring k",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.4,
+            "y": 0.35
+          }
+        },
+        {
+          "id": "osc-damper",
+          "label": "Viscous damper c",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.4,
+            "y": 0.68
+          }
+        },
+        {
+          "id": "osc-mass",
+          "label": "Mass m",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.76,
+            "y": 0.5
+          }
+        }
+      ],
+      "relations": [
+        {
+          "id": "osc-attach-spring",
+          "source_id": "osc-wall",
+          "target_id": "osc-mass",
+          "kind": "associated_with",
+          "direction": "directed",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "spring force Fs = −kx"
+        },
+        {
+          "id": "osc-attach-damper",
+          "source_id": "osc-wall",
+          "target_id": "osc-mass",
+          "kind": "associated_with",
+          "direction": "directed",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "damping force Fd = −cv"
+        }
+      ],
+      "groups": [],
+      "conditions": [
+        {
+          "id": "osc-cond-linear",
+          "text": "Spring response assumes a linear spring: Fs = −kx.",
+          "scope": "fact",
+          "target_ids": [
+            "osc-f-spring"
+          ]
+        },
+        {
+          "id": "osc-cond-viscous",
+          "text": "Damping force assumes viscous damping: Fd = −cv.",
+          "scope": "fact",
+          "target_ids": [
+            "osc-f-damper"
+          ]
+        }
+      ]
+    },
+    "plots": [],
+    "facts": [
+      {
+        "id": "osc-f-spring",
+        "subject": "Spring force Fs",
+        "predicate": "equals",
+        "object": "−kx",
+        "qualifiers": [
+          "linear spring"
+        ],
+        "certainty": "asserted",
+        "source_ids": [
+          "osc-spring",
+          "osc-attach-spring"
+        ]
+      },
+      {
+        "id": "osc-f-damper",
+        "subject": "Damping force Fd",
+        "predicate": "equals",
+        "object": "−cv",
+        "qualifiers": [
+          "viscous damping"
+        ],
+        "certainty": "asserted",
+        "source_ids": [
+          "osc-damper",
+          "osc-attach-damper"
+        ]
+      },
+      {
+        "id": "osc-equation",
+        "subject": "Mass acceleration m x′′",
+        "predicate": "equals",
+        "object": "Fs + Fd",
+        "qualifiers": [],
+        "certainty": "asserted",
+        "source_ids": [
+          "osc-f-spring",
+          "osc-f-damper"
+        ]
+      },
+      {
+        "id": "osc-drive",
+        "subject": "External driving force",
+        "predicate": "is",
+        "object": "absent",
+        "qualifiers": [],
+        "certainty": "asserted",
+        "source_ids": [
+          "osc-equation"
+        ]
+      }
+    ],
+    "uncertainties": [],
+    "evidence": [],
+    "completeness": "complete"
+  },
+  "report": {
+    "keypoint_results": [
+      {
+        "keypoint_id": "osc-k1",
+        "text": "The spring force follows Fs = −kx for a linear spring.",
+        "in_a": {
+          "status": "retained",
+          "issue_types": [],
+          "matched_item_ids": [
+            "osc-f-spring"
+          ],
+          "rationale": "Recovered: Spring force Fs equals −kx (linear spring).",
+          "method": "rule",
+          "review_required": false
+        },
+        "in_b": {
+          "status": "retained",
+          "issue_types": [],
+          "matched_item_ids": [
+            "osc-f-spring"
+          ],
+          "rationale": "Recovered: Spring force Fs equals −kx (linear spring).",
+          "method": "rule",
+          "review_required": false
+        },
+        "observed_stage": "none",
+        "recovery_in_b": false,
+        "render_item_status": "represented",
+        "suggestions": []
+      },
+      {
+        "keypoint_id": "osc-k2",
+        "text": "The damping force follows Fd = −cv for viscous damping.",
+        "in_a": {
+          "status": "retained",
+          "issue_types": [],
+          "matched_item_ids": [
+            "osc-f-damper"
+          ],
+          "rationale": "Recovered: Damping force Fd equals −cv (viscous damping).",
+          "method": "rule",
+          "review_required": false
+        },
+        "in_b": {
+          "status": "retained",
+          "issue_types": [],
+          "matched_item_ids": [
+            "osc-f-damper"
+          ],
+          "rationale": "Recovered: Damping force Fd equals −cv (viscous damping).",
+          "method": "rule",
+          "review_required": false
+        },
+        "observed_stage": "none",
+        "recovery_in_b": false,
+        "render_item_status": "represented",
+        "suggestions": []
+      },
+      {
+        "keypoint_id": "osc-k3",
+        "text": "The mass equation is m x′′ = Fs + Fd.",
+        "in_a": {
+          "status": "retained",
+          "issue_types": [],
+          "matched_item_ids": [
+            "osc-equation"
+          ],
+          "rationale": "Recovered: Mass acceleration m x′′ equals Fs + Fd.",
+          "method": "rule",
+          "review_required": false
+        },
+        "in_b": {
+          "status": "retained",
+          "issue_types": [],
+          "matched_item_ids": [
+            "osc-equation"
+          ],
+          "rationale": "Recovered: Mass acceleration m x′′ equals Fs + Fd.",
+          "method": "rule",
+          "review_required": false
+        },
+        "observed_stage": "none",
+        "recovery_in_b": false,
+        "render_item_status": "represented",
+        "suggestions": []
+      },
+      {
+        "keypoint_id": "osc-k4",
+        "text": "No external driving force is shown.",
+        "in_a": {
+          "status": "retained",
+          "issue_types": [],
+          "matched_item_ids": [
+            "osc-drive"
+          ],
+          "rationale": "Recovered: External driving force is absent.",
+          "method": "rule",
+          "review_required": false
+        },
+        "in_b": {
+          "status": "retained",
+          "issue_types": [],
+          "matched_item_ids": [
+            "osc-drive"
+          ],
+          "rationale": "Recovered: External driving force is absent.",
+          "method": "rule",
+          "review_required": false
+        },
+        "observed_stage": "none",
+        "recovery_in_b": false,
+        "render_item_status": "represented",
+        "suggestions": []
+      }
+    ],
+    "a_to_b": [
+      {
+        "a_item_id": "osc-f-spring",
+        "b_item_ids": [
+          "osc-f-spring"
+        ],
+        "status": "retained",
+        "rationale": "Recovered: Spring force Fs equals −kx (linear spring)."
+      },
+      {
+        "a_item_id": "osc-f-damper",
+        "b_item_ids": [
+          "osc-f-damper"
+        ],
+        "status": "retained",
+        "rationale": "Recovered: Damping force Fd equals −cv (viscous damping)."
+      },
+      {
+        "a_item_id": "osc-equation",
+        "b_item_ids": [
+          "osc-equation"
+        ],
+        "status": "retained",
+        "rationale": "Recovered: Mass acceleration m x′′ equals Fs + Fd."
+      },
+      {
+        "a_item_id": "osc-drive",
+        "b_item_ids": [
+          "osc-drive"
+        ],
+        "status": "retained",
+        "rationale": "Recovered: External driving force is absent."
+      }
+    ],
+    "unmatched_b_claims": [],
+    "summary": {
+      "retained_a": 4,
+      "retained_b": 4,
+      "total": 4,
+      "unresolved": 0,
+      "renderer_warnings": 0
+    },
+    "limitations": [
+      "SCRIPTED DEMO: A and B are authored teaching records, not model outputs. These are not empirical accuracy results.",
+      "AI reader feedback does not establish human readability or scientific correctness.",
+      "Independent requests to the same model do not imply independent errors.",
+      "Unmatched B assertions are candidates for review, not proven hallucinations.",
+      "Plot reconstruction is approximate, not precision digitization.",
+      "Rules only: free-text or synonymous assertions may remain uncertain.",
+      "This reconstruction has not received an independent visual-review pass."
+    ]
+  },
+  "render_audit": {
+    "width": 1200,
+    "height": 940,
+    "rendered_item_ids": [
+      "osc-attach-spring",
+      "osc-attach-damper",
+      "osc-wall",
+      "osc-spring",
+      "osc-damper",
+      "osc-mass",
+      "osc-cond-linear",
+      "osc-cond-viscous",
+      "osc-f-spring",
+      "osc-f-damper",
+      "osc-equation",
+      "osc-drive"
+    ],
+    "unsupported_item_ids": [],
+    "warnings": [],
+    "structural_audit": "complete",
+    "visual_review": "not_reviewed",
+    "renderer_version": "0.2.1"
+  },
+  "stages": [
+    {
+      "stage": "reading_a",
+      "at": "2026-10-21T19:09:11.544Z",
+      "input_digests": [
+        "53805f8991f5504a411da37e8cf8dc1f2818f63c570472ce0aed457c8ccdb653"
+      ],
+      "meta": null
+    },
+    {
+      "stage": "reconstructing",
+      "at": "2026-10-21T19:09:11.555Z",
+      "input_digests": [
+        "724d4437b7018fc557512c4b6934672300cf70524c06cc6c765c092a7aab2677"
+      ],
+      "meta": null
+    },
+    {
+      "stage": "reading_b",
+      "at": "2026-10-21T19:09:11.975Z",
+      "input_digests": [
+        "1fcc3af71df0149ffd54a0663aa3aab88dd517e2dd7f8abb2c5c15650bf59b39"
+      ],
+      "meta": null
+    },
+    {
+      "stage": "evaluating",
+      "at": "2026-10-21T19:09:11.979Z",
+      "input_digests": [
+        "b2ae3a9641631c8d4061c9acb63c6bdab1e319070876a139a428c691401765f1",
+        "724d4437b7018fc557512c4b6934672300cf70524c06cc6c765c092a7aab2677",
+        "724d4437b7018fc557512c4b6934672300cf70524c06cc6c765c092a7aab2677"
+      ],
+      "meta": null
+    }
+  ],
+  "assets": {
+    "original": "/api/runs/1792609751541-f19a6709/assets/original.png",
+    "reconstruction": "/api/runs/1792609751541-f19a6709/assets/reconstruction.png",
+    "svg": "/api/runs/1792609751541-f19a6709/assets/reconstruction.svg"
+  },
+  "baseline": null,
+  "error": null
+}

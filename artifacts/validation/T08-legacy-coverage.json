@@ -1,0 +1,32 @@
+{
+  "baseURL": "http://127.0.0.1:3000",
+  "runId": "1792629154544-bc6d1ac7",
+  "checks": [
+    {
+      "name": "legacy run opens by deep link",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "coverage panel renders",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "no undefined value in coverage panel",
+      "ok": true,
+      "detail": "WHAT WAS ACTUALLY CHECKED\nDetection coverage\n2/5 rule audits executed\n✓\nFact-by-fact comparison\nExecuted · 1 A facts · 1 B facts\n✓\nRelation-direction audit\nExecuted\n—\nCondition audit\nNOT EXECUTED\n\nA recorded no qualified facts, so condition comparison was not executed.\n\n—\nPlot-axis audit\nNOT EXECUTED\n\nA recorded no plots, so plot-axis and series-shape comparison was not executed.\n\n—\nSeries-shape audit\nNOT EXECUTED\n\nA recorded no plots, so plot-axis and series-shape comparison was not executed.\n\n"
+    },
+    {
+      "name": "plot audit explicitly not executed",
+      "ok": false,
+      "detail": "WHAT WAS ACTUALLY CHECKED\nDetection coverage\n2/5 rule audits executed\n✓\nFact-by-fact comparison\nExecuted · 1 A facts · 1 B facts\n✓\nRelation-direction audit\nExecuted\n—\nCondition audit\nNOT EXECUTED\n\nA recorded no qualified facts, so condition comparison was not executed.\n\n—\nPlot-axis audit\nNOT EXECUTED\n\nA recorded no plots, so plot-axis and series-shape comparison was not executed.\n\n—\nSeries-shape audit\nNOT EXECUTED\n\nA recorded no plots, so plot-axis and series-shape comparison was not executed.\n\nNot covered: Unlabelled node and edge changes; Axis units, scales and series shapes; Precision digitization of plotted values; Semantic equivalence of paraphrased labels and conditions\n\nCoverage states which automatic checks ran. An empty finding list does not mean the figure is unchanged.\n\nScientif"
+    },
+    {
+      "name": "execution",
+      "ok": false,
+      "detail": "plot audit explicitly not executed: WHAT WAS ACTUALLY CHECKED\nDetection coverage\n2/5 rule audits executed\n✓\nFact-by-fact comparison\nExecuted · 1 A facts · 1 B facts\n✓\nRelation-direction audit\nExecuted\n—\nCondition audit\nNOT EXECUTED\n\nA recorded no qualified facts, so condition comparison was not executed.\n\n—\nPlot-axis audit\nNOT EXECUTED\n\nA recorded no plots, so plot-axis and series-shape comparison was not executed.\n\n—\nSeries-shape audit\nNOT EXECUTED\n\nA recorded no plots, so plot-axis and series-shape comparison was not executed.\n\nNot covered: Unlabelled node and edge changes; Axis units, scales and series shapes; Precision digitization of plotted values; Semantic equivalence of paraphrased labels and conditions\n\nCoverage states which automatic checks ran. An empty finding list does not mean the figure is unchanged.\n\nScientif"
+    }
+  ],
+  "consoleErrors": []
+}

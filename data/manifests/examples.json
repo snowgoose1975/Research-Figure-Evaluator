@@ -1,0 +1,477 @@
+{
+  "schema_version": "0.2.0",
+  "generated_at": "reproducible-build",
+  "items": [
+    {
+      "id": "physics-oscillator",
+      "title": "Mass–spring–damper oscillator",
+      "domain": "physics",
+      "figure_type": "mechanism",
+      "description": "An unforced oscillator with linear spring and viscous damping forces. Scripted demo data is hand-authored, not a measured AI result.",
+      "split": "dev",
+      "keypoints": [
+        {
+          "id": "osc-k1",
+          "text": "The spring force follows Fs = −kx for a linear spring.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Spring force Fs",
+            "predicate": "equals",
+            "object": "−kx",
+            "qualifiers": [
+              "linear spring"
+            ],
+            "certainty": "asserted"
+          }
+        },
+        {
+          "id": "osc-k2",
+          "text": "The damping force follows Fd = −cv for viscous damping.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Damping force Fd",
+            "predicate": "equals",
+            "object": "−cv",
+            "qualifiers": [
+              "viscous damping"
+            ],
+            "certainty": "asserted"
+          }
+        },
+        {
+          "id": "osc-k3",
+          "text": "The mass equation is m x′′ = Fs + Fd.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Mass acceleration m x′′",
+            "predicate": "equals",
+            "object": "Fs + Fd",
+            "qualifiers": [],
+            "certainty": "asserted"
+          }
+        },
+        {
+          "id": "osc-k4",
+          "text": "No external driving force is shown.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "External driving force",
+            "predicate": "is",
+            "object": "absent",
+            "qualifiers": [],
+            "certainty": "asserted"
+          }
+        }
+      ],
+      "versions": [
+        {
+          "id": "clear",
+          "label": "Clear",
+          "image_url": "/examples/physics-oscillator-clear-v2.png",
+          "change": "Reference rendering with legible force labels and explicit linear/viscous assumptions."
+        },
+        {
+          "id": "challenged",
+          "label": "Challenged",
+          "image_url": "/examples/physics-oscillator-challenged-v2.png",
+          "change": "Same mechanism and equations; force labels and assumption tags are lighter and smaller."
+        }
+      ],
+      "source": "Original educational illustration; self-drawn.",
+      "license": "CC0-1.0",
+      "authored_as": "original-self-drawn-educational-illustration",
+      "scripted_demo_only": true
+    },
+    {
+      "id": "physics-resonance",
+      "title": "Damped oscillator response",
+      "domain": "physics",
+      "figure_type": "plot",
+      "description": "Normalized response curves for ζ = 0.15 and ζ = 0.35. Scripted demo data is hand-authored, not a measured AI result.",
+      "split": "holdout",
+      "keypoints": [
+        {
+          "id": "res-k1",
+          "text": "The horizontal frequency ratio r = ω/ω₀ spans 0 to 2 and is dimensionless.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Frequency ratio r",
+            "predicate": "equals",
+            "object": "ω/ω₀",
+            "qualifiers": [
+              "dimensionless",
+              "range 0–2"
+            ],
+            "certainty": "asserted"
+          }
+        },
+        {
+          "id": "res-k2",
+          "text": "Amplitude follows the displayed A(r, ζ) equation.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Normalized amplitude A(r, ζ)",
+            "predicate": "equals",
+            "object": "1 / √[(1−r²)² + (2ζr)²]",
+            "qualifiers": [],
+            "certainty": "asserted"
+          }
+        },
+        {
+          "id": "res-k3",
+          "text": "The ζ = 0.15 peak is higher than the ζ = 0.35 peak.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Peak amplitude",
+            "predicate": "is higher for",
+            "object": "ζ = 0.15 than for ζ = 0.35",
+            "qualifiers": [],
+            "certainty": "asserted"
+          }
+        },
+        {
+          "id": "res-k4",
+          "text": "The ζ = 0.15 peak lies slightly below r = 1, not exactly at 1.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Peak for ζ = 0.15",
+            "predicate": "occurs",
+            "object": "slightly below r = 1",
+            "qualifiers": [
+              "not exactly at r = 1"
+            ],
+            "certainty": "asserted"
+          }
+        }
+      ],
+      "versions": [
+        {
+          "id": "clear",
+          "label": "Clear",
+          "image_url": "/examples/physics-resonance-clear-v3.png",
+          "change": "Reference rendering with readable equation, normalized axes, and damping legend."
+        },
+        {
+          "id": "challenged",
+          "label": "Challenged",
+          "image_url": "/examples/physics-resonance-challenged-v3.png",
+          "change": "Same plotted curves; equation and legend are reduced and the legend swatches are lighter."
+        }
+      ],
+      "source": "Original educational illustration; self-drawn.",
+      "license": "CC0-1.0",
+      "authored_as": "original-self-drawn-educational-illustration",
+      "scripted_demo_only": true
+    },
+    {
+      "id": "materials-layered-stack",
+      "title": "Idealized A / B / A layered stack",
+      "domain": "materials",
+      "figure_type": "structure",
+      "description": "A three-layer cross-section showing B between two non-contacting A layers. Scripted demo data is hand-authored, not a measured AI result.",
+      "split": "dev",
+      "keypoints": [
+        {
+          "id": "layer-k1",
+          "text": "The vertical layer order is A on top, B in the middle, and A on the bottom.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Layer sequence",
+            "predicate": "is",
+            "object": "A (top) / B (middle) / A (bottom)",
+            "qualifiers": [],
+            "certainty": "asserted"
+          }
+        },
+        {
+          "id": "layer-k2",
+          "text": "The middle B layer is adjacent to the top A layer.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Layer B",
+            "predicate": "is adjacent to",
+            "object": "top layer A",
+            "qualifiers": [],
+            "certainty": "asserted"
+          }
+        },
+        {
+          "id": "layer-k3",
+          "text": "The middle B layer is adjacent to the bottom A layer.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Layer B",
+            "predicate": "is adjacent to",
+            "object": "bottom layer A",
+            "qualifiers": [],
+            "certainty": "asserted"
+          }
+        },
+        {
+          "id": "layer-k4",
+          "text": "The two A layers do not directly contact one another.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Top and bottom A layers",
+            "predicate": "are separated by",
+            "object": "middle layer B",
+            "qualifiers": [],
+            "certainty": "asserted"
+          }
+        }
+      ],
+      "versions": [
+        {
+          "id": "clear",
+          "label": "Clear",
+          "image_url": "/examples/materials-layered-stack-clear-v4.png",
+          "change": "Reference cross-section with clear interfaces and layer labels."
+        },
+        {
+          "id": "challenged",
+          "label": "Challenged",
+          "image_url": "/examples/materials-layered-stack-challenged-v4.png",
+          "change": "Same A/B/A stack; interface strokes and the middle-layer label are lighter and smaller."
+        }
+      ],
+      "source": "Original educational illustration; self-drawn.",
+      "license": "CC0-1.0",
+      "authored_as": "original-self-drawn-educational-illustration",
+      "scripted_demo_only": true
+    },
+    {
+      "id": "materials-thermal-expansion",
+      "title": "Linear thermal expansion",
+      "domain": "materials",
+      "figure_type": "plot",
+      "description": "An instructional ΔL/L₀ versus ΔT plot with two expansion coefficients. Scripted demo data is hand-authored, not a measured AI result.",
+      "split": "dev",
+      "keypoints": [
+        {
+          "id": "thermal-k1",
+          "text": "The shown relationship is the linear approximation ΔL/L₀ = αΔT.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Relative length change ΔL/L₀",
+            "predicate": "equals",
+            "object": "αΔT",
+            "qualifiers": [
+              "linear approximation"
+            ],
+            "certainty": "asserted"
+          }
+        },
+        {
+          "id": "thermal-k2",
+          "text": "The temperature-change axis spans 0 to 100 K.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Temperature change ΔT",
+            "predicate": "ranges",
+            "object": "0–100 K",
+            "qualifiers": [],
+            "certainty": "asserted"
+          }
+        },
+        {
+          "id": "thermal-k3",
+          "text": "Material A has α = 10 × 10⁻⁶ K⁻¹.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Material A expansion coefficient α",
+            "predicate": "equals",
+            "object": "10 × 10⁻⁶ K⁻¹",
+            "qualifiers": [],
+            "certainty": "asserted"
+          }
+        },
+        {
+          "id": "thermal-k4",
+          "text": "Material B’s slope is twice material A’s slope.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Material B slope",
+            "predicate": "is",
+            "object": "2× material A slope",
+            "qualifiers": [],
+            "certainty": "asserted"
+          }
+        }
+      ],
+      "versions": [
+        {
+          "id": "clear",
+          "label": "Clear",
+          "image_url": "/examples/materials-thermal-expansion-clear-v3.png",
+          "change": "Reference rendering with visible linear-approximation note, units, and endpoint scale."
+        },
+        {
+          "id": "challenged",
+          "label": "Challenged",
+          "image_url": "/examples/materials-thermal-expansion-challenged-v3.png",
+          "change": "Same instructional lines; approximation note and units are lighter and smaller."
+        }
+      ],
+      "source": "Original educational illustration; self-drawn.",
+      "license": "CC0-1.0",
+      "authored_as": "original-self-drawn-educational-illustration",
+      "scripted_demo_only": true
+    },
+    {
+      "id": "mathematics-directed-graph",
+      "title": "Three-node directed graph",
+      "domain": "mathematics",
+      "figure_type": "structure",
+      "description": "A directed acyclic graph with a direct and an indirect U-to-W path. Scripted demo data is hand-authored, not a measured AI result.",
+      "split": "dev",
+      "keypoints": [
+        {
+          "id": "graph-k1",
+          "text": "The graph has directed edges U→V, V→W, and U→W.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Directed edges",
+            "predicate": "are",
+            "object": "U→V, V→W, U→W",
+            "qualifiers": [],
+            "certainty": "asserted"
+          }
+        },
+        {
+          "id": "graph-k2",
+          "text": "There are two directed paths from U to W: directly and through V.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Directed paths from U to W",
+            "predicate": "number",
+            "object": "2: direct U→W and via V",
+            "qualifiers": [],
+            "certainty": "asserted"
+          }
+        },
+        {
+          "id": "graph-k3",
+          "text": "There is no directed cycle.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Directed cycles",
+            "predicate": "are",
+            "object": "absent",
+            "qualifiers": [],
+            "certainty": "asserted"
+          }
+        },
+        {
+          "id": "graph-k4",
+          "text": "The arrows encode graph direction, not scientific causation.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Arrow meaning",
+            "predicate": "is",
+            "object": "graph direction only",
+            "qualifiers": [
+              "not a causal explanation"
+            ],
+            "certainty": "asserted"
+          }
+        }
+      ],
+      "versions": [
+        {
+          "id": "clear",
+          "label": "Clear",
+          "image_url": "/examples/mathematics-directed-graph-clear-v3.png",
+          "change": "Reference graph with distinct arrowheads and clearly separated labels."
+        },
+        {
+          "id": "challenged",
+          "label": "Challenged",
+          "image_url": "/examples/mathematics-directed-graph-challenged-v3.png",
+          "change": "Same three arrows; arrowheads and edge labels are smaller and lower contrast."
+        }
+      ],
+      "source": "Original educational illustration; self-drawn.",
+      "license": "CC0-1.0",
+      "authored_as": "original-self-drawn-educational-illustration",
+      "scripted_demo_only": true
+    },
+    {
+      "id": "mathematics-parabola",
+      "title": "Parabola and its derivative",
+      "domain": "mathematics",
+      "figure_type": "plot",
+      "description": "The curves f(x) = x² and f′(x) = 2x on shared dimensionless axes. Scripted demo data is hand-authored, not a measured AI result.",
+      "split": "holdout",
+      "keypoints": [
+        {
+          "id": "para-k1",
+          "text": "The function is f(x) = x² on the interval −2 to 2.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Function f(x)",
+            "predicate": "equals",
+            "object": "x²",
+            "qualifiers": [
+              "x from −2 to 2"
+            ],
+            "certainty": "asserted"
+          }
+        },
+        {
+          "id": "para-k2",
+          "text": "The derivative is f′(x) = 2x.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Derivative f′(x)",
+            "predicate": "equals",
+            "object": "2x",
+            "qualifiers": [],
+            "certainty": "asserted"
+          }
+        },
+        {
+          "id": "para-k3",
+          "text": "The function is nonnegative on the shown interval.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Function f(x) = x²",
+            "predicate": "is",
+            "object": "nonnegative on the shown interval",
+            "qualifiers": [],
+            "certainty": "asserted"
+          }
+        },
+        {
+          "id": "para-k4",
+          "text": "The derivative is zero at x = 0, negative for x < 0, and positive for x > 0.",
+          "author_confirmed": true,
+          "claim": {
+            "subject": "Derivative sign",
+            "predicate": "is negative for x < 0 and positive for x > 0",
+            "object": "with zero at x = 0",
+            "qualifiers": [],
+            "certainty": "asserted"
+          }
+        }
+      ],
+      "versions": [
+        {
+          "id": "clear",
+          "label": "Clear",
+          "image_url": "/examples/mathematics-parabola-clear-v3.png",
+          "change": "Reference plot with legible function and derivative labels and shared axes."
+        },
+        {
+          "id": "challenged",
+          "label": "Challenged",
+          "image_url": "/examples/mathematics-parabola-challenged-v3.png",
+          "change": "Same mathematical curves; curve labels and the zero crossing marker are smaller and lighter."
+        }
+      ],
+      "source": "Original educational illustration; self-drawn.",
+      "license": "CC0-1.0",
+      "authored_as": "original-self-drawn-educational-illustration",
+      "scripted_demo_only": true
+    }
+  ]
+}

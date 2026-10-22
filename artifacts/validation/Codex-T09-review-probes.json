@@ -1,0 +1,71 @@
+{
+  "captured_at": "2026-10-22T02:43:49.125Z",
+  "scope": "Read-only offline fixtures and in-memory stub; no real inference and no original run changes.",
+  "source_sha256": {
+    "src/lib/evaluation/scientific.ts": "9c014e2c9c712b8292694a456f14c48d12426b627a14da85a3311bfac307bc92",
+    "src/lib/evaluation/index.ts": "e8cdb13b5a286c998a1a1aa85cb3445ad512575b97120a79da203779485a13fa",
+    "src/lib/model/index.ts": "ec0c8d809b8cded3b2f844c5b418fb50fccb03349d704d63c3acc901dc58085f"
+  },
+  "original_counterexamples": {
+    "F1": "contradicted",
+    "F2": {
+      "matched_plots": 0,
+      "confirmed": 0
+    },
+    "F3": {
+      "zero_vs_005": "contradicted",
+      "wide": "uncertain"
+    },
+    "F4": {
+      "usage": {
+        "prompt_tokens": 7
+      },
+      "complete": false
+    }
+  },
+  "remaining": {
+    "small_threshold": {
+      "check": {
+        "kind": "plot_reference_line",
+        "series_label": "Reference current",
+        "expected_y": 1e-10,
+        "value_tolerance": 1e-12,
+        "flatness_tolerance": 1e-12,
+        "tolerance_basis": "Synthetic fixture contract: absolute uncertainty 1e-12 A, specified before comparison.",
+        "expected_unit": "A",
+        "expected_scale": "linear",
+        "source": "project_curated"
+      },
+      "observed_y": 0,
+      "actual": {
+        "status": "retained",
+        "issue_types": [],
+        "matched_item_ids": [
+          "a-p1",
+          "a-s1"
+        ],
+        "rationale": "Project-curated plot check (not author-confirmed): expected a flat \"Reference current\" series near y=1e-10 (value tolerance 1e-12, flatness tolerance 1e-12; basis: Synthetic fixture contract: absolute uncertainty 1e-12 A, specified before comparison.); observed y range 0 across 2 sampled points.",
+        "method": "rule",
+        "review_required": true
+      },
+      "expected": "contradicted or uncertain; cannot retain zero at 100% error"
+    },
+    "b_only_plots": {
+      "coverage": {
+        "executed": false,
+        "axis_executed": false,
+        "series_executed": false,
+        "a_plots": 0,
+        "b_plots": 1,
+        "matched_plots": 0,
+        "matched_series": 0,
+        "unmatched_a_plots": [],
+        "unmatched_a_series": [],
+        "unmatched_b_plots": [],
+        "unmatched_b_series": [],
+        "reason": "A recorded no plots, so plot-axis and series-shape comparison was not executed."
+      },
+      "expected": "one unmatched B plot and one unmatched B series"
+    }
+  }
+}

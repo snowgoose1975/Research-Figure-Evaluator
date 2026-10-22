@@ -1,0 +1,118 @@
+# 接续交接 · 2026-10-22
+
+## T10 已通过独立定向复验（最新）
+
+Codex独立重跑75项测试及生产构建、18项边界探针、默认拒绝覆盖和wx二次写入保护，均符合预期；N1/N2与防覆盖可关闭。验收记录见 [ACCEPTANCE_T10_REVIEW](ACCEPTANCE_T10_REVIEW.md)。下一步进入真实图修改对照与参赛成品准备，不再扩大工程修复清单。
+
+比赛提交已复核：Moment活动页与官方Agenda均为10月22日19:00 CDT，即**北京时间10月23日08:00**，不是北京时间今天19:00。当前平台必需公开帖子、write-up、公开仓库含README、规则确认；视频选填≤4分钟，允许单人。入口与详情见 [COMPETITION](COMPETITION.md) 和 [提交检查表](submission/CHECKLIST.md)。发布、push、提交尚未授权或执行。
+
+## T10 边界收尾与防覆盖（最新）
+
+T09 复验遗留的 N1/N2 已修：`1e-10 A` 对 `1e-12 A` 容差的实际零值不再被判 retained；A 无 plot、B 有面板/系列时 `unmatched_b_plots`/`unmatched_b_series` 会列出；证据生成脚本使用独立 label、预检和拒绝覆盖写入。当前 `npm run validate` 为 11 个测试文件 75 项通过；T10 边界探针 18/18、科学回归 11/11、受控审计 16/16；最终构建浏览器 16/16 界面、24/24 历史/深链接、7/7 旧 coverage；一页 PDF 1 页、998/1020px。详见 [T10 交接](handoffs/T10-review-boundaries.md)。没有启动新的完整真实模型实验，旧运行与旧检查点未改动。
+
+## T09 独立复验结论（历史）
+
+Codex已独立重跑64项测试及生产构建，四个原始反例均已修复。剩余两项P2：固定绝对epsilon吞掉小量级阈值差异；A无plot而B有plot时未匹配B列表遗漏。另需给证据生成脚本加独立命名和禁止覆盖保护。具体证据与最小收尾范围见 [ACCEPTANCE_T09_REVIEW](ACCEPTANCE_T09_REVIEW.md)。上述两项及防覆盖已由 T10 处理；已通过修复保留，原始T08汇总被覆盖事件按下文披露处理。
+
+## T09 边界修复（历史）
+
+F1–F4 与覆盖说明已修：semantic retained 不再覆盖科学规则或明确反向断言；A/B 任一侧面板重名时不产生确定匹配；0.05 检查不再把 y=0 判 retained；只有输入或只有 total 的 usage 标为不完整。T09 独立证据为 `T09-boundary-probes.json`（12/12）与 `T09-scientific-regression.json`（11/11）。详见 [T09 交接](handoffs/T09-review-boundaries.md)。
+
+必须披露：重跑既有 `t08-audit-stub.ts` 时，`T08-audit-stub-v2.json` 及两个复制 JSONL 被同脚本覆盖为新的受控 run；旧私有 run `1792629726115-43ba30b6`、`1792629726849-ace8a605` 仍在，但原始 T08 汇总 JSON 未保留。不要把当前文件当作原始 T08 证据。
+
+## T08 独立复验（历史）
+
+R01/R02/R05 通过；R03 主流程通过但 partial usage 有边界错误；R04 因 live 分支绕过规则、面板歧义匹配和阈值容差未通过。该结论由 T09/T10 修复，等待 Codex 复核；历史报告见 [ACCEPTANCE_T08_REVIEW](ACCEPTANCE_T08_REVIEW.md)。下文 T08“done”是执行方自测状态，不等于独立验收结论。
+
+- 历史回放：列表、LIVE 筛选、深链接 `?run=`、按完整 ID 打开最近 50 条之外的运行、失败运行、分页、桌面与 390px 布局，22/22 通过；另有 6 项旧 coverage 兼容性检查。
+- 默认配置：无环境变量时模型为 `qwen3-vl:4b-instruct-16k`、输出上限 10000；`scripts/Modelfile.*` 与 README/HANDOFF 命令一致。
+- 审计：每次 HTTP 尝试一行 `runs/<run-id>/model-calls.jsonl`，含阶段、修复/首发、请求 ID、usage、finish_reason、HTTP 状态、校验与错误码；受控 stub 两个 run 覆盖临时 500 重试、schema 修复和 length 失败，16/16。
+- 检测覆盖：报告与界面显示四类检查是否执行、未覆盖项与 `review_required`；6 个冻结 synthetic 负例覆盖方向反转、条件丢失、阈值变化、轴单位/尺度、系列形状、重复标签歧义。
+- 文稿：WRITEUP/POST/DEMO_SCRIPT/CHECKLIST 已按实测更正；T09 一页 PDF 经 Edge 打印实测 1 页（内容 1014/1020px、41219 bytes），见 `artifacts/validation/T09-writeup-one-page.pdf` 与 `.json`；旧 T08 PDF 保留不动。
+
+仍待外部输入：真人视觉复核、视频录制、push/发布/提交授权、官方提交入口确认。
+
+## Codex 验收后的接续入口
+
+2026-10-22 独立验收结论为“工程候选版有条件通过，最终成品暂不通过”。具体证据见 [ACCEPTANCE_REVIEW](ACCEPTANCE_REVIEW.md)，DeepSeek 下一批执行顺序、验收标准和返交格式见 [DEEPSEEK_REPAIR_BRIEF](DEEPSEEK_REPAIR_BRIEF.md)。先处理该任务单，再看下文历史候选版状态；不要将下文“已补齐”理解为所有问题已通过独立验收。
+
+## 先读与边界
+
+工作目录：`C:\Users\czc12\OneDrive - HKUST (Guangzhou)\Documents\ChatGPT\hackathon`。先读根目录 AGENTS.md 与 `docs/IMPLEMENTATION.md`，再读本文。本文记录实际状态；MASTER_PLAN、CONTRACTS、TASKS、VALIDATION 含早期规划。接口以 `src/lib/schemas/index.ts` 为准，实际证据以 `docs/DELIVERY_VALIDATION.md` 与 `artifacts/validation/` 为准。
+
+已授权：实现、项目局部依赖、Ollama 模型下载、本地真实运行、准备比赛文字。未授权：删除文件、修改 .env/密钥/CI、数据库迁移、`git push`/`rebase`/`reset --hard`、全局安装/系统设置、公开发布/部署/发帖、比赛提交。密钥不进入代码、日志、报告或聊天。
+
+## 当前状态
+
+应用已实现并在生产模式本地运行：真实论文图与上传、3–5 条作者检查点、A/B 独立请求、确定性 SVG→PNG 重建、逐项评价、隔离直接检查基线、历史与同条件比较、JSON/Markdown 导出、响应式界面。
+
+真实视觉模型闭环已打通，不再是被阻塞项：
+
+- 固定协议模型 `qwen3-vl:4b-instruct-16k`（`num_ctx=16384`，`RFE_MAX_OUTPUT_TOKENS=10000`），提示词 `reader-0.2.2`，renderer `0.2.1`。
+- 物理、材料、数学（metric 双面板）各 1 张真实 PLOS ONE 图按 3 次协议运行；数学网络图（holdout）无法完整提取，作为失败记录保留。完成 8/12，具体数字见 `docs/DELIVERY_VALIDATION.md`。
+- 32k/14000 与 16k/8000 两种配置均实测过：前者在 8GB 显存上溢出到 CPU（8.4GB、33% CPU），单次约 20 分钟；后者物理出现输出截断。最终用 16k/10000。
+- 8B instruct 仅作抽查：物理 1 次完成（3/4 检查点，漏 `d sin(ωt)`），随后一次尝试三次超时；本机显存不足，未作为协议模型。
+
+## 视觉模型环境（本机特有）
+
+Ollama 默认 4096 上下文放不下“图片 + 完整 JSON schema + 提取结果”。已创建派生模型：
+
+- `qwen3-vl:4b-instruct-16k` / `-32k`（协议最终使用 16k + 输出 10000；32k/14000 在本机过慢）
+- `qwen3-vl:8b-instruct-16k`
+
+`ollama pull` 曾在 Cloudflare 层卡死（解析到 198.18.0.7）。已用 curl 按 registry manifest 下载 blob 到 `~/.ollama/models/blobs/`，写入 `~/.ollama/models/manifests/registry.ollama.ai/library/qwen3-vl/<tag>`，再用 `ollama list`、`ollama ps` 和 sha256 校验。Modelfile 位置 `runs/model-setup/`（已在忽略目录内）。这是网络适配，不是产品逻辑；不要改系统 DNS/代理或关闭安全检查。
+
+启动示例（PowerShell；默认配置已正确，通常不需要环境变量）：
+
+```powershell
+npm start
+```
+
+如需显式覆盖：
+
+```powershell
+$env:RFE_MODEL="qwen3-vl:4b-instruct-16k"; $env:RFE_MAX_OUTPUT_TOKENS="10000"; npm start
+```
+
+## 提示词版本与已知结论
+
+- `reader-0.2.0`：物理、材料 3/3 完成；数学 metric 0/3、网络 0/3，Reader A 报 `no_readable_content`。
+- `reader-0.2.1`（试改“可读即完整”）：数学 metric 3/3，但材料 0/3（空完整记录）。已回退。
+- `reader-0.2.2`（当前）：只澄清 `completeness=unsupported` 指图像不可读，不指图中统计结论不成立。数学 metric 与材料恢复完成；物理完成。
+- 观察到模型会把 `unsupported` 当成“统计上不显著”，这是数学图失败的可疑根因；修复方式是语义澄清，不是放宽评分。
+
+不要通过改标注、放宽完整性门槛或挑选成功重跑让结果好看。Reader A/B 的原始记忆与失败运行都保留。
+
+## 文件地图
+
+- `src/lib/schemas/index.ts`：schema 0.2.0 与 `PROMPT_VERSION`（0.2.2），唯一类型来源。
+- `src/lib/prompts/index.ts`：reader/judge/direct 提示词与隔离规则。
+- `src/lib/model/index.ts`：chat/responses 适配、JSON Schema、超时重试、有界语义修复（重复 ID、悬空引用、完整性与内容矛盾）。
+- `src/lib/reconstruction/index.ts`：白名单投影、SVG/PNG、结构审计、轴名/单位去重；`visual_review` 默认 `not_reviewed`。
+- `src/lib/evaluation/index.ts`：规则与语义判定的证据引用审计、阶段归因、可比性检查。
+- `src/lib/pipeline/`、`storage/`：运行编排、图像归一化、持久化、状态。
+- `src/lib/examples/published.ts`：4 张真实图（物理、材料、数学网络 holdout、数学 metric dev）。
+- `scripts/live-run.mjs`、`scripts/protocol.mjs`、`scripts/live-browser.mjs`：真实运行、固定协议、浏览器真实运行证据。
+- `scripts/probe-reader.ts`、`scripts/probe-pipeline.ts`：诊断真实模型行为，不写运行记录。
+- `docs/handoffs/Txx-*.md`：早期模块执行记录。
+
+## 接续优先级
+
+1. T10 已补齐 N1/N2 与防覆盖：`npm run validate` 通过（11 文件 75 测试）；16 项界面 + 24 项历史/深链接 + 7 项旧 coverage 检查通过；T10 边界探针 18/18、真实运行离线回归 11/11；受控审计 16/16。一页 PDF 为 1 页、998/1020px。详情见 [T10 交接](handoffs/T10-review-boundaries.md)；T09 历史见 [T09 交接](handoffs/T09-review-boundaries.md)。当前 T08 审计汇总仍是 T09 期间重跑覆盖版，见上文披露。
+2. 人工复核至少物理与材料各一次真实重建；当前只有助手级检查。应用内 `visual_review` 不应在未人工查看时改成 `passed`。
+3. `docs/submission/WRITEUP.md` 与 `DEMO_SCRIPT.md` 已换为实测数字；视频未录制（本机无 ffmpeg，安装需授权）。
+4. 比赛提交入口、视频时长、账号/标签仍需玉米在官方 Slack/当届页面核实；任何 push、发布、部署、提交先取得明确许可。
+
+## 验证与启动
+
+Node >=22.12，依赖已装在项目内。`npm run dev` 或 `npm run build && npm start` → http://127.0.0.1:3000。`npm run validate` 依次做类型、lint、单测、生产构建。
+
+- 浏览器脚本：`node scripts/browser-smoke.mjs`（需要本机 Edge 和服务运行）。
+- 真实运行：`node scripts/live-run.mjs <example-id> --baseline`。
+- 固定协议：`node scripts/protocol.mjs --tag <tag> --attempts 3 --baseline`。
+
+Windows 沙箱可能拒绝 Next/浏览器/Ollama 网络；不要把沙箱 EPERM 当应用 bug，也不要通过跳过检查绕过。
+
+## Git / 未做事项
+
+本地 unborn master、无远端，全部实现尚未提交。未 push、部署、发布或提交比赛。不要 `git clean/reset` 或删除原型、失败运行。准备可审查变更可以，任何 push 先问玉米。

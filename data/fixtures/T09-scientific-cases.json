@@ -1,0 +1,31 @@
+{
+  "fixture_version": "T09-scientific-v2",
+  "frozen_at": "2026-10-22",
+  "synthetic": true,
+  "supersedes": "T08-scientific-v1",
+  "revision_reason": "The T08 checkpoint used value_tolerance=0.05 for expected_y=0.05, so y=0 was accepted at 100% relative error. T09 separates threshold-level and flatness checks, requires an independently frozen tolerance basis, and uses a value tolerance of 0.005 (10% of the reference) fixed from the source panel's tick spacing before the audit. The T08 file and its saved regression output are preserved unchanged as historical evidence.",
+  "legacy_cases_file": "T08-scientific-cases.json",
+  "cases": [],
+  "checkpoints": [
+    {
+      "id": "t09-kp-math-alpha-threshold",
+      "text": "Project-curated plot check: the alpha series stays at its 0.05 reference level (value tolerance +/-0.005, 10% of the reference) and remains flat within 0.002 (0.2% of the 0-1 axis span). This is not an author-confirmed claim.",
+      "author_confirmed": false,
+      "claim": null,
+      "scientific": {
+        "kind": "plot_reference_line",
+        "series_label": "alpha = 0.05",
+        "expected_y": 0.05,
+        "value_tolerance": 0.005,
+        "flatness_tolerance": 0.002,
+        "tolerance_basis": "Value tolerance is 10% of the 0.05 reference level; flatness tolerance is 0.2% of the 0-1 y-axis span. Both were fixed from the source panel's tick spacing before the revised audit and are not chosen from the A/B observations.",
+        "expected_unit": null,
+        "expected_scale": "linear",
+        "source": "project_curated"
+      },
+      "case_id": "neg-series-shape",
+      "expected": { "in_a": "retained", "in_b": "contradicted", "real_math_run_in_a": "contradicted", "real_math_run_in_b": "contradicted" },
+      "provenance_note": "Project-curated threshold and flatness check, verified against the source panel before freezing. It is not the product owner's item-by-item confirmation and must remain review_required. The T08 checkpoint and regression JSON are superseded but not overwritten."
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "empirical_model_results": true,
+  "captured_via": "browser",
+  "example_title": "Metric value and p-value versus rewiring steps",
+  "run_id": "1792609657136-e85156a8",
+  "status": "completed",
+  "model": "qwen3-vl:4b-instruct-16k",
+  "prompt_version": "reader-0.2.2",
+  "engine_version": "b7b534bf90861521bbb2620a6b9806115cd0becc28d6c1f582ae197b955f0f49",
+  "duration_ms": 70365,
+  "browser_checks": {
+    "image_panels": 2,
+    "report_rows": 4,
+    "baseline_rows": 4,
+    "live_label_visible": true,
+    "baseline_label_visible": true
+  },
+  "report_summary": {
+    "retained_a": 4,
+    "retained_b": 4,
+    "total": 4,
+    "unresolved": 0,
+    "renderer_warnings": 0
+  },
+  "keypoint_results": [
+    {
+      "keypoint_id": "published-mathematics-rewiring-k1",
+      "in_a": "retained",
+      "in_b": "retained"
+    },
+    {
+      "keypoint_id": "published-mathematics-rewiring-k2",
+      "in_a": "retained",
+      "in_b": "retained"
+    },
+    {
+      "keypoint_id": "published-mathematics-rewiring-k3",
+      "in_a": "retained",
+      "in_b": "retained"
+    },
+    {
+      "keypoint_id": "published-mathematics-rewiring-k4",
+      "in_a": "retained",
+      "in_b": "retained"
+    }
+  ],
+  "render_audit": {
+    "width": 1200,
+    "height": 766,
+    "rendered_item_ids": [
+      "plot_a",
+      "plot_a_series_1",
+      "plot_a_series_2",
+      "plot_a_series_3",
+      "plot_b",
+      "plot_b_series_1",
+      "plot_b_series_2",
+      "plot_b_series_3",
+      "plot_b_series_4"
+    ],
+    "unsupported_item_ids": [],
+    "warnings": [],
+    "structural_audit": "complete",
+    "visual_review": "not_reviewed",
+    "renderer_version": "0.2.1"
+  },
+  "baseline": {
+    "error": null,
+    "result": {
+      "results": [
+        {
+          "keypoint_id": "published-mathematics-rewiring-k1",
+          "judgment": {
+            "status": "retained",
+            "issue_types": [
+              "identity",
+              "direction",
+              "relation_type",
+              "condition",
+              "scope",
+              "evidence_status",
+              "value",
+              "unit",
+              "scale",
+              "geometry"
+            ],
+            "matched_item_ids": [],
+            "rationale": "Panel (a) explicitly plots 'Metric Value' on the y-axis against 'Number of rewirings' on the x-axis, ranging from 0 to 3. The visual structure confirms this description.",
+            "method": "semantic_assist",
+            "review_required": true
+          }
+        },
+        {
+          "keypoint_id": "published-mathematics-rewiring-k2",
+          "judgment": {
+            "status": "retained",
+            "issue_types": [
+              "identity",
+              "direction",
+              "relation_type",
+              "condition",
+              "scope",
+              "evidence_status",
+              "value",
+              "unit",
+              "scale",
+              "geometry"
+            ],
+            "matched_item_ids": [],
+            "rationale": "Panel (a) contains three distinct lines: 'Original' (black), 'Random Rewiring' (blue), and 'Controlled Rewiring' (orange), as labeled in the legend. The comparison is visually evident.",
+            "method": "semantic_assist",
+            "review_required": true
+          }
+        },
+        {
+          "keypoint_id": "published-mathematics-rewiring-k3",
+          "judgment": {
+            "status": "retained",
+            "issue_types": [
+              "identity",
+              "direction",
+              "relation_type",
+              "condition",
+              "scope",
+              "evidence_status",
+              "value",
+              "unit",
+              "scale",
+              "geometry"
+            ],
+            "matched_item_ids": [],
+            "rationale": "Panel (b) has 'p-value' on the y-axis and 'Number of rewirings' on the x-axis, matching the description. The plot structure confirms this.",
+            "method": "semantic_assist",
+            "review_required": true
+          }
+        },
+        {
+          "keypoint_id": "published-mathematics-rewiring-k4",
+          "judgment": {
+            "status": "retained",
+            "issue_types": [
+              "identity",
+              "direction",
+              "relation_type",
+              "condition",
+              "scope",
+              "evidence_status",
+              "value",
+              "unit",
+              "scale",
+              "geometry"
+            ],
+            "matched_item_ids": [],
+            "rationale": "Panel (b) includes a red horizontal line labeled 'alpha = 0.05' at the bottom, consistent with the keypoint description.",
+            "method": "semantic_assist",
+            "review_required": true
+          }
+        }
+      ]
+    }
+  },
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedResponses": []
+}

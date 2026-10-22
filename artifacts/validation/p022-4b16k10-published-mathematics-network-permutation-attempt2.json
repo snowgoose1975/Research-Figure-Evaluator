@@ -1,0 +1,43 @@
+{
+  "empirical_model_results": false,
+  "protocol_tag": "p022-4b16k10",
+  "attempt": 2,
+  "example_id": "published-mathematics-network-permutation",
+  "run_id": "1792608943836-62bfa1db",
+  "mode": "live",
+  "model": "qwen3-vl:4b-instruct-16k",
+  "protocol": "chat",
+  "prompt_version": "reader-0.2.2",
+  "engine_version": "b7b534bf90861521bbb2620a6b9806115cd0becc28d6c1f582ae197b955f0f49",
+  "status": "failed",
+  "duration_ms": 156886,
+  "created_at": "2026-10-21T18:55:43.836Z",
+  "completed_at": "2026-10-21T18:58:19.000Z",
+  "settings_digest": "bd3512d99c7793a7c63610a9449b49c75a8f48cd8271526537735236944901aa",
+  "input_digest": "7572d2ff6e8432181c9b3544445396a38ee46f571557e22e03c104dddddd0b81",
+  "stages": [
+    {
+      "stage": "reading_a",
+      "at": "2026-10-21T18:55:43.846Z",
+      "input_digests": [
+        "7572d2ff6e8432181c9b3544445396a38ee46f571557e22e03c104dddddd0b81"
+      ],
+      "meta": null
+    }
+  ],
+  "error": {
+    "code": "incomplete",
+    "message": "Model response was incomplete.",
+    "stage": "reading_a"
+  },
+  "render_audit": null,
+  "report_summary": null,
+  "keypoint_results": null,
+  "a_to_b": null,
+  "unmatched_b_claims": null,
+  "limitations": null,
+  "baseline": null,
+  "assets": {
+    "original": "/api/runs/1792608943836-62bfa1db/assets/original.png"
+  }
+}

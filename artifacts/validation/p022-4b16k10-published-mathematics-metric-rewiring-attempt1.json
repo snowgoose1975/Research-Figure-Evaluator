@@ -1,0 +1,309 @@
+{
+  "empirical_model_results": true,
+  "protocol_tag": "p022-4b16k10",
+  "attempt": 1,
+  "example_id": "published-mathematics-metric-rewiring",
+  "run_id": "1792609254557-2193eadd",
+  "mode": "live",
+  "model": "qwen3-vl:4b-instruct-16k",
+  "protocol": "chat",
+  "prompt_version": "reader-0.2.2",
+  "engine_version": "b7b534bf90861521bbb2620a6b9806115cd0becc28d6c1f582ae197b955f0f49",
+  "status": "completed",
+  "duration_ms": 73367,
+  "created_at": "2026-10-21T19:00:54.557Z",
+  "completed_at": "2026-10-21T19:02:07.662Z",
+  "settings_digest": "bd3512d99c7793a7c63610a9449b49c75a8f48cd8271526537735236944901aa",
+  "input_digest": "2667ad982e76ef0b6e8dd68c9a444289b0cc2d83dbac57aac24d8fc9036ebd04",
+  "stages": [
+    {
+      "stage": "reading_a",
+      "at": "2026-10-21T19:00:54.560Z",
+      "input_digests": [
+        "2667ad982e76ef0b6e8dd68c9a444289b0cc2d83dbac57aac24d8fc9036ebd04"
+      ],
+      "meta": {
+        "request_id": "chatcmpl-315",
+        "model": "qwen3-vl:4b-instruct-16k",
+        "latency_ms": 13550,
+        "usage": {
+          "prompt_tokens": 2761,
+          "completion_tokens": 1085,
+          "total_tokens": 3846
+        },
+        "attempts": 1,
+        "prompt_version": "reader-0.2.2",
+        "repairs": 1
+      }
+    },
+    {
+      "stage": "reconstructing",
+      "at": "2026-10-21T19:01:18.328Z",
+      "input_digests": [
+        "65fdf0d8a4fdee56650b0d974f5c7b5edb16a310e685e44f18f4f10385766139"
+      ],
+      "meta": null
+    },
+    {
+      "stage": "reading_b",
+      "at": "2026-10-21T19:01:19.536Z",
+      "input_digests": [
+        "2dea5be183977f04c11aea07115a74f0b851cd180050498face7090238d2f86b"
+      ],
+      "meta": {
+        "request_id": "chatcmpl-628",
+        "model": "qwen3-vl:4b-instruct-16k",
+        "latency_ms": 13004,
+        "usage": {
+          "prompt_tokens": 2793,
+          "completion_tokens": 1037,
+          "total_tokens": 3830
+        },
+        "attempts": 1,
+        "prompt_version": "reader-0.2.2",
+        "repairs": 1
+      }
+    },
+    {
+      "stage": "evaluating",
+      "at": "2026-10-21T19:01:46.883Z",
+      "input_digests": [
+        "a320a0f9e780b2c8844c00cefe003cd5251a8e46e17343ee74e36f408e828426",
+        "65fdf0d8a4fdee56650b0d974f5c7b5edb16a310e685e44f18f4f10385766139",
+        "c2bab4a26dfe820f89292c14c8382243029e4ceb5ef4aaaf6458c4386b0b3682"
+      ],
+      "meta": {
+        "request_id": "chatcmpl-700",
+        "model": "qwen3-vl:4b-instruct-16k",
+        "latency_ms": 12835,
+        "usage": {
+          "prompt_tokens": 1944,
+          "completion_tokens": 1007,
+          "total_tokens": 2951
+        },
+        "attempts": 1,
+        "prompt_version": "reader-0.2.2"
+      }
+    }
+  ],
+  "error": null,
+  "render_audit": {
+    "width": 1200,
+    "height": 766,
+    "rendered_item_ids": [
+      "plot_a",
+      "plot_a_series_1",
+      "plot_a_series_2",
+      "plot_a_series_3",
+      "plot_b",
+      "plot_b_series_1",
+      "plot_b_series_2",
+      "plot_b_series_3",
+      "plot_b_series_4"
+    ],
+    "unsupported_item_ids": [],
+    "warnings": [],
+    "structural_audit": "complete",
+    "visual_review": "not_reviewed",
+    "renderer_version": "0.2.1"
+  },
+  "report_summary": {
+    "retained_a": 4,
+    "retained_b": 4,
+    "total": 4,
+    "unresolved": 0,
+    "renderer_warnings": 0
+  },
+  "keypoint_results": [
+    {
+      "keypoint_id": "published-mathematics-rewiring-k1",
+      "text": "Panel (a) plots Metric Value against the number of rewirings from 0 to 3.",
+      "in_a": "retained",
+      "in_b": "retained",
+      "observed_stage": "none",
+      "review_required": true,
+      "matched_a": [
+        "plot_a",
+        "plot_a_series_1",
+        "plot_a_series_2",
+        "plot_a_series_3"
+      ],
+      "matched_b": [
+        "plot_a",
+        "plot_a_series_1",
+        "plot_a_series_2",
+        "plot_a_series_3"
+      ]
+    },
+    {
+      "keypoint_id": "published-mathematics-rewiring-k2",
+      "text": "Panel (a) compares the Original, Random Rewiring and Controlled Rewiring series.",
+      "in_a": "retained",
+      "in_b": "retained",
+      "observed_stage": "none",
+      "review_required": true,
+      "matched_a": [
+        "plot_a",
+        "plot_a_series_1",
+        "plot_a_series_2",
+        "plot_a_series_3"
+      ],
+      "matched_b": [
+        "plot_a",
+        "plot_a_series_1",
+        "plot_a_series_2",
+        "plot_a_series_3"
+      ]
+    },
+    {
+      "keypoint_id": "published-mathematics-rewiring-k3",
+      "text": "Panel (b) plots p-value against the number of rewirings.",
+      "in_a": "retained",
+      "in_b": "retained",
+      "observed_stage": "none",
+      "review_required": true,
+      "matched_a": [
+        "plot_b"
+      ],
+      "matched_b": [
+        "plot_b"
+      ]
+    },
+    {
+      "keypoint_id": "published-mathematics-rewiring-k4",
+      "text": "Panel (b) includes a reference line labelled alpha = 0.05.",
+      "in_a": "retained",
+      "in_b": "retained",
+      "observed_stage": "none",
+      "review_required": true,
+      "matched_a": [
+        "plot_b_series_1"
+      ],
+      "matched_b": [
+        "plot_b_series_1"
+      ]
+    }
+  ],
+  "a_to_b": [],
+  "unmatched_b_claims": [],
+  "limitations": [
+    "AI reader feedback does not establish human readability or scientific correctness.",
+    "Independent requests to the same model do not imply independent errors.",
+    "Unmatched B assertions are candidates for review, not proven hallucinations.",
+    "Plot reconstruction is approximate, not precision digitization.",
+    "Semantic judgments require review of their cited extracted items.",
+    "This reconstruction has not received an independent visual-review pass."
+  ],
+  "baseline": {
+    "result": {
+      "results": [
+        {
+          "keypoint_id": "published-mathematics-rewiring-k1",
+          "judgment": {
+            "status": "retained",
+            "issue_types": [
+              "identity",
+              "direction",
+              "relation_type",
+              "condition",
+              "scope",
+              "evidence_status",
+              "value",
+              "unit",
+              "scale",
+              "geometry"
+            ],
+            "matched_item_ids": [],
+            "rationale": "Panel (a) explicitly plots 'Metric Value' on the y-axis against 'Number of rewirings' on the x-axis, ranging from 0 to 3. The visual structure confirms this description.",
+            "method": "semantic_assist",
+            "review_required": true
+          }
+        },
+        {
+          "keypoint_id": "published-mathematics-rewiring-k2",
+          "judgment": {
+            "status": "retained",
+            "issue_types": [
+              "identity",
+              "direction",
+              "relation_type",
+              "condition",
+              "scope",
+              "evidence_status",
+              "value",
+              "unit",
+              "scale",
+              "geometry"
+            ],
+            "matched_item_ids": [],
+            "rationale": "Panel (a) contains three distinct lines: 'Original' (black), 'Random Rewiring' (blue), and 'Controlled Rewiring' (orange), as labeled in the legend. The comparison is visually evident.",
+            "method": "semantic_assist",
+            "review_required": true
+          }
+        },
+        {
+          "keypoint_id": "published-mathematics-rewiring-k3",
+          "judgment": {
+            "status": "retained",
+            "issue_types": [
+              "identity",
+              "direction",
+              "relation_type",
+              "condition",
+              "scope",
+              "evidence_status",
+              "value",
+              "unit",
+              "scale",
+              "geometry"
+            ],
+            "matched_item_ids": [],
+            "rationale": "Panel (b) has 'p-value' on the y-axis and 'Number of rewirings' on the x-axis, matching the description. The plot structure confirms this.",
+            "method": "semantic_assist",
+            "review_required": true
+          }
+        },
+        {
+          "keypoint_id": "published-mathematics-rewiring-k4",
+          "judgment": {
+            "status": "retained",
+            "issue_types": [
+              "identity",
+              "direction",
+              "relation_type",
+              "condition",
+              "scope",
+              "evidence_status",
+              "value",
+              "unit",
+              "scale",
+              "geometry"
+            ],
+            "matched_item_ids": [],
+            "rationale": "Panel (b) includes a red horizontal line labeled 'alpha = 0.05' at the bottom, consistent with the keypoint description.",
+            "method": "semantic_assist",
+            "review_required": true
+          }
+        }
+      ]
+    },
+    "meta": {
+      "request_id": "chatcmpl-448",
+      "model": "qwen3-vl:4b-instruct-16k",
+      "latency_ms": 7940,
+      "usage": {
+        "prompt_tokens": 1567,
+        "completion_tokens": 631,
+        "total_tokens": 2198
+      },
+      "attempts": 1,
+      "prompt_version": "reader-0.2.2"
+    },
+    "error": null
+  },
+  "assets": {
+    "original": "/api/runs/1792609254557-2193eadd/assets/original.png",
+    "reconstruction": "/api/runs/1792609254557-2193eadd/assets/reconstruction.png",
+    "svg": "/api/runs/1792609254557-2193eadd/assets/reconstruction.svg"
+  }
+}

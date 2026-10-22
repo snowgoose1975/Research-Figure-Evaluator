@@ -1,0 +1,133 @@
+{
+  "baseURL": "http://127.0.0.1:3000",
+  "realRunId": "1792609657136-e85156a8",
+  "failedRunId": "1792608204732-e4de481f",
+  "missingRunId": "9999999999999-doesnotexist",
+  "checks": [
+    {
+      "name": "history card opens from topbar",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "history lists recent runs",
+      "ok": true,
+      "detail": "rows=10"
+    },
+    {
+      "name": "history shows ID and status columns",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "history filters live runs",
+      "ok": true,
+      "detail": "live rows=10"
+    },
+    {
+      "name": "filter finds requested real run",
+      "ok": true,
+      "detail": "count=1"
+    },
+    {
+      "name": "real run opened from history row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "real run shows source and reconstruction",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "real run shows four keypoint rows",
+      "ok": true,
+      "detail": "rows=4"
+    },
+    {
+      "name": "real run shows four baseline rows",
+      "ok": true,
+      "detail": "rows=4"
+    },
+    {
+      "name": "deep link written to address bar",
+      "ok": true,
+      "detail": "http://127.0.0.1:3000/?run=1792609657136-e85156a8"
+    },
+    {
+      "name": "deep link reloads the same run",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "deep-linked run still shows report",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "history export contains the opened run",
+      "ok": true,
+      "detail": "artifacts/validation/figure-relay-1792609657136-e85156a8.json"
+    },
+    {
+      "name": "failed run opened by full ID",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "failed run names failure stage",
+      "ok": true,
+      "detail": "!\nRun failed\n\nModel response was incomplete. Stage: reading_a.\n\nCheck the service configuration and input limits, then start a new run. This record remains in history."
+    },
+    {
+      "name": "failed run keeps recorded error",
+      "ok": true,
+      "detail": "!\nRun failed\n\nModel response was incomplete. Stage: reading_a.\n\nCheck the service configuration and input limits, then start a new run. This record remains in history."
+    },
+    {
+      "name": "missing ID has a readable message",
+      "ok": true,
+      "detail": "!\nRun history\n\nRun 9999999999999-doesnotexist was not found. Check the ID; it may belong to another workspace."
+    },
+    {
+      "name": "390px page has no horizontal overflow",
+      "ok": true,
+      "detail": "{\"width\":390,\"scroll\":390,\"tableScroll\":767,\"tableClient\":334}"
+    },
+    {
+      "name": "history table scrolls inside its card",
+      "ok": true,
+      "detail": "{\"width\":390,\"scroll\":390,\"tableScroll\":767,\"tableClient\":334}"
+    },
+    {
+      "name": "open-by-ID form usable at 390px",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "real run opens at 390px",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "no unexpected console errors",
+      "ok": true,
+      "detail": "[]"
+    }
+  ],
+  "consoleErrors": [
+    {
+      "step": "missing run",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ],
+  "unexpectedConsoleErrors": [],
+  "pageErrors": [],
+  "failedResponses": [],
+  "expectedConsoleErrors": [
+    {
+      "step": "missing run",
+      "text": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+    }
+  ]
+}

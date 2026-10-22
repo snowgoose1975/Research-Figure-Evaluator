@@ -1,0 +1,75 @@
+{
+  "captured_at": "2026-10-22T01:18:09.188Z",
+  "scope": "Independent offline counterexamples and in-memory HTTP stub. No real model invocation. No original run modified.",
+  "source_sha256": {
+    "src/lib/evaluation/scientific.ts": "edb63f55d2bc5fa204d713d5e59d6c79a0c33cf435b6e056870aa34c22c5ab9e",
+    "src/lib/evaluation/index.ts": "ec4ff7dfe8dc3f114102df8da0608f2bf89c74c4b9e532634dbcbbbaf1fb99b6",
+    "src/lib/model/index.ts": "70ac105c125bc14f7919b5c760d2eda89fdedee344fdc7b4045565e64861f484"
+  },
+  "duplicate_a_plot_titles": {
+    "expected": "uncertain alignment or not assessed, not confirmed twice",
+    "coverage": {
+      "executed": true,
+      "a_plots": 2,
+      "b_plots": 1,
+      "matched_plots": 2,
+      "matched_series": 2,
+      "unmatched_a_series": [],
+      "reason": null
+    },
+    "findings": [
+      {
+        "id": "sf-series_shape_change-a-s1-b-s1",
+        "category": "series_shape_change",
+        "status": "confirmed",
+        "summary": "Series \"alpha = 0.05\" is flat in A but not flat in B (range 1 exceeds the last-digit tolerance 0.005).",
+        "a_item_ids": [
+          "a-s1"
+        ],
+        "b_item_ids": [
+          "b-s1"
+        ],
+        "review_required": true
+      },
+      {
+        "id": "sf-series_shape_change-a-s2-b-s1",
+        "category": "series_shape_change",
+        "status": "confirmed",
+        "summary": "Series \"alpha = 0.05\" is flat in A but not flat in B (range 1 exceeds the last-digit tolerance 0.005).",
+        "a_item_ids": [
+          "a-s2"
+        ],
+        "b_item_ids": [
+          "b-s1"
+        ],
+        "review_required": true
+      }
+    ]
+  },
+  "zero_threshold": {
+    "expected_y": 0.05,
+    "value_tolerance": 0.05,
+    "sampled_y": 0,
+    "result": {
+      "status": "retained",
+      "issue_types": [],
+      "matched_item_ids": [
+        "a-p1",
+        "a-s1"
+      ],
+      "rationale": "Project-curated plot check (not author-confirmed): expected a flat \"alpha = 0.05\" series near y=0.05 (value tolerance 0.05, flatness tolerance 0.05); observed y range 0 across 2 sampled points.",
+      "method": "rule",
+      "review_required": true
+    }
+  },
+  "semantic_override": {
+    "ruleB": "contradicted",
+    "withSemanticB": "retained"
+  },
+  "partial_usage": {
+    "usage": {
+      "prompt_tokens": 7
+    },
+    "usage_complete": true
+  }
+}

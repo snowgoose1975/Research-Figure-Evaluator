@@ -1,0 +1,43 @@
+{
+  "evidence_id": "T10-legacy-coverage-final",
+  "baseURL": "http://127.0.0.1:3000",
+  "runId": "1792629154544-bc6d1ac7",
+  "checks": [
+    {
+      "name": "legacy run opens by deep link",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "coverage panel renders",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "no undefined value in coverage panel",
+      "ok": true,
+      "detail": "WHAT WAS ACTUALLY CHECKED\nDetection coverage\n2/5 rule audits executed\n✓\nFact-by-fact comparison\nExecuted · 1 A facts · 1 B facts\n✓\nRelation-direction audit\nExecuted\n—\nCondition audit\nNOT EXECUTED\n\nA recorded no qualified facts, so condition comparison was not executed.\n\n—\nPlot-axis audit\nNOT EXECUTED\n\nA recorded no plots, so plot-axis and series-shape comparison was not executed.\n\n—\nSeries-shape audit\nNOT EXECUTED\n\nA recorded no plots, so plot-axis and series-shape comparison was not executed.\n\n"
+    },
+    {
+      "name": "plot-axis audit explicitly not executed",
+      "ok": true,
+      "detail": "WHAT WAS ACTUALLY CHECKED\nDetection coverage\n2/5 rule audits executed\n✓\nFact-by-fact comparison\nExecuted · 1 A facts · 1 B facts\n✓\nRelation-direction audit\nExecuted\n—\nCondition audit\nNOT EXECUTED\n\nA recorded no qualified facts, so condition comparison was not executed.\n\n—\nPlot-axis audit\nNOT EXECUTED\n\nA recorded no plots, so plot-axis and series-shape comparison was not executed.\n\n—\nSeries-shape audit\nNOT EXECUTED\n\nA recorded no plots, so plot-axis and series-shape comparison was not executed.\n\nNot covered: Unlabelled node and edge changes; Axis units, scales and series shapes; Precision digitization of plotted values; Semantic equivalence of paraphrased labels and conditions\n\nCoverage states which automatic checks ran. An empty finding list does not mean the figure is unchanged.\n\nScientif"
+    },
+    {
+      "name": "series-shape audit explicitly not executed",
+      "ok": true,
+      "detail": "WHAT WAS ACTUALLY CHECKED\nDetection coverage\n2/5 rule audits executed\n✓\nFact-by-fact comparison\nExecuted · 1 A facts · 1 B facts\n✓\nRelation-direction audit\nExecuted\n—\nCondition audit\nNOT EXECUTED\n\nA recorded no qualified facts, so condition comparison was not executed.\n\n—\nPlot-axis audit\nNOT EXECUTED\n\nA recorded no plots, so plot-axis and series-shape comparison was not executed.\n\n—\nSeries-shape audit\nNOT EXECUTED\n\nA recorded no plots, so plot-axis and series-shape comparison was not executed.\n\nNot covered: Unlabelled node and edge changes; Axis units, scales and series shapes; Precision digitization of plotted values; Semantic equivalence of paraphrased labels and conditions\n\nCoverage states which automatic checks ran. An empty finding list does not mean the figure is unchanged.\n\nScientif"
+    },
+    {
+      "name": "legacy markdown has no undefined",
+      "ok": true,
+      "detail": "# Figure Relay — scientific information recovery\n\nRun: 1792629154544-bc6d1ac7\nMode: LIVE MODEL RUN\nCreated: 2026-10-22T00:32:34.544Z\nModel: stub-model\nSchema: 0.2.0; prompts: reader-0.2.2\nStatus: completed\n\n## Keypoint evidence\n\n| Author statement | Reader A | Reader B | Observed stage | Evidence / rationale |\n|---|---|---|---|---|\n| Controlled checkpoint 1: Input promotes Output. | retained | retained | none | Controlled stub response. |\n| Controlled checkpoint 2: Input promotes Output. | retai"
+    },
+    {
+      "name": "legacy markdown falls back to matched-series count",
+      "ok": true,
+      "detail": "- Plot-axis audit: NOT EXECUTED (A plots: 0; B plots: 0; matched plots: 0).\n- Series-shape audit: NOT EXECUTED (matched series: 0). A recorded no plots, so plot-axis and series-shape comparison was not executed."
+    }
+  ],
+  "consoleErrors": []
+}

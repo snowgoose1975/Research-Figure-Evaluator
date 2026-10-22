@@ -1,0 +1,212 @@
+{
+  "evidence_id": "T09-boundary-probes-v1",
+  "generated_at": "2026-10-22T02:05:33.514Z",
+  "scope": "Offline probes against frozen fixtures, saved run memories, and an in-memory HTTP stub. No real model request, no saved-run modification.",
+  "source_run_id": "1792609657136-e85156a8",
+  "source_fixture": "data/fixtures/T09-scientific-cases.json",
+  "checks": [
+    {
+      "id": "F1a scientific rule contradiction survives semantic retained",
+      "expected": {
+        "status": "contradicted",
+        "method": "rule",
+        "precedence_noted": true
+      },
+      "actual": {
+        "status": "contradicted",
+        "method": "rule",
+        "precedence_noted": true
+      },
+      "pass": true
+    },
+    {
+      "id": "F1b scientific rule uncertainty survives semantic retained",
+      "expected": {
+        "status": "uncertain",
+        "method": "rule"
+      },
+      "actual": {
+        "status": "uncertain",
+        "method": "rule"
+      },
+      "pass": true
+    },
+    {
+      "id": "F2a duplicate A panel has no unique match",
+      "expected": {
+        "matched_plots": 0,
+        "matched_series": 0,
+        "confirmed_shape": 0,
+        "unmatched_a_has_key": true
+      },
+      "actual": {
+        "matched_plots": 0,
+        "matched_series": 0,
+        "confirmed_shape": 0,
+        "unmatched_a_has_key": true
+      },
+      "pass": true
+    },
+    {
+      "id": "F2b duplicate B panel has no unique match",
+      "expected": {
+        "matched_plots": 0,
+        "matched_series": 0,
+        "confirmed_shape": 0,
+        "unmatched_a_has_key": true
+      },
+      "actual": {
+        "matched_plots": 0,
+        "matched_series": 0,
+        "confirmed_shape": 0,
+        "unmatched_a_has_key": true
+      },
+      "pass": true
+    },
+    {
+      "id": "F2c duplicates on both sides have no unique match",
+      "expected": {
+        "matched_plots": 0,
+        "matched_series": 0,
+        "confirmed_shape": 0,
+        "unmatched_a_has_key": true,
+        "unmatched_b_has_key": true
+      },
+      "actual": {
+        "matched_plots": 0,
+        "matched_series": 0,
+        "confirmed_shape": 0,
+        "unmatched_a_has_key": true,
+        "unmatched_b_has_key": true
+      },
+      "pass": true
+    },
+    {
+      "id": "F3a real A y=0 is not retained against 0.05",
+      "expected": {
+        "status": "contradicted",
+        "issue_types": [
+          "value"
+        ]
+      },
+      "actual": {
+        "status": "contradicted",
+        "issue_types": [
+          "value"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F3b real B deviation is contradicted",
+      "expected": {
+        "status": "contradicted",
+        "issue_types": [
+          "value"
+        ]
+      },
+      "actual": {
+        "status": "contradicted",
+        "issue_types": [
+          "value"
+        ]
+      },
+      "pass": true
+    },
+    {
+      "id": "F3c 0.05 tolerance cannot distinguish zero from 0.05",
+      "expected": {
+        "status": "uncertain",
+        "has_reason": true
+      },
+      "actual": {
+        "status": "uncertain",
+        "has_reason": true
+      },
+      "pass": true
+    },
+    {
+      "id": "F3d check without frozen tolerance basis is uncertain",
+      "expected": {
+        "status": "uncertain",
+        "has_reason": true
+      },
+      "actual": {
+        "status": "uncertain",
+        "has_reason": true
+      },
+      "pass": true
+    },
+    {
+      "id": "F4a input-only usage is incomplete and not zero-filled",
+      "expected": {
+        "usage": {
+          "prompt_tokens": 7
+        },
+        "complete": false,
+        "attempt_usage": {
+          "prompt_tokens": 7
+        }
+      },
+      "actual": {
+        "usage": {
+          "prompt_tokens": 7
+        },
+        "complete": false,
+        "attempt_usage": {
+          "prompt_tokens": 7
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "F4b total-only usage is incomplete",
+      "expected": {
+        "usage": {
+          "total_tokens": 12
+        },
+        "complete": false,
+        "attempt_usage": {
+          "total_tokens": 12
+        }
+      },
+      "actual": {
+        "usage": {
+          "total_tokens": 12
+        },
+        "complete": false,
+        "attempt_usage": {
+          "total_tokens": 12
+        }
+      },
+      "pass": true
+    },
+    {
+      "id": "F4c input and output usage is complete",
+      "expected": {
+        "usage": {
+          "prompt_tokens": 7,
+          "completion_tokens": 3
+        },
+        "complete": true,
+        "attempt_usage": {
+          "prompt_tokens": 7,
+          "completion_tokens": 3
+        }
+      },
+      "actual": {
+        "usage": {
+          "prompt_tokens": 7,
+          "completion_tokens": 3
+        },
+        "complete": true,
+        "attempt_usage": {
+          "prompt_tokens": 7,
+          "completion_tokens": 3
+        }
+      },
+      "pass": true
+    }
+  ],
+  "pass": true
+}

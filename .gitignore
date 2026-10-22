@@ -1,0 +1,13 @@
+node_modules/
+.next/
+.next-dev/
+.next-build/
+coverage/
+*.tsbuildinfo
+.env*
+runs/
+artifacts/private/
+artifacts/browser/
+playwright-report/
+test-results/
+npm-debug.log*

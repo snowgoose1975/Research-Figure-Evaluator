@@ -1,0 +1,8 @@
+# Purpose: local evaluation model for Figure Relay.
+# Ollama's default 4096-token context cannot hold an image, the full JSON schema
+# and a complete memory record. Create this derived model once:
+#   ollama pull qwen3-vl:4b-instruct
+#   ollama create qwen3-vl:4b-instruct-16k -f scripts/Modelfile.qwen3-vl-4b-instruct-16k
+# The app defaults to this name with RFE_MAX_OUTPUT_TOKENS=10000.
+FROM qwen3-vl:4b-instruct
+PARAMETER num_ctx 16384

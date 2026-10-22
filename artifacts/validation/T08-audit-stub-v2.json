@@ -1,0 +1,398 @@
+{
+  "evidence_id": "T08-audit-stub-v2",
+  "generated_at": "2026-10-22T01:59:58.308Z",
+  "scope": "Controlled local HTTP stub exercising the real pipeline and audit persistence: transient retry, schema repair, and output-length failure. It is not a real-model accuracy result.",
+  "primary_run": {
+    "run_id": "1792634397291-60381724",
+    "status": "completed",
+    "calls": 5,
+    "attempts": [
+      {
+        "index": 1,
+        "stage": "reading_a",
+        "phase": "initial",
+        "started_at": "2026-10-22T01:59:57.305Z",
+        "request_id": null,
+        "model": null,
+        "usage": null,
+        "finish_reason": null,
+        "http_status": 500,
+        "outcome": "failure",
+        "validation": "not_run",
+        "error_code": "temporary_service_error",
+        "ended_at": "2026-10-22T01:59:57.312Z",
+        "duration_ms": 7
+      },
+      {
+        "index": 2,
+        "stage": "reading_a",
+        "phase": "initial",
+        "started_at": "2026-10-22T01:59:57.464Z",
+        "request_id": "stub-request-nwncfe",
+        "model": "stub-model",
+        "usage": {
+          "prompt_tokens": 10,
+          "completion_tokens": 2,
+          "total_tokens": 12
+        },
+        "finish_reason": "stop",
+        "http_status": 200,
+        "outcome": "failure",
+        "validation": "schema_failed",
+        "error_code": "schema_invalid",
+        "ended_at": "2026-10-22T01:59:57.482Z",
+        "duration_ms": 18
+      },
+      {
+        "index": 3,
+        "stage": "reading_a",
+        "phase": "repair",
+        "started_at": "2026-10-22T01:59:57.486Z",
+        "request_id": "stub-request-s8cpgz",
+        "model": "stub-model",
+        "usage": {
+          "prompt_tokens": 100,
+          "completion_tokens": 20,
+          "total_tokens": 120
+        },
+        "finish_reason": "stop",
+        "http_status": 200,
+        "outcome": "success",
+        "validation": "semantic_passed",
+        "error_code": null,
+        "ended_at": "2026-10-22T01:59:57.497Z",
+        "duration_ms": 11
+      },
+      {
+        "index": 1,
+        "stage": "reading_b",
+        "phase": "initial",
+        "started_at": "2026-10-22T01:59:57.762Z",
+        "request_id": "stub-request-xy7an6",
+        "model": "stub-model",
+        "usage": {
+          "prompt_tokens": 100,
+          "completion_tokens": 20,
+          "total_tokens": 120
+        },
+        "finish_reason": "stop",
+        "http_status": 200,
+        "outcome": "success",
+        "validation": "semantic_passed",
+        "error_code": null,
+        "ended_at": "2026-10-22T01:59:57.778Z",
+        "duration_ms": 16
+      },
+      {
+        "index": 1,
+        "stage": "evaluating",
+        "phase": "initial",
+        "started_at": "2026-10-22T01:59:57.786Z",
+        "request_id": "stub-request-hgimry",
+        "model": "stub-model",
+        "usage": {
+          "prompt_tokens": 80,
+          "completion_tokens": 30,
+          "total_tokens": 110
+        },
+        "finish_reason": "stop",
+        "http_status": 200,
+        "outcome": "success",
+        "validation": "schema_passed",
+        "error_code": null,
+        "ended_at": "2026-10-22T01:59:57.794Z",
+        "duration_ms": 8
+      }
+    ],
+    "stages": {
+      "reading_a": {
+        "request_id": "stub-request-s8cpgz",
+        "model": "stub-model",
+        "latency_ms": 36,
+        "usage": {
+          "prompt_tokens": 110,
+          "completion_tokens": 22,
+          "total_tokens": 132
+        },
+        "usage_complete": false,
+        "attempts": 3,
+        "prompt_version": "reader-0.2.2",
+        "attempts_detail": [
+          {
+            "index": 1,
+            "stage": "reading_a",
+            "phase": "initial",
+            "started_at": "2026-10-22T01:59:57.305Z",
+            "request_id": null,
+            "model": null,
+            "usage": null,
+            "finish_reason": null,
+            "http_status": 500,
+            "outcome": "failure",
+            "validation": "not_run",
+            "error_code": "temporary_service_error",
+            "ended_at": "2026-10-22T01:59:57.312Z",
+            "duration_ms": 7
+          },
+          {
+            "index": 2,
+            "stage": "reading_a",
+            "phase": "initial",
+            "started_at": "2026-10-22T01:59:57.464Z",
+            "request_id": "stub-request-nwncfe",
+            "model": "stub-model",
+            "usage": {
+              "prompt_tokens": 10,
+              "completion_tokens": 2,
+              "total_tokens": 12
+            },
+            "finish_reason": "stop",
+            "http_status": 200,
+            "outcome": "failure",
+            "validation": "schema_failed",
+            "error_code": "schema_invalid",
+            "ended_at": "2026-10-22T01:59:57.482Z",
+            "duration_ms": 18
+          },
+          {
+            "index": 3,
+            "stage": "reading_a",
+            "phase": "repair",
+            "started_at": "2026-10-22T01:59:57.486Z",
+            "request_id": "stub-request-s8cpgz",
+            "model": "stub-model",
+            "usage": {
+              "prompt_tokens": 100,
+              "completion_tokens": 20,
+              "total_tokens": 120
+            },
+            "finish_reason": "stop",
+            "http_status": 200,
+            "outcome": "success",
+            "validation": "semantic_passed",
+            "error_code": null,
+            "ended_at": "2026-10-22T01:59:57.497Z",
+            "duration_ms": 11
+          }
+        ],
+        "repairs": 1
+      },
+      "reading_b": {
+        "request_id": "stub-request-xy7an6",
+        "model": "stub-model",
+        "latency_ms": 16,
+        "usage": {
+          "prompt_tokens": 100,
+          "completion_tokens": 20,
+          "total_tokens": 120
+        },
+        "usage_complete": true,
+        "attempts": 1,
+        "prompt_version": "reader-0.2.2",
+        "attempts_detail": [
+          {
+            "index": 1,
+            "stage": "reading_b",
+            "phase": "initial",
+            "started_at": "2026-10-22T01:59:57.762Z",
+            "request_id": "stub-request-xy7an6",
+            "model": "stub-model",
+            "usage": {
+              "prompt_tokens": 100,
+              "completion_tokens": 20,
+              "total_tokens": 120
+            },
+            "finish_reason": "stop",
+            "http_status": 200,
+            "outcome": "success",
+            "validation": "semantic_passed",
+            "error_code": null,
+            "ended_at": "2026-10-22T01:59:57.778Z",
+            "duration_ms": 16
+          }
+        ],
+        "repairs": 0
+      },
+      "evaluating": {
+        "request_id": "stub-request-hgimry",
+        "model": "stub-model",
+        "latency_ms": 8,
+        "usage": {
+          "prompt_tokens": 80,
+          "completion_tokens": 30,
+          "total_tokens": 110
+        },
+        "usage_complete": true,
+        "attempts": 1,
+        "prompt_version": "reader-0.2.2",
+        "attempts_detail": [
+          {
+            "index": 1,
+            "stage": "evaluating",
+            "phase": "initial",
+            "started_at": "2026-10-22T01:59:57.786Z",
+            "request_id": "stub-request-hgimry",
+            "model": "stub-model",
+            "usage": {
+              "prompt_tokens": 80,
+              "completion_tokens": 30,
+              "total_tokens": 110
+            },
+            "finish_reason": "stop",
+            "http_status": 200,
+            "outcome": "success",
+            "validation": "schema_passed",
+            "error_code": null,
+            "ended_at": "2026-10-22T01:59:57.794Z",
+            "duration_ms": 8
+          }
+        ]
+      }
+    },
+    "config_snapshot": {
+      "model": "stub-model",
+      "protocol": "chat",
+      "timeout_ms": 300000,
+      "max_output_tokens": 1000,
+      "base_url_host": "127.0.0.1:61260",
+      "model_digest": "stub-digest-not-a-real-model",
+      "num_ctx": 16384
+    }
+  },
+  "length_run": {
+    "run_id": "1792634398032-6fb24c30",
+    "status": "failed",
+    "calls": 1,
+    "error": {
+      "code": "incomplete",
+      "message": "Model output reached the token limit before the response was complete.",
+      "stage": "reading_a"
+    },
+    "attempts": [
+      {
+        "index": 1,
+        "stage": "reading_a",
+        "phase": "initial",
+        "started_at": "2026-10-22T01:59:58.043Z",
+        "request_id": "stub-request-mvms5x",
+        "model": "stub-model",
+        "usage": {
+          "prompt_tokens": 120,
+          "completion_tokens": 1000,
+          "total_tokens": 1120
+        },
+        "finish_reason": "length",
+        "http_status": 200,
+        "outcome": "failure",
+        "validation": "not_run",
+        "error_code": "incomplete",
+        "ended_at": "2026-10-22T01:59:58.057Z",
+        "duration_ms": 14
+      }
+    ],
+    "stages": {
+      "reading_a": {
+        "request_id": "stub-request-mvms5x",
+        "model": "stub-model",
+        "latency_ms": 14,
+        "usage": {
+          "prompt_tokens": 120,
+          "completion_tokens": 1000,
+          "total_tokens": 1120
+        },
+        "usage_complete": true,
+        "attempts": 1,
+        "prompt_version": "reader-0.2.2",
+        "attempts_detail": [
+          {
+            "index": 1,
+            "stage": "reading_a",
+            "phase": "initial",
+            "started_at": "2026-10-22T01:59:58.043Z",
+            "request_id": "stub-request-mvms5x",
+            "model": "stub-model",
+            "usage": {
+              "prompt_tokens": 120,
+              "completion_tokens": 1000,
+              "total_tokens": 1120
+            },
+            "finish_reason": "length",
+            "http_status": 200,
+            "outcome": "failure",
+            "validation": "not_run",
+            "error_code": "incomplete",
+            "ended_at": "2026-10-22T01:59:58.057Z",
+            "duration_ms": 14
+          }
+        ]
+      }
+    }
+  },
+  "checks": [
+    {
+      "name": "primary run completed after transient and schema failures",
+      "pass": true
+    },
+    {
+      "name": "five primary HTTP attempts were audited",
+      "pass": true
+    },
+    {
+      "name": "temporary 500 is recorded before the retry",
+      "pass": true
+    },
+    {
+      "name": "schema-invalid initial call and repair are separate records",
+      "pass": true
+    },
+    {
+      "name": "stage indexes restart per stage and remain traceable",
+      "pass": true
+    },
+    {
+      "name": "every primary record has the frozen audit key set",
+      "pass": true
+    },
+    {
+      "name": "successful calls retain request IDs and model; the bare 500 leaves them null",
+      "pass": true
+    },
+    {
+      "name": "usage and finish reason are retained on successful calls",
+      "pass": true
+    },
+    {
+      "name": "failed retry has no fabricated usage",
+      "pass": true
+    },
+    {
+      "name": "stage metadata counts the retry and marks usage incomplete",
+      "pass": true
+    },
+    {
+      "name": "config snapshot records model digest and context length",
+      "pass": true
+    },
+    {
+      "name": "no API key, authorization header or image bytes are persisted",
+      "pass": true
+    },
+    {
+      "name": "length-limited run fails at Reader A",
+      "pass": true
+    },
+    {
+      "name": "length failure is persisted as one attempt",
+      "pass": true
+    },
+    {
+      "name": "length attempt keeps finish_reason and complete usage",
+      "pass": true
+    },
+    {
+      "name": "length failure JSONL contains no secret or image bytes",
+      "pass": true
+    }
+  ],
+  "pass": true
+}
