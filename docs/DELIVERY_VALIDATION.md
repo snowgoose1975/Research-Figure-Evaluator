@@ -1,5 +1,7 @@
 # Delivery validation · 2026-10-22
 
+T21（2026-10-23）访客交互增量：移除连接语法编辑器、0/N覆盖计数，多行普通语言输入；A/B摘要和引用优先，技术覆盖折叠，待核验/重建警告保留。最终受控浏览器17/17（含新旧报告回放/手机极小图关闭），旧结构化报告兼容6/6，真实公网iframe新表单检查通过，无新图提交或模型调用。模型协议/原8/12不变。worker空闲更新，接单恢复，Sites父页v7不改。证据T21-*，详情见`handoffs/T21-visitor-flow.md`。
+
 T20当前增量：22文件143测试、typecheck/lint/build通过；独立A/B角色prompt reader-0.2.4，renderer-0.2.3去摘要、避让/分车道，evidence-0.3.1显式连接检查与重复边分离。受控访客UI6/6、本机浏览器19/19、已发布v7公网iframe检查通过。1次同图开发live完成123秒，A/B摘要不同，但模型仍存在箭头误读、facts为空、新重建1项unsupported；不代表准确率提高，也不改固定协议8/12。原私有A的离线重建旧6警告降0只证明特定几何修复，不是所有输入均无警告。新证据及限制见 `handoffs/T20-acceptance-fixes.md` 和 `T20-*.json`。下文为历史阶段记录。
 
 T16增量（2026-10-22）：机主历史全量搜索/分页、9041工作台入口、访客origin内IndexedDB历史已部署至稳定站v4（version `appgver_132cff8c1f308191955a4fe9af33b429`）。全量owner history API/UI搜索并打开真实完成run 7/7；访客桥接回放10/10。综合访客浏览器测试在已发布站点进行，12/12通过：用真实run报告驱动UI，stub worker模拟2次HTTP 502后恢复，验证只POST一次、IndexedDB保存、搜索、刷新、断开worker后离线打开、删除、原图/文件名排除及能力ID清理，见`T16-visitor-history-resilience-v2.json`及两张截图。该测试使用真实production page与真实报告数据，但worker流量被stub拦截；没有真实模型调用或隧道请求，不作为实际公网传输证明。真实访客公网材料图只提交一次，run `1792674795248-f18f993e`完成，不计入固定协议8/12；live证据记录13次HTTP 502且没有保存记录ID，旧选择器也不兼容CSS Modules，因此worker到IndexedDB的真实闭环尚未由真实请求验收，失败证据`T16-visitor-history-e2e-v4.json`保留。新增有限状态GET重试的独立测试5/5通过，见`T16-poll-retry-smoke-v2.json`。本轮typecheck、lint、19个测试文件/125项（`--maxWorkers=4`）、生产构建全部通过；首次默认并行全测有一项5秒超时，降并行后通过。发现并重启了引用旧Next构建、静态chunk返回500的本机网页进程；此前无活动任务，重启后owner UI检查通过。最后一次隧道检查为online、frameable、accepting；地址可能轮换。访客历史仅当前浏览器本地存储，不提供服务端同步。

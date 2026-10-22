@@ -17,7 +17,7 @@ A research-software project built for the 2026 Open Scientific Intelligence Hack
 
 The report separates possible first-read omissions from reconstruction differences and second-read changes. It is a review aid, not an overall figure-quality score.
 
-For diagrams, optional author-entered connection checks (`Source -> Target`) compare explicit endpoints and directions against the saved extractions. Duplicate records and connections recorded in both directions are listed separately for inspection. These checks verify recorded content, not the source figure or every clause of an unrestricted natural-language statement.
+Upload a figure and describe three to five intended messages in ordinary language. The report shows the two AI readings and their cited records; technical checks are available in a collapsed section. No connection syntax is required. Existing structured checks remain supported by the evaluation engine for reproducible experiments; they verify recorded content, not the source figure or every clause of an unrestricted natural-language statement.
 
 ## Try the public demo
 

@@ -1,0 +1,56 @@
+{
+  "checks": [
+    {
+      "name": "three plain-language multiline boxes, no connection editor",
+      "pass": true
+    },
+    {
+      "name": "no dead remove controls at minimum",
+      "pass": true
+    },
+    {
+      "name": "bounded to five messages",
+      "pass": true
+    },
+    {
+      "name": "removal preserves adjacent message box",
+      "pass": true
+    },
+    {
+      "name": "consent required",
+      "pass": true
+    },
+    {
+      "name": "exactly one plain text submission, no hidden atoms",
+      "pass": true
+    },
+    {
+      "name": "no coverage ratio anywhere in rendered report",
+      "pass": true
+    },
+    {
+      "name": "both summaries immediately visible",
+      "pass": true
+    },
+    {
+      "name": "uncertainty and rendering gap remain visible",
+      "pass": true
+    },
+    {
+      "name": "technical checks folded by default",
+      "pass": true
+    },
+    {
+      "name": "technical audit still accessible",
+      "pass": true
+    },
+    {
+      "name": "mobile has no horizontal overflow",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "controlled_stub": true,
+  "model_calls": 0,
+  "public_model_submission": false
+}

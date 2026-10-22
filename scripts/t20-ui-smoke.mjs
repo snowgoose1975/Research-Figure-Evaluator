@@ -23,14 +23,13 @@ const checks = []; const check = (name, pass) => { checks.push({ name, pass: Boo
 try {
   await page.goto(origin, { waitUntil: 'networkidle' });
   await page.locator('input[type=file]').setInputFiles({ name: 'public-test.png', mimeType: 'image/png', buffer: Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+cLo0AAAAASUVORK5CYII=', 'base64') });
-  for (let i = 0; i < 3; i++) await page.locator('#keypoints .keypoint input').nth(i).fill(`Expected statement ${i + 1}`);
-  await page.getByText('Add explicit connection checks (optional)', { exact: true }).first().click();
-  await page.getByLabel('Optional explicit connection checks').first().fill('Alpha -> Beta\nAlpha | inhibits | Gamma');
-  await page.locator('#consent').check(); await page.getByRole('button', { name: 'Agree and submit figure' }).click();
-  await page.getByText('Model: CONTROLLED UI STUB — not inference', { exact: false }).waitFor();
+  for (let i = 0; i < 3; i++) await page.getByRole('textbox', { name: 'Expected scientific statement' }).nth(i).fill(`Expected statement ${i + 1}`);
+  await page.locator('#consent').check(); await page.locator('#submit').click();
+  await page.getByText('1. Compare the two AI readings', { exact: true }).waitFor();
   check('one submission only', posts === 1);
-  check('author atoms transmitted without changing ordinary text', payload.keypoints.length === 3 && payload.keypoints[0].record_checks.length === 2 && payload.keypoints[0].record_checks[1].predicate === 'inhibits' && payload.keypoints[0].claim === null);
-  check('persisted coverage shown', await page.getByText(/1\/3 author statements have deterministic record checks/).count() === 1);
+  check('ordinary text transmitted without requiring author atoms', payload.keypoints.length === 3 && !payload.keypoints.some(point => point.record_checks) && payload.keypoints[0].claim === null);
+  check('coverage ratio removed', await page.getByText(/1\/3 author statements have deterministic record checks/).count() === 0);
+  await page.getByText('Technical checks and coverage', { exact: true }).click();
   check('duplicates identified separately', await page.getByText(/duplicate/i).count() > 0);
   check('explicit connection scope visible', await page.getByText(/only these connections are checked/).count() > 0);
   check('no page errors', errors.length === 0);
