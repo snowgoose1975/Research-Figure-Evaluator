@@ -4,14 +4,14 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import os from "node:os";
 import { z } from "zod";
-import { IntentSetSchema } from "../../src/lib/schemas";
+import { IntentSetSchema, RecordCheckSchema } from "../../src/lib/schemas";
 import { normalizeImage } from "../../src/lib/pipeline/images";
 import { ServiceQueue, QueueError } from "./queue";
 import { executeLocal, readiness, releaseModel, type ServiceInput } from "./executor";
 
 const folder = path.dirname(fileURLToPath(import.meta.url));
 const stateFile = path.resolve("runs/service-control/state.json");
-const Input = z.object({ image_base64: z.string().min(1).max(14_000_000), keypoints: z.array(z.object({ id: z.string().min(1).max(40), text: z.string().min(3).max(1200), claim: z.null(), author_confirmed: z.literal(true) }).strict()).min(3).max(5), consent: z.literal(true) }).strict();
+const Input = z.object({ image_base64: z.string().min(1).max(14_000_000), keypoints: z.array(z.object({ id: z.string().min(1).max(40), text: z.string().min(3).max(1200), claim: z.null(), author_confirmed: z.literal(true), record_checks: z.array(RecordCheckSchema).max(12).optional() }).strict()).min(3).max(5), consent: z.literal(true) }).strict();
 const CSP = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'";
 const PUBLIC_FRAME_CSP = CSP.replace("frame-ancestors 'none'", "frame-ancestors 'self' https://figure-relay.chicchair5.chatgpt.site");
 

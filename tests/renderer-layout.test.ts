@@ -95,7 +95,7 @@ describe("renderer semantic layout", () => {
     expect(result.unsupported_item_ids).toEqual([]);
   });
 
-  it("marks long, overlapping relations when lines cross intervening nodes", async () => {
+  it("routes long relations around intervening nodes and separates reverse edges", async () => {
     const input = positionedMechanism([0.1, 0.35, 0.6, 0.85].map(x => ({ x, y: 0.5 })));
     input.graph.relations = [
       { id: "edge-forward", source_id: "p0", target_id: "p3", kind: "flows_to", direction: "directed", line_style: "solid", evidence_status: "asserted", label: "forward" },
@@ -105,10 +105,11 @@ describe("renderer semantic layout", () => {
     const result = await renderMemory(input);
 
     expect(result.rendered_item_ids).toEqual(expect.arrayContaining(["edge-forward", "edge-reverse"]));
-    expect(result.unsupported_item_ids).toEqual(expect.arrayContaining(["edge-forward", "edge-reverse"]));
-    expect(result.warnings.some(warning => warning.includes("edge-forward") && warning.includes("crosses non-endpoint node"))).toBe(true);
-    expect(result.warnings.some(warning => warning.includes("edge-reverse") && warning.includes("crosses non-endpoint node"))).toBe(true);
-    expect(result.warnings.some(warning => warning.includes("share this endpoint pair"))).toBe(true);
-    expect(result.structural_audit).toBe("incomplete");
+    expect(result.unsupported_item_ids).not.toContain("edge-forward");
+    expect(result.unsupported_item_ids).not.toContain("edge-reverse");
+    const forward = result.svg.match(/<g data-item-id="edge-forward">([\s\S]*?)<\/g>/)?.[1] ?? "";
+    const reverse = result.svg.match(/<g data-item-id="edge-reverse">([\s\S]*?)<\/g>/)?.[1] ?? "";
+    expect(forward.match(/<path d="([^"]+)"/)?.[1]).not.toBe(reverse.match(/<path d="([^"]+)"/)?.[1]);
+    expect(result.structural_audit).toBe("complete");
   });
 });

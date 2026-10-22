@@ -4,6 +4,7 @@ import { ChangeEvent, FormEvent, useCallback, useEffect, useMemo, useState } fro
 import Image from "next/image";
 import type { ExampleSummary, EvaluationReport, Keypoint, MemoryRecord, RunHistorySummary, RunRequest, RunSnapshot, ServiceStatus, StageRecord } from "@/lib/schemas";
 import { buildReviewQueue } from "@/lib/evaluation/review";
+import { GraphRecordWarnings } from "@/components/graph-record-warnings";
 
 const labels: Record<string, string> = { physics: "Physics", materials: "Materials", mathematics: "Mathematics", other: "Other", mechanism: "Mechanism", structure: "Structure", plot: "Analysis plot", geometry: "Geometry", mixed: "Mixed" };
 const emptyStatus: ServiceStatus = { configured: false, model: null, protocol: "responses", base_url_host: "not configured", active_run_id: null, limits: { imageBytes: 10485760, imagePixels: 25000000, nodes: 96, relations: 160, facts: 80 } };
@@ -289,6 +290,9 @@ function Judgment({ label, judgment }: { label: string; judgment: EvaluationRepo
   return <div className="judgment-cell"><span>{label}</span><div><Badge tone={tone}>{statusText}</Badge><small>{judgment.method.replaceAll("_", " ")}{judgment.review_required ? " · review" : ""}{judgment.issue_types.length ? " · " + judgment.issue_types.join(", ") : ""}</small></div><details className="review-evidence"><summary>Evidence audit · {audit?.status || (legacySemantic ? "legacy/unverified" : "unavailable")}</summary>{audit ? <><p>Evaluator requested: {audit.requested_status} · audit status: {audit.status}</p>{audit.reasons.length > 0 ? <ul>{audit.reasons.map((reason, index) => <li key={index}>{reason}</li>)}</ul> : <p>No audit reason recorded.</p>}{audit.citations.length > 0 ? <ul>{audit.citations.map(citation => <li key={citation.id}><code>{citation.id} · {citation.type}</code><span>{citation.text}</span></li>)}</ul> : <p>No citation returned. Absence of a citation does not establish that a reader missed the item.</p>}</> : <p>{legacySemantic ? "Legacy semantic judgment without evidence_audit; treat this status as an unverified suggestion." : "Evidence audit was not included in this report."}</p>}</details></div>;
 }
 function GraphAuditPanel({ report }: { report: EvaluationReport }) {
+  return <><GraphRecordWarnings audit={report.graph_audit}/><GraphAuditDetails report={report}/></>;
+}
+function GraphAuditDetails({ report }: { report: EvaluationReport }) {
   const audit = report.graph_audit;
   if (!audit) return <div className="coverage-panel legacy-coverage"><strong>Graph audit unavailable</strong><p>This report has no graph_audit field (legacy/unavailable). No graph difference can be inferred.</p></div>;
   const edgeText = (edge: NonNullable<EvaluationReport["graph_audit"]>["added_edges"][number]) => edge.source + (edge.direction === "directed" ? " → " : edge.direction === "undirected" ? " ↔ " : " — ") + edge.target + " · " + edge.kind + " · " + edge.line_style + " · evidence: " + edge.evidence_status;

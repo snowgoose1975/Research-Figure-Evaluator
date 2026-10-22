@@ -15,7 +15,7 @@ import {
   type ModelResult,
   type ReaderImageInput,
 } from "../schemas";
-import { DIRECT_PROMPT, JUDGE_PROMPT, PROMPT_VERSION, READER_PROMPT } from "../prompts";
+import { DIRECT_PROMPT, JUDGE_PROMPT, PROMPT_VERSION, READER_A_PROMPT, READER_B_PROMPT } from "../prompts";
 
 export class ModelAdapterError extends Error {
   constructor(readonly code: string, message: string, readonly audit?: ModelCallMeta, readonly detail?: unknown) {
@@ -308,12 +308,12 @@ function repairDetail(detail: unknown): string {
   if (detail instanceof z.ZodError) return repairNote(detail, null);
   return repairNote(null, null);
 }
-async function readWithSemanticCheck(image: ReaderImageInput, config: ModelConfig, text: string, audit?: ModelAuditContext): Promise<ModelResult<MemoryRecord>> {
+async function readWithSemanticCheck(image: ReaderImageInput, config: ModelConfig, text: string, readerPrompt: string, audit?: ModelAuditContext): Promise<ModelResult<MemoryRecord>> {
   let promptText = text;
   let priorMetas: ModelCallMeta[] = [];
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
-      const result = await call(config, { schema: MemoryOutputSchema, stage: "reader", prompt: READER_PROMPT, image, text: promptText }, { audit, phase: attempt === 0 ? "initial" : "repair", validate: validateMemory });
+      const result = await call(config, { schema: MemoryOutputSchema, stage: "reader", prompt: readerPrompt, image, text: promptText }, { audit, phase: attempt === 0 ? "initial" : "repair", validate: validateMemory });
       const combined = combineModelMetas([...priorMetas, result.meta]);
       if (!combined) throw new ModelAdapterError("internal_error", "Model call metadata was not recorded.");
       return { value: result.value, meta: { ...combined, repairs: attempt } };
@@ -333,11 +333,11 @@ async function readWithSemanticCheck(image: ReaderImageInput, config: ModelConfi
   throw new ModelAdapterError("semantic_invalid", "Model memory contains invalid references or semantic structure.", combineModelMetas(priorMetas) ?? undefined);
 }
 export function readOriginal(image: ReaderImageInput, config: ModelConfig, audit?: ModelAuditContext): Promise<ModelResult<MemoryRecord>> {
-  return readWithSemanticCheck(image, config, "Read the supplied image and return the memory JSON.", audit);
+  return readWithSemanticCheck(image, config, "Read this original figure image and return the memory JSON.", READER_A_PROMPT, audit);
 }
 
 export function readReconstruction(image: ReaderImageInput, config: ModelConfig, audit?: ModelAuditContext): Promise<ModelResult<MemoryRecord>> {
-  return readOriginal(image, config, audit);
+  return readWithSemanticCheck(image, config, "Read this standalone reconstruction image and return the memory JSON.", READER_B_PROMPT, audit);
 }
 
 export function judgeKeypoints(input: JudgeInput, config: ModelConfig, audit?: ModelAuditContext): Promise<ModelResult<JudgeOutput>> {

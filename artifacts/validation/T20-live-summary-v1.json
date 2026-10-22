@@ -1,0 +1,17 @@
+{
+  "run_id": "1792682976529-29804c8a",
+  "protocol": "bounded development check; excluded from original 8/12",
+  "source": "private developer-supplied figure; image and content not exported",
+  "status": "completed",
+  "duration_ms": 123066,
+  "prompt": "reader-0.2.4",
+  "renderer": "0.2.3",
+  "evaluation": "evidence-0.3.1",
+  "reader_a_facts": 0,
+  "reader_b_facts": 0,
+  "identical_summaries": false,
+  "render_warnings": 1,
+  "unsupported_items": 1,
+  "error_code": null,
+  "no_accuracy_claim": true
+}

@@ -11,11 +11,13 @@ A research-software project built for the 2026 Open Scientific Intelligence Hack
 ## How it works
 
 1. **Set the intended message.** The author records three to five points a reader should take away.
-2. **Read the original.** Reader A receives the figure image and creates a structured account. The author’s checkpoints are withheld from the reader.
-3. **Reconstruct from memory.** A deterministic renderer turns Reader A’s saved account into an approximate diagram.
-4. **Read again and compare.** A separate image-only request reads the reconstruction. The report compares the two reader accounts with the intended points and marks areas that were not checked.
+2. **Read the original.** Reader A uses a fixed prompt for original scientific figures and creates structured observations. The author’s checkpoints are withheld from the reader.
+3. **Reconstruct from memory.** A deterministic renderer turns Reader A’s saved observations into an approximate diagram, without printing A’s prose summary into the image.
+4. **Read again and compare.** Reader B uses its own fixed prompt in a separate image-only request. The report compares the two reader accounts with the intended points and marks areas that were not checked.
 
 The report separates possible first-read omissions from reconstruction differences and second-read changes. It is a review aid, not an overall figure-quality score.
+
+For diagrams, optional author-entered connection checks (`Source -> Target`) compare explicit endpoints and directions against the saved extractions. Duplicate records and connections recorded in both directions are listed separately for inspection. These checks verify recorded content, not the source figure or every clause of an unrestricted natural-language statement.
 
 ## Try the public demo
 

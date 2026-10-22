@@ -2,12 +2,13 @@ import { readFileSync } from "node:fs";
 import type { AddressInfo } from "node:net";
 import { afterEach, describe, expect, it } from "vitest";
 import { startService } from "../adapters/local-service/server";
+import type { ServiceInput } from "../adapters/local-service/executor";
 
 const image = readFileSync("public/published/materials-lattice-design.png").toString("base64");
 const input = { image_base64: image, keypoints: [1, 2, 3].map(i => ({ id: `k${i}`, text: `Expected message ${i}`, claim: null, author_confirmed: true })), consent: true };
 const services: Awaited<ReturnType<typeof startService>>[] = [];
 afterEach(async () => { await Promise.all(services.splice(0).map(service => service.close())); });
-async function setup(execute = async () => ({ report: { safe: true } }), resourcesOk = () => true) {
+async function setup(execute: (input: ServiceInput) => Promise<unknown> = async () => ({ report: { safe: true } }), resourcesOk = () => true) {
   const service = await startService({ publicPort: 0, adminPort: 0, persist: false, execute, release: async () => {}, ready: async () => true, resourcesOk });
   services.push(service);
   const pub = `http://127.0.0.1:${(service.publicServer.address() as AddressInfo).port}`;
@@ -58,6 +59,17 @@ describe("public local worker boundaries", () => {
     const status = await (await fetch(pub + "/status")).json();
     expect(JSON.stringify(status)).not.toContain(admitted.id);
     expect(JSON.stringify(job)).not.toContain("image_base64");
+  });
+  it("accepts bounded explicit record checks and forwards them only with the author keypoints", async () => {
+    let received: unknown;
+    const { pub } = await setup(async payload => { received = payload; return { report: { safe: true } }; });
+    const recordCheck = { subject: "Source label", predicate: "flows_to", object: "Target label", qualifiers: [], certainty: null };
+    const payload = { ...input, keypoints: input.keypoints.map((keypoint, index) => index === 0 ? { ...keypoint, record_checks: [recordCheck] } : keypoint) };
+    expect((await post(pub, "/jobs", payload)).status).toBe(202);
+    await new Promise(resolve => setTimeout(resolve, 0));
+    expect(received).toEqual(expect.objectContaining({ keypoints: expect.arrayContaining([expect.objectContaining({ claim: null, record_checks: [recordCheck] })]) }));
+    const tooMany = { ...input, keypoints: input.keypoints.map((keypoint, index) => index === 0 ? { ...keypoint, record_checks: Array.from({ length: 13 }, (_, i) => ({ ...recordCheck, object: `Target ${i}` })) } : keypoint) };
+    expect((await post(pub, "/jobs", tooMany)).status).toBe(400);
   });
   it("local pause rejects admission, resume restores it without restarting the computer", async () => {
     const { pub, admin } = await setup();

@@ -11,7 +11,7 @@ const label = assertEvidenceLabel(evidenceLabel("T12-public-v1"));
 const destination = path.resolve("artifacts/web-preview", label);
 if (existsSync(destination)) throw new Error("Static output already exists. Choose a new --label; no output is overwritten.");
 const scratch = mkdtempSync(path.join(os.tmpdir(), "figure-relay-public-"));
-const sources = ["src/app/page.tsx", "src/app/layout.tsx", "src/app/icon.svg", "src/app/globals.css", "src/components/entry.module.css", "src/components/visitor-history.ts", "src/components/visitor-endpoint.ts", "src/lib/examples/case-studies.ts", "src/lib/schemas/index.ts", "public/published", "public/case-studies"];
+const sources = ["src/app/page.tsx", "src/app/layout.tsx", "src/app/icon.svg", "src/app/globals.css", "src/components/entry.module.css", "src/components/visitor-history.ts", "src/components/visitor-endpoint.ts", "src/components/graph-record-warnings.tsx", "src/lib/examples/case-studies.ts", "src/lib/schemas/index.ts", "public/published", "public/case-studies"];
 for (const source of sources) {
   const target = path.join(scratch, source);
   mkdirSync(path.dirname(target), { recursive: true });

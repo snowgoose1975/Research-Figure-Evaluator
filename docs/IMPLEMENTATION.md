@@ -1,5 +1,15 @@
 # 实现合同 v0.2：跨领域科研图
 
+## T20 已授权紧急修复（2026-10-22）
+
+玉米确认立即解决核查发现的问题并要求A/B各自通用prompt。本批：reader-0.2.4（A原图/B重建图分别固定角色，均image-only、不读作者答案），renderer-0.2.3（不给B附加A摘要，避让箭头，保留真实可见标签/图示，不改A记忆），evidence-0.3.1。旧报告、旧8/12统计和公开历史回放不重写。仅1次用户图开发live验证，不因失败重复；只记录检查结果，不据单次运行宣称准确率改善。
+
+可选作者原子连接检查：Keypoint新增`record_checks?: Claim[]`，最多12条，只支持flows_to/promotes/inhibits，qualifiers为空；作者显式填写`Source -> Target`或`Source | inhibits | Target`，每行一条，与原文一起确认。禁止从自由文本暗中推断标准答案，不将检查项送给A/B/绘图器。仅以唯一端点标签/alias精确规范化匹配提取图；重复标签、未知方向或双方方向并存均待核验。缺少显式边只标提取未记录，不证明原图缺箭头。多项按证据保守合并，输出逐项可读依据。
+
+图审计将语义连接集合与重复记录分开：added/removed不按重复数量制造新连接；新增可选duplicate_edges_a/b（edge+count）和opposing_edges_a/b字段，仅报告记录层异常/双向候选，不能称原图科学错误。旧缺字段保持legacy。界面优先实际记录异常和明确检查结论，通用限制收起，模型自由文本建议保留为未核验而不伪装确定。
+
+所有权：主代理schemas、A/B prompts/model、evaluation/index、主页面与owner UI/Markdown、集成和live；Luna renderer仅reconstruction及专用测试；Luna graph仅graph-audit及对应测试；Luna public仅adapters/local-service/public.html、server.ts及其专项测试。主代理先冻结类型；任何无法可靠验证项明确披露，不以文案代替能力。无数据库迁移、环境文件、全局安装或系统修改。
+
 ## T16 历史检索与可提交用户路径（2026-10-22）
 
 本机历史：修复列表只能筛选最近50项的问题。新增`GET /api/runs?history=1&q=<text>&offset=<n>&limit=<n>`，响应`{runs,total,offset,limit,has_more}`；关键词在服务端覆盖所有可读manifest，匹配ID、时间、模式、状态、示例/版本、模型、错误字段、作者关键点及A/B提取文本/图结构标签/报告项。limit默认20、最大50；offset非负整数；query最多120字符。只返回摘要（ID、时间、状态、示例/版本、模型、关键点数量、失败摘要），不返回图片、记忆、报告、请求审计或私有路径。旧`GET /api/runs`维持最近50完整快照，供现有比较/脚本使用；打开记录走原有单run API。9041控制页新增本机私有工作台入口，不能被公网访客访问。

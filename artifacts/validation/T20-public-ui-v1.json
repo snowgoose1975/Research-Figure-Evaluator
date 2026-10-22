@@ -1,0 +1,31 @@
+{
+  "checks": [
+    {
+      "name": "one submission only",
+      "pass": true
+    },
+    {
+      "name": "author atoms transmitted without changing ordinary text",
+      "pass": true
+    },
+    {
+      "name": "persisted coverage shown",
+      "pass": true
+    },
+    {
+      "name": "duplicates identified separately",
+      "pass": true
+    },
+    {
+      "name": "explicit connection scope visible",
+      "pass": true
+    },
+    {
+      "name": "no page errors",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "model_calls": 0,
+  "controlled_stub": true
+}

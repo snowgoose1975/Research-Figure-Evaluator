@@ -1,7 +1,7 @@
 import type { EvaluationReport, Fact, IntentSet, Judgment, JudgeOutput, Keypoint, MemoryRecord, RenderAudit, RunSnapshot } from "../schemas";
 import { auditScientific, judgeScientific } from "./scientific";
 import { auditGraph } from "./graph-audit";
-export const EVALUATION_VERSION = "evidence-0.3.0";
+export const EVALUATION_VERSION = "evidence-0.3.1";
 
 const norm = (v: string) => v.normalize("NFKC").toLowerCase().replace(/[−–—]/g, "-").replace(/\s+/g, " ").replace(/[.,;:]$/g, "").trim();
 const eq = (a: string, b: string) => norm(a) === norm(b);
@@ -13,6 +13,28 @@ export function memoryItemIds(memory: MemoryRecord): Set<string> {
 }
 export function uncertain(reason: string): Judgment {
   return { status: "uncertain", issue_types: [], matched_item_ids: [], rationale: reason, method: "rule", review_required: true };
+}
+function checkConnection(check: NonNullable<Keypoint["record_checks"]>[number], memory: MemoryRecord): Judgment {
+  const labelKey = (value: string) => norm(value).replace(/\s*([+\-])\s*/g, "$1");
+  const find = (label: string) => memory.graph.nodes.filter(node => [node.label, ...node.aliases].some(value => labelKey(value) === labelKey(label)));
+  const source = find(check.subject), target = find(check.object);
+  const description = `${check.subject} → ${check.object} (${check.predicate})`;
+  if (source.length !== 1 || target.length !== 1) return uncertain(`${description}: endpoint labels are missing or ambiguous in this extraction.`);
+  const relevant = memory.graph.relations.filter(edge => edge.source_id === source[0].id && edge.target_id === target[0].id || edge.source_id === target[0].id && edge.target_id === source[0].id);
+  const forward = relevant.filter(edge => edge.source_id === source[0].id && edge.target_id === target[0].id && edge.kind === check.predicate && edge.direction === "directed");
+  const reverse = relevant.filter(edge => edge.source_id === target[0].id && edge.target_id === source[0].id && edge.kind === check.predicate && edge.direction === "directed");
+  if (forward.length && reverse.length) return { ...uncertain(`${description}: both directions occur in the extraction; a one-way check cannot be confirmed.`), matched_item_ids: [...forward, ...reverse].map(edge => edge.id) };
+  if (!forward.length && reverse.length) return { status: "contradicted", issue_types: ["direction"], matched_item_ids: reverse.map(edge => edge.id), rationale: `${description}: the extracted connection points in the opposite direction.`, method: "rule", review_required: true };
+  if (!forward.length && relevant.some(edge => edge.direction !== "directed" || edge.kind === "unknown")) return uncertain(`${description}: connection direction or type is not explicit in the extraction.`);
+  if (!forward.length) return { status: "omitted", issue_types: [], matched_item_ids: [source[0].id, target[0].id], rationale: `${description}: both endpoint labels were found, but this directed connection was not recorded. This does not prove the original image lacks it.`, method: "rule", review_required: true };
+  if (check.certainty !== null && forward.some(edge => edge.evidence_status !== check.certainty)) return uncertain(`${description}: the recorded evidence status differs or is ambiguous.`);
+  return { status: "retained", issue_types: [], matched_item_ids: forward.map(edge => edge.id), rationale: `${description}: present in the extracted graph record.`, method: "rule", review_required: true };
+}
+function checkConnections(keypoint: Keypoint, memory: MemoryRecord): Judgment {
+  const results = keypoint.record_checks!.map(check => checkConnection(check, memory));
+  const retained = results.filter(result => result.status === "retained").length;
+  const status: Judgment["status"] = results.some(result => result.status === "contradicted") ? "contradicted" : retained === results.length ? "retained" : retained > 0 ? "partial" : results.every(result => result.status === "omitted") ? "omitted" : "uncertain";
+  return { status, issue_types: [...new Set(results.flatMap(result => result.issue_types))], matched_item_ids: [...new Set(results.flatMap(result => result.matched_item_ids))], rationale: `Explicit connection checks: ${retained}/${results.length} present. ${results.map(result => result.rationale).join(" ")} These checks cover only the author-entered connections, not every clause of the free-text statement or original-image correctness.`, method: "rule", review_required: true };
 }
 function compareFact(claim: NonNullable<Keypoint["claim"]>, fact: Fact): Judgment {
   const issues: Judgment["issue_types"] = [];
@@ -33,6 +55,7 @@ export function judgeByRules(keypoint: Keypoint, memory: MemoryRecord): Judgment
   if (keypoint.scientific) return judgeScientific(keypoint.scientific, memory);
   if (!keypoint.author_confirmed) return uncertain("The author has not confirmed this keypoint.");
   if (memory.completeness !== "complete") return uncertain("Extraction was not complete; omission cannot be inferred.");
+  if (keypoint.record_checks?.length) return checkConnections(keypoint, memory);
   const claim = keypoint.claim;
   if (!claim) {
     const exact = memory.facts.filter(f => eq(factText(f), keypoint.text));
@@ -106,6 +129,7 @@ export function resolveJudgment(keypoint: Keypoint, memory: MemoryRecord, semant
   if (keypoint.scientific) {
     return { ...rule, rationale: semantic.status === rule.status ? rule.rationale : `${rule.rationale} The semantic judge reported ${semantic.status}, but that suggestion was not used because the deterministic project-curated check takes precedence.`, evidence_audit: { requested_status: semantic.status, suggestion_rationale: semantic.rationale, status: rule.status === "uncertain" ? "unverified" : "verified", reasons: ["The explicit scientific check takes precedence; its coverage is limited to the recorded quantities and tolerance basis."], citations: evidenceCitations(memory, rule.matched_item_ids) } };
   }
+  if (keypoint.record_checks?.length) return { ...rule, evidence_audit: { requested_status: semantic.status, suggestion_rationale: semantic.rationale, status: rule.status === "uncertain" ? "unverified" : "verified", reasons: ["Only the explicitly author-entered atomic connections were checked against the extracted graph. This does not verify other clauses, the source figure, or scientific truth."], citations: evidenceCitations(memory, rule.matched_item_ids) } };
   const audited = auditedJudgment(semantic, memory, keypoint);
   const citations = evidenceCitations(memory, semantic.matched_item_ids);
   const invalid = semantic.matched_item_ids.some(id => !memoryItemIds(memory).has(id)) || (["retained", "partial", "contradicted"].includes(semantic.status) && !semantic.matched_item_ids.length);
@@ -156,6 +180,7 @@ export function evaluate(input: { intents: IntentSet; a: MemoryRecord; b: Memory
   const graph = auditGraph(a, b);
   return {
     evaluation_version: EVALUATION_VERSION, graph_audit: graph,
+    author_record_checks: intents.keypoints.map(keypoint => ({ keypoint_id: keypoint.id, checks: keypoint.record_checks?.length ?? 0 })),
     keypoint_results: keypointResults, a_to_b: aToB, unmatched_b_claims: unmatched,
     summary: { retained_a: keypointResults.filter(r => r.in_a.status === "retained").length, retained_b: keypointResults.filter(r => r.in_b.status === "retained").length, total: intents.keypoints.length, unresolved: keypointResults.filter(r => r.in_a.status === "uncertain" || r.in_b.status === "uncertain").length, renderer_warnings: render.warnings.length },
     limitations: ["AI reader feedback does not establish human readability or scientific correctness.", "Independent requests to the same model do not imply independent errors.", "Unmatched B assertions are candidates for review, not proven hallucinations.", "Plot reconstruction is approximate, not precision digitization.", ...(scientific.coverage.fact_comparison.executed ? [] : ["Fact-by-fact assertion comparison was not executed; see detection coverage for what was and was not checked."]), ...(semantic ? ["Semantic judgments require review of their cited extracted items."] : ["Rules only: free-text or synonymous assertions may remain uncertain."]), ...(semantic && intents.keypoints.some(k => k.scientific) ? ["Project-curated scientific checks are deterministic and are not overridden by semantic-judge results."] : []), ...(render.visual_review !== "passed" ? ["This reconstruction has not received an independent visual-review pass."] : [])],

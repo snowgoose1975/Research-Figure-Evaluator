@@ -56,7 +56,6 @@
       let jobId = null;
       let pollTimer = null;
       let pollFailures = 0;
-      const MAX_POLL_RETRIES = 5;
       let stoppedLocally = false;
       let serviceAccepting = false;
       let submitted = false;
@@ -102,18 +101,24 @@
         input.setAttribute('aria-label', 'Expected scientific statement'); input.value = value;
         const remove = document.createElement('button');
         remove.type = 'button'; remove.className = 'remove'; remove.textContent = '×'; remove.setAttribute('aria-label', 'Remove statement');
-        remove.addEventListener('click', () => { if (keypointsEl.children.length > 3) row.remove(); updateSubmit(); });
-        row.append(input, remove); keypointsEl.append(row); updateSubmit();
+        remove.addEventListener('click', () => { if (keypointsEl.querySelectorAll('.keypoint').length > 3) { const next = row.nextElementSibling; row.remove(); next?.remove(); } updateSubmit(); });
+        const recordDetails = document.createElement('details'); recordDetails.className = 'details';
+        const recordSummary = document.createElement('summary'); recordSummary.textContent = 'Add explicit connection checks (optional)';
+        const recordHelp = document.createElement('p'); recordHelp.className = 'small-note'; recordHelp.textContent = 'One connection per line. Use Source -> Target (flows_to by default), Source | promotes | Target, or Source | inhibits | Target. Endpoints must exactly match visible figure labels. These checks are only used for this assessment and are never sent to either reader or the drawing step.';
+        const recordInput = document.createElement('textarea'); recordInput.maxLength = 4000; recordInput.rows = 3; recordInput.dataset.recordChecks = 'true'; recordInput.setAttribute('aria-label', 'Optional explicit connection checks'); recordInput.placeholder = 'Receptor -> Pathway\nPathway | inhibits | Response';
+        recordInput.style.cssText = 'width:100%;resize:vertical;border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit;font-size:13px';
+        recordDetails.append(recordSummary, recordHelp, recordInput);
+        row.append(input, remove); keypointsEl.append(row, recordDetails); updateSubmit();
       }
 
       function updateSubmit() {
-        const count = keypointsEl.querySelectorAll('input').length;
+        const count = keypointsEl.querySelectorAll('.keypoint input').length;
         addButton.disabled = count >= 5;
-        submitButton.disabled = submitted || !(serviceAccepting && imageDataUrl && document.querySelector('#consent').checked && count >= 3 && count <= 5 && [...keypointsEl.querySelectorAll('input')].every(input => input.value.trim().length >= 3));
+        submitButton.disabled = submitted || !(serviceAccepting && imageDataUrl && document.querySelector('#consent').checked && count >= 3 && count <= 5 && [...keypointsEl.querySelectorAll('.keypoint input')].every(input => input.value.trim().length >= 3));
       }
 
       addKeypoint(); addKeypoint(); addKeypoint();
-      addButton.addEventListener('click', () => { if (keypointsEl.children.length < 5) addKeypoint(); });
+      addButton.addEventListener('click', () => { if (keypointsEl.querySelectorAll('.keypoint').length < 5) addKeypoint(); });
       keypointsEl.addEventListener('input', updateSubmit);
       document.querySelector('#consent').addEventListener('change', updateSubmit);
 
@@ -207,17 +212,20 @@
         if (!audit) return judgment?.method === 'semantic_assist' ? 'Legacy / unverified' : 'Audit unavailable';
         return audit.status === 'verified' ? 'Verified by available evidence' : audit.status === 'invalid' ? 'Invalid evidence' : 'Needs verification';
       }
-      function renderJudgment(parent, labelText, judgment) {
+      function renderJudgment(parent, labelText, judgment, hasExplicitChecks = false) {
         const panel = document.createElement('div'); panel.className = 'audit-box';
         appendText(panel, 'strong', `${labelText}: ${judgment?.status === 'uncertain' ? 'Needs verification' : label(judgment?.status, 'unknown')}`);
         const audit = judgment?.evidence_audit;
+        if (hasExplicitChecks) appendText(panel, 'p', 'Explicit connection checks (only these connections are checked). Other natural-language meaning remains unverified.');
+        if (judgment?.rationale) { const rationale = document.createElement('details'); rationale.className = 'details'; appendText(rationale, 'summary', 'Rule rationale'); appendText(rationale, 'p', judgment.rationale); panel.append(rationale); }
         appendText(panel, 'p', `Evidence check: ${auditStatus(judgment)}${audit?.requested_status ? ` · evaluator requested ${audit.requested_status}` : ''}`);
         if (!audit) appendText(panel, 'p', 'Legacy/unavailable evidence audit; this status is not independently verified.');
         if (audit?.reasons?.length) for (const reason of audit.reasons) appendText(panel, 'p', reason);
         const citations = audit?.citations;
-        appendText(panel, 'p', 'Actual cited extraction');
-        if (!Array.isArray(citations) || !citations.length) appendText(panel, 'p', 'No citation was returned. An absent citation does not prove the reader failed to notice the item.');
-        else for (const citation of citations) appendText(panel, 'p', `${label(citation.id)} · ${label(citation.type)}: ${label(citation.text)}`, 'citation');
+        const citationDetails = document.createElement('details'); citationDetails.className = 'details'; appendText(citationDetails, 'summary', 'Actual cited extraction');
+        if (!Array.isArray(citations) || !citations.length) appendText(citationDetails, 'p', 'No citation was returned. An absent citation does not prove the reader failed to notice the item.');
+        else for (const citation of citations) appendText(citationDetails, 'p', `${label(citation.id)} · ${label(citation.type)}: ${label(citation.text)}`, 'citation');
+        panel.append(citationDetails);
         parent.append(panel);
       }
       function renderGraphAudit(parent, graphAudit) {
@@ -228,8 +236,11 @@
         appendText(parent, 'p', label(graphAudit.note));
         appendText(parent, 'p', 'Differences between reader A and reader B cannot be attributed to the original figure without an independent reference answer.', 'warning-note');
         const grid = document.createElement('div'); grid.className = 'graph-diff';
+        if ((graphAudit.opposing_edges_a?.length || 0) + (graphAudit.opposing_edges_b?.length || 0) > 0) appendText(parent, 'p', 'Opposing directions are record-level candidates. Both directions may appear in the original figure; this is not a scientific error finding.', 'warning-note');
         const groups = [
           ['Edges added in B', graphAudit.added_edges, formatRelation], ['Edges absent in B', graphAudit.removed_edges, formatRelation],
+          ['Duplicate edge records in A', graphAudit.duplicate_edges_a, item => `${formatRelation(item)} · recorded ${item.count} times`], ['Duplicate edge records in B', graphAudit.duplicate_edges_b, item => `${formatRelation(item)} · recorded ${item.count} times`],
+          ['Opposing direction candidates in A', graphAudit.opposing_edges_a, item => formatRelation(item)], ['Opposing direction candidates in B', graphAudit.opposing_edges_b, item => formatRelation(item)],
           ['Nodes only in A', graphAudit.unmatched_a_nodes, item => item], ['Nodes only in B', graphAudit.unmatched_b_nodes, item => item],
           ['Ambiguous node matches', graphAudit.ambiguous_nodes, item => item]
         ];
@@ -245,41 +256,45 @@
         if (!result) { showState('The job completed without a report payload.', 'error'); return; }
         showState('Analysis finished — evidence needs review. This is an AI reading comparison, not a verified answer.', 'review');
         const report = result.report || {};
-        const checkedRows = Array.isArray(report.keypoint_results) ? report.keypoint_results : [];
-        const verified = checkedRows.filter(row => row.in_a?.evidence_audit?.status === 'verified' && row.in_b?.evidence_audit?.status === 'verified').length;
-        appendText(resultBody, 'p', `Assessment coverage: ${verified} of ${checkedRows.length} statements have independently checked record comparisons. Other free-text suggestions need verification. This is not a figure-quality or human-understanding score.`, 'warning-note');
+        const recordCheckRows = Array.isArray(report.author_record_checks) ? report.author_record_checks : null;
+        const deterministicCount = recordCheckRows?.filter(item => item.checks > 0).length ?? 0;
+        const deterministicCoverage = recordCheckRows ? `${deterministicCount}/${recordCheckRows.length} author statements have deterministic record checks; graph audit ${report.graph_audit?.executed === true ? 'ran' : report.graph_audit?.executed === false ? 'did not run' : 'status unavailable'}.` : `Deterministic record-check coverage is unavailable (legacy report); graph audit ${report.graph_audit?.executed === true ? 'ran' : report.graph_audit?.executed === false ? 'did not run' : 'status unavailable'}.`;
+        appendText(resultBody, 'p', `${deterministicCoverage} This is not a figure-quality or human-understanding score.`, 'warning-note');
         if (result.render_audit?.warnings?.length || result.render_audit?.unsupported_item_ids?.length) appendText(resultBody, 'p', `Reconstruction needs review: ${result.render_audit.unsupported_item_ids?.length || 0} items not fully represented and ${result.render_audit.warnings?.length || 0} rendering warnings. Inspect these gaps before attributing differences to the original figure.`, 'warning-note');
         const coverage = report.coverage;
         if (coverage) appendText(resultBody, 'p', `Automatic checks executed: graph comparison ${report.graph_audit?.executed ? 'yes (uniquely matched labels only)' : 'no'}; explicit-fact comparison ${coverage.fact_comparison?.executed ? 'yes' : 'no'}; plot audit ${coverage.plot_audit?.executed ? 'yes' : 'no'}. A check not executed provides no assurance of fidelity.`, 'small-note');
         appendText(resultBody, 'p', `Model: ${result.model || 'Not reported'} · Prompt: ${result.prompt_version || 'Not reported'}`);
         appendText(resultBody, 'p', 'The saved A/B records are what each model extracted. Missing from a record means not represented in that saved extraction; it does not by itself prove the figure omitted it.');
         appendText(resultBody, 'h3', 'What readers A and B actually extracted');
+        const readerDetails = document.createElement('details'); readerDetails.className = 'details'; appendText(readerDetails, 'summary', 'What readers A and B actually extracted');
         const readers = document.createElement('div'); readers.className = 'reader-grid';
         renderReaderRecord(readers, result.reader_records?.a, 'A · original figure');
         renderReaderRecord(readers, result.reader_records?.b, 'B · reconstruction');
-        resultBody.append(readers);
+        readerDetails.append(readers); resultBody.append(readerDetails);
         renderGraphAudit(resultBody, report.graph_audit);
         appendText(resultBody, 'h3', 'Author statements · judgment and cited evidence');
         const rows = Array.isArray(report.keypoint_results) ? report.keypoint_results : [];
         if (!rows.length) appendText(resultBody, 'p', 'No itemized findings were returned.');
         for (const row of rows) {
+          const hasExplicitChecks = recordCheckRows?.some(item => item.keypoint_id === row.keypoint_id && item.checks > 0) ?? false;
           const article = document.createElement('article'); article.className = 'judgment';
           const head = document.createElement('div'); head.className = 'judgment-head';
-          appendText(head, 'span', row.text || row.keypoint_id || 'Author statement');
+          appendText(head, 'span', `${row.text || row.keypoint_id || 'Author statement'}${hasExplicitChecks ? ' · Explicit checks' : ''}`);
           appendText(head, 'span', `A: ${row.in_a?.status === 'uncertain' ? 'Needs verification' : row.in_a?.status || 'unknown'} · B: ${row.in_b?.status === 'uncertain' ? 'Needs verification' : row.in_b?.status || 'unknown'}`, 'badge'); article.append(head);
           const panels = document.createElement('div'); panels.className = 'reader-grid';
-          renderJudgment(panels, 'Assessment of reader A record', row.in_a); renderJudgment(panels, 'Assessment of reader B record', row.in_b); article.append(panels);
+          renderJudgment(panels, 'Assessment of reader A record', row.in_a, hasExplicitChecks); renderJudgment(panels, 'Assessment of reader B record', row.in_b, hasExplicitChecks); article.append(panels);
           const suggestion = document.createElement('details'); suggestion.className = 'details';
           const suggestionSummary = document.createElement('summary'); suggestionSummary.textContent = 'Evaluator suggestion and explanation'; suggestion.append(suggestionSummary);
           const requested = [row.in_a?.evidence_audit?.requested_status, row.in_b?.evidence_audit?.requested_status].filter(Boolean);
           appendText(suggestion, 'p', `Evaluator requested status: ${requested.length ? [...new Set(requested)].join(' / ') : 'Legacy/unavailable'}`);
           appendText(suggestion, 'p', `Judge explanation, not reader wording: A — ${row.in_a?.evidence_audit?.suggestion_rationale || row.in_a?.rationale || 'Not reported'} · B — ${row.in_b?.evidence_audit?.suggestion_rationale || row.in_b?.rationale || 'Not reported'}`);
           if (Array.isArray(row.suggestions) && row.suggestions.length) { const list = document.createElement('ul'); list.className = 'suggestions'; for (const item of row.suggestions) appendText(list, 'li', item); suggestion.append(list); }
+          if ([row.in_a, row.in_b].filter(Boolean).every(judgment => judgment.method === 'semantic_assist' && judgment.evidence_audit?.status === 'unverified')) suggestion.open = true;
           article.append(suggestion);
           resultBody.append(article);
         }
         const limitations = Array.isArray(result.limitations) ? result.limitations : Array.isArray(report.limitations) ? report.limitations : [];
-        if (limitations.length) { appendText(resultBody, 'h3', 'Limitations'); const list = document.createElement('ul'); list.className = 'suggestions'; for (const item of limitations) appendText(list, 'li', item); resultBody.append(list); }
+        if (limitations.length) { const details = document.createElement('details'); details.className = 'details'; appendText(details, 'summary', 'Limitations'); const list = document.createElement('ul'); list.className = 'suggestions'; for (const item of [...new Set(limitations)]) appendText(list, 'li', item); details.append(list); resultBody.append(details); }
         if (result.reconstruction_data_url && /^data:image\/(png|jpeg);base64,/i.test(result.reconstruction_data_url)) {
           appendText(resultBody, 'h3', 'Reconstruction from the saved reading');
           const img = document.createElement('img'); img.className = 'reconstruction'; img.src = result.reconstruction_data_url; img.alt = 'AI-generated reconstruction from the saved reading'; img.tabIndex = 0;
@@ -297,7 +312,7 @@
         button.addEventListener('click', () => {
           clearInterval(pollTimer); pollTimer = null; jobId = null; stoppedLocally = false; submitted = false;
           imageInput.value = ''; imageDataUrl = null; preview.removeAttribute('src'); preview.classList.remove('show'); hint.textContent = 'Maximum 10 MB';
-          keypointsEl.querySelectorAll('input').forEach(input => { input.value = ''; });
+          keypointsEl.querySelectorAll('input, textarea').forEach(input => { input.value = ''; });
           document.querySelector('#consent').checked = false; button.remove(); submitButton.textContent = 'Agree and submit figure';
           showState('Ready for a new figure. Your previous result remains below until you submit the next check.'); updateSubmit();
           imageInput.focus();
@@ -321,14 +336,14 @@
           pollFailures = 0;
           renderJob(job);
         } catch (error) {
-          const transient = error instanceof TypeError || [502, 503, 504].includes(error?.httpStatus);
-          pollFailures++;
-          if (transient && pollFailures <= MAX_POLL_RETRIES) {
-            showState(`Temporary connection issue (${pollFailures}/${MAX_POLL_RETRIES}). Checking this existing job again in 3 seconds; the image will not be submitted again.`, 'review');
-            return;
+          if (error?.httpStatus === 404) {
+            clearInterval(pollTimer); pollTimer = null;
+            showState('This pending session has expired or the host restarted. Results are no longer available, and the image was not resubmitted.', 'error');
+          } else {
+            clearInterval(pollTimer); pollTimer = null;
+            showState('The connection to the service is temporarily unreachable. Your existing check was not resubmitted. Use Check again to retry checking this same session.', 'review');
           }
-          clearInterval(pollTimer); pollTimer = null;
-          showState(`This pending check is unavailable: ${error.message}. The service may have restarted or its 30-minute pending window may have expired. It was not resubmitted.`, 'error');
+          pollFailures++;
           const again = document.createElement('button'); again.type = 'button'; again.className = 'secondary'; again.textContent = 'Check again';
           again.addEventListener('click', () => { stoppedLocally = false; pollFailures = 0; poll(); if (!pollTimer) pollTimer = setInterval(poll, 3000); });
           resultBody.replaceChildren(again);
@@ -361,9 +376,32 @@
       });
       form.addEventListener('submit', async event => {
         event.preventDefault(); if (submitButton.disabled || !imageDataUrl) return;
-        const statements = [...keypointsEl.querySelectorAll('input')].map(input => input.value.trim());
+        const rows = [...keypointsEl.querySelectorAll('.keypoint')];
+        const statements = rows.map(row => row.querySelector('input').value.trim());
+        const parsedChecks = [];
+        for (const [index, row] of rows.entries()) {
+          const raw = row.nextElementSibling?.querySelector('textarea')?.value || '';
+          const lines = raw.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+          if (lines.length > 12) { showState(`Statement ${index + 1} has more than 12 connection checks. Reduce the list before submitting.`, 'error'); return; }
+          const checks = [];
+          for (const [lineIndex, line] of lines.entries()) {
+            let subject = '', predicate = 'flows_to', object = '';
+            if (line.includes('|')) {
+              const parts = line.split('|').map(part => part.trim());
+              if (parts.length !== 3 || !['flows_to', 'promotes', 'inhibits'].includes(parts[1])) { showState(`Statement ${index + 1}, line ${lineIndex + 1}: use Source | flows_to/promotes/inhibits | Target.`, 'error'); return; }
+              [subject, predicate, object] = parts;
+            } else {
+              const parts = line.split('->');
+              if (parts.length !== 2) { showState(`Statement ${index + 1}, line ${lineIndex + 1}: use Source -> Target or Source | predicate | Target.`, 'error'); return; }
+              [subject, object] = parts.map(part => part.trim());
+            }
+            if (!subject || !object || subject.length > 300 || object.length > 300) { showState(`Statement ${index + 1}, line ${lineIndex + 1}: both endpoint labels are required and must be at most 300 characters.`, 'error'); return; }
+            checks.push({ subject, predicate, object, qualifiers: [], certainty: null });
+          }
+          parsedChecks.push(checks);
+        }
         submitted = true; submitButton.disabled = true; submitButton.textContent = 'Submitting once…'; resultSection.classList.add('show'); resultBody.replaceChildren(); showState('Submitting to the local service. If this request fails, it will not be retried automatically.');
-        const payload = { image_base64: imageDataUrl.slice(imageDataUrl.indexOf(',') + 1), keypoints: statements.map((text, index) => ({ id: `author-${index + 1}`, text, claim: null, author_confirmed: true })), consent: true };
+        const payload = { image_base64: imageDataUrl.slice(imageDataUrl.indexOf(',') + 1), keypoints: statements.map((text, index) => ({ id: `author-${index + 1}`, text, claim: null, author_confirmed: true, ...(parsedChecks[index].length ? { record_checks: parsedChecks[index] } : {}) })), consent: true };
         try {
           const job = await request('/jobs', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
           jobId = job.id; stoppedLocally = false; pollFailures = 0;

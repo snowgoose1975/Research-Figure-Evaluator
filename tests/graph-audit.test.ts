@@ -57,11 +57,43 @@ describe("auditGraph", () => {
     expect(result.added_edges[0]).toMatchObject({ kind: "inhibits", direction: "undirected", line_style: "dashed", evidence_status: "hypothesized" });
   });
 
-  it("compares duplicate edges by multiplicity", () => {
+  it("reports repeated records separately without inventing removed connections", () => {
     const result = auditGraph(memory(nodes, [edge("e1"), edge("e2")]), memory([{ id: "x", label: "Alpha" }, { id: "y", label: "Beta" }], [edge("r", "x", "y")]));
     expect(result.unchanged_edges).toBe(1);
-    expect(result.removed_edges).toHaveLength(1);
+    expect(result.removed_edges).toEqual([]);
     expect(result.added_edges).toEqual([]);
+    expect(result.duplicate_edges_a).toEqual([{ source: "Alpha", target: "Beta", kind: "associated_with", direction: "directed", line_style: "solid", evidence_status: "asserted", count: 2 }]);
+    expect(result.duplicate_edges_b).toBeUndefined();
+  });
+
+  it("reports a genuinely B-only connection once even when B repeats it", () => {
+    const result = auditGraph(memory(nodes), memory([{ id: "x", label: "Alpha" }, { id: "y", label: "Beta" }], [edge("r1", "x", "y"), edge("r2", "x", "y")]));
+    expect(result.added_edges).toHaveLength(1);
+    expect(result.duplicate_edges_b?.[0]).toMatchObject({ source: "Alpha", target: "Beta", count: 2 });
+  });
+
+  it("marks same-kind reverse directed records as opposing candidates", () => {
+    const result = auditGraph(
+      memory([{ id: "u", label: "Unmatched source" }, { id: "v", label: "Unmatched target" }], [edge("uv", "u", "v", { kind: "promotes" }), edge("uv2", "u", "v", { kind: "promotes" }), edge("vu", "v", "u", { kind: "promotes" })]),
+      memory([{ id: "x", label: "Other" }]),
+    );
+    expect(result.opposing_edges_a).toHaveLength(2);
+    expect(result.opposing_edges_b).toBeUndefined();
+    expect(result.duplicate_edges_a?.[0]).toMatchObject({ source: "Unmatched source", target: "Unmatched target", count: 2 });
+    expect(result.added_edges).toEqual([]);
+    expect(result.note).toContain("extracted A/B records only");
+    expect(result.note).toContain("may already both appear in the source image");
+  });
+
+  it("does not match edges whose endpoint label is repeated", () => {
+    const result = auditGraph(
+      memory([{ id: "a1", label: "Alpha" }, { id: "a2", label: "ALPHA" }, { id: "b", label: "Beta" }], [edge("e1", "a1", "b"), edge("e2", "a2", "b")]),
+      memory([{ id: "x", label: "Alpha" }, { id: "y", label: "Beta" }], [edge("r", "x", "y")]),
+    );
+    expect(result.ambiguous_nodes).toEqual(["alpha"]);
+    expect(result.removed_edges).toEqual([]);
+    expect(result.added_edges).toEqual([]);
+    expect(result.duplicate_edges_a).toBeUndefined();
   });
 
   it("recognizes B-only edges when their endpoint labels match", () => {
@@ -77,6 +109,6 @@ describe("auditGraph", () => {
     expect(result.unmatched_b_nodes).toEqual(["Alpha renamed"]);
     expect(result.removed_edges).toEqual([]);
     expect(result.added_edges).toEqual([]);
-    expect(result.note).toContain("不能据此判断原图正确性");
+    expect(result.note).toContain("no source-image ground truth");
   });
 });

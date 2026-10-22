@@ -21,6 +21,10 @@ export function markdownReport(run: RunSnapshot) {
   if (!graph) lines.push("Unavailable in this legacy report.");
   else {
     lines.push(`Executed: ${graph.executed}; matched nodes: ${graph.matched_nodes}; unchanged edges: ${graph.unchanged_edges}.`);
+    for (const [side, duplicates, opposing] of [["A", graph.duplicate_edges_a, graph.opposing_edges_a], ["B", graph.duplicate_edges_b, graph.opposing_edges_b]] as const) {
+      for (const edge of duplicates ?? []) lines.push(`- Duplicate connection records in ${side}: ${edge.source} → ${edge.target}; ${edge.kind}; ${edge.count} occurrences. Not a new semantic edge.`);
+      for (const edge of opposing ?? []) lines.push(`- Both directions recorded in ${side}: ${edge.source} → ${edge.target}; ${edge.kind}. Check whether this is intentional in the original figure.`);
+    }
     for (const [kind, edges] of [["Absent in B", graph.removed_edges], ["Added in B", graph.added_edges]] as const) for (const edge of edges) lines.push(`- ${kind}: ${edge.source} → ${edge.target}; ${edge.kind}, ${edge.direction}, ${edge.line_style}, ${edge.evidence_status}`);
     if (graph.ambiguous_nodes.length) lines.push(`- Ambiguous matches excluded: ${graph.ambiguous_nodes.join("; ")}`);
     if (graph.unmatched_a_nodes.length || graph.unmatched_b_nodes.length) lines.push(`- Unmatched nodes: A ${graph.unmatched_a_nodes.join("; ")}; B ${graph.unmatched_b_nodes.join("; ")}`);

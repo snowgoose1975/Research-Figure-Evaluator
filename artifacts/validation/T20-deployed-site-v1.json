@@ -1,0 +1,9 @@
+{
+  "deployed_version": 7,
+  "explicit_checks_editors": 3,
+  "errors": [],
+  "model_calls": 0,
+  "real_public_transport": true,
+  "new_model_end_to_end_submission": false,
+  "pass": true
+}

@@ -13,6 +13,30 @@ function response(value: unknown, headers?: Record<string, string>) {
 afterEach(() => vi.unstubAllGlobals());
 
 describe("model HTTP adapter", () => {
+  it("uses distinct image-only role prompts for A and B", async () => {
+    const fetchMock = vi.fn<FetchStub>(async () => response(memory));
+    vi.stubGlobal("fetch", fetchMock);
+    const image = { base64: "aGVsbG8=", mime: "image/png" as const };
+    await readOriginal(image, config);
+    await readReconstruction(image, config);
+    const a = String(fetchMock.mock.calls[0][1]?.body), b = String(fetchMock.mock.calls[1][1]?.body);
+    expect(a).toContain("ROLE: READER A");
+    expect(b).toContain("ROLE: READER B");
+    expect(b).not.toContain("ROLE: READER A");
+    expect(a).not.toMatch(/keypoints|filename|original_path/i);
+    expect(b).not.toMatch(/keypoints|filename|original_path/i);
+    expect(b).toContain("data:image/png;base64,aGVsbG8=");
+  });
+  it("retains reader B's role during its bounded schema repair", async () => {
+    const fetchMock = vi.fn<FetchStub>().mockResolvedValueOnce(response({})).mockResolvedValueOnce(response(memory));
+    vi.stubGlobal("fetch", fetchMock);
+    await readReconstruction({ base64: "aGVsbG8=", mime: "image/png" }, config);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    for (const request of fetchMock.mock.calls) {
+      expect(String(request[1]?.body)).toContain("ROLE: READER B");
+      expect(String(request[1]?.body)).not.toContain("ROLE: READER A");
+    }
+  });
   it("sends an isolated reader image with no filename or author keypoints", async () => {
     const fetchMock = vi.fn<FetchStub>(async () => response(memory));
     vi.stubGlobal("fetch", fetchMock);

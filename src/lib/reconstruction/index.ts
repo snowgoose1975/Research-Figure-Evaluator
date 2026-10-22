@@ -1,7 +1,7 @@
 import { Resvg } from "@resvg/resvg-js";
 import type { MemoryRecord, RenderInput, RenderResult } from "../schemas";
 
-export const RENDERER_VERSION = "0.2.2";
+export const RENDERER_VERSION = "0.2.3";
 const WIDTH = 1200;
 const COLORS = {
   ink: "#172b3a", muted: "#526579", line: "#9aabba", faint: "#eaf0f4",
@@ -131,14 +131,13 @@ export async function renderMemory(input: RenderInput): Promise<RenderResult> {
   const markUnsupported = (id: string, why: string) => { unsupported.add(id); warnings.push(`${id}: ${why}`); };
 
   let y = 40;
-  const title = input.title || "Untitled scientific figure";
+  const title = "Reconstructed figure";
   const titleLines = wrap(title, 68);
   pieces.push(titleLines.map((line, i) => `<text class="title" ${TEXT_FONT.title} x="56" y="${y + i * 32}">${esc(line)}</text>`).join(""));
   y += titleLines.length * 32 + 4;
   pieces.push(`<text class="meta" ${TEXT_FONT.meta} x="58" y="${y}">${esc(input.domain)} · ${esc(input.figure_type)}</text>`);
   y += 20;
-  if (input.summary) { y += 8; pieces.push(textLines(input.summary, 58, y, 115, 20, "summary")); y += Math.max(1, wrap(input.summary, 115).length) * 20; }
-  y += 16;
+  y += 36;
 
   const nodes = input.graph.nodes;
   const itemLabels = new Map<string, string>([
@@ -229,6 +228,9 @@ export async function renderMemory(input: RenderInput): Promise<RenderResult> {
   }
 
   const endpointPairCounts = new Map<string, number>();
+  const endpointPairSeen = new Map<string, number>();
+  const relationLabelBoxes: { id: string; x: number; y: number; w: number; h: number }[] = [];
+  let routedMaxY = 0;
   for (const relation of input.graph.relations) {
     const pairKey = [relation.source_id, relation.target_id].sort().join("\u0000");
     endpointPairCounts.set(pairKey, (endpointPairCounts.get(pairKey) ?? 0) + 1);
@@ -241,23 +243,72 @@ export async function renderMemory(input: RenderInput): Promise<RenderResult> {
       relationNotices.push({ id: relation.id, text: `${relation.label || relation.kind} · ${relation.kind} · ${relation.direction} · ${relation.line_style} line · ${certaintyLabel(relation.evidence_status)}` });
       continue;
     }
-    const p1 = { x: a.x + a.w / 2, y: a.y + a.h / 2 }; const p2 = { x: b.x + b.w / 2, y: b.y + b.h / 2 };
-    const dx = p2.x - p1.x; const dy = p2.y - p1.y; const len = Math.max(1, Math.hypot(dx, dy));
-    const ux = dx / len; const uy = dy / len;
-    const rectExit = (box: Box) => Math.min(ux === 0 ? Infinity : box.w / 2 / Math.abs(ux), uy === 0 ? Infinity : box.h / 2 / Math.abs(uy));
-    const startDistance = rectExit(a); const endDistance = rectExit(b);
-    const start = { x: p1.x + ux * (startDistance + 1), y: p1.y + uy * (startDistance + 1) };
-    const end = { x: p2.x - ux * (endDistance + 3), y: p2.y - uy * (endDistance + 3) };
     const pairKey = [relation.source_id, relation.target_id].sort().join("\u0000");
-    if ((endpointPairCounts.get(pairKey) ?? 0) > 1) {
-      markUnsupported(relation.id, "multiple relations share this endpoint pair; edge lines may overlap");
-    }
-    for (const node of nodes) {
-      if (node.id === relation.source_id || node.id === relation.target_id) continue;
+    const pairIndex = endpointPairSeen.get(pairKey) ?? 0;
+    endpointPairSeen.set(pairKey, pairIndex + 1);
+    const pairCount = endpointPairCounts.get(pairKey) ?? 1;
+    const lane = pairCount > 1 ? (pairIndex - (pairCount - 1) / 2) * 24 : 0;
+    const centerA = { x: a.x + a.w / 2, y: a.y + a.h / 2 };
+    const centerB = { x: b.x + b.w / 2, y: b.y + b.h / 2 };
+    const rectBoundary = (box: Box, from: { x: number; y: number }, toward: { x: number; y: number }) => {
+      const dx = toward.x - from.x; const dy = toward.y - from.y;
+      const scale = Math.min(dx === 0 ? Infinity : box.w / 2 / Math.abs(dx), dy === 0 ? Infinity : box.h / 2 / Math.abs(dy));
+      return { x: from.x + dx * scale, y: from.y + dy * scale };
+    };
+    const collides = (points: { x: number; y: number }[]) => nodes.some(node => {
+      if (node.id === relation.source_id || node.id === relation.target_id) return false;
       const box = nodeBoxes.get(node.id)!;
-      if (segmentIntersectsBox(start, end, box)) {
-        markUnsupported(relation.id, `edge line crosses non-endpoint node ${node.label}`);
+      return points.slice(1).some((point, index) => segmentIntersectsBox(points[index], point, box));
+    });
+    const direct = [centerA, centerB];
+    const route = (raw: { x: number; y: number }[]) => {
+      const pts = [...raw];
+      pts[0] = rectBoundary(a, centerA, pts[1]);
+      pts[pts.length - 1] = rectBoundary(b, centerB, pts[pts.length - 2]);
+      return pts;
+    };
+    let points = route(direct);
+    if (pairCount > 1 || collides(points)) {
+      const candidates: { x: number; y: number }[][] = [];
+      const topChannel = Math.min(...[...nodeBoxes.values()].map(box => box.y)) - 28 + lane;
+      const bottomChannel = Math.max(...[...nodeBoxes.values()].map(box => box.y + box.h)) + 28 + lane;
+      const leftChannel = Math.min(...[...nodeBoxes.values()].map(box => box.x)) - 28 - Math.abs(lane);
+      const rightChannel = Math.max(...[...nodeBoxes.values()].map(box => box.x + box.w)) + 28 + Math.abs(lane);
+      const sideChannel = (centerA.x + centerB.x) / 2 + (lane || 28);
+      const verticalPair = Math.abs(centerB.y - centerA.y) > Math.abs(centerB.x - centerA.x);
+      const sideOffset = Math.floor(pairIndex / 2) * 24;
+      const pairLeftChannel = leftChannel - sideOffset;
+      const pairRightChannel = rightChannel + sideOffset;
+      if (pairCount > 1 && verticalPair) {
+        const preferredSide = pairIndex % 2 === 0 ? pairLeftChannel : pairRightChannel;
+        const alternateSide = pairIndex % 2 === 0 ? rightChannel + 24 + sideOffset : leftChannel - 24 - sideOffset;
+        candidates.push(route([centerA, { x: preferredSide, y: centerA.y }, { x: preferredSide, y: centerB.y }, centerB]));
+        candidates.push(route([centerA, { x: alternateSide, y: centerA.y }, { x: alternateSide, y: centerB.y }, centerB]));
       }
+      candidates.push(route([centerA, { x: centerA.x, y: topChannel }, { x: centerB.x, y: topChannel }, centerB]));
+      candidates.push(route([centerA, { x: centerA.x, y: bottomChannel }, { x: centerB.x, y: bottomChannel }, centerB]));
+      candidates.push(route([centerA, { x: sideChannel, y: centerA.y }, { x: sideChannel, y: centerB.y }, centerB]));
+      candidates.push(route([centerA, { x: centerA.x, y: topChannel }, { x: leftChannel, y: topChannel }, { x: leftChannel, y: centerB.y }, centerB]));
+      candidates.push(route([centerA, { x: centerA.x, y: bottomChannel }, { x: rightChannel, y: bottomChannel }, { x: rightChannel, y: centerB.y }, centerB]));
+      candidates.push(route([centerA, { x: centerA.x, y: topChannel }, { x: rightChannel, y: topChannel }, { x: rightChannel, y: centerB.y }, centerB]));
+      candidates.push(route([centerA, { x: centerA.x, y: bottomChannel }, { x: leftChannel, y: bottomChannel }, { x: leftChannel, y: centerB.y }, centerB]));
+      const clear = candidates.find(candidate => (!verticalPair || pairCount === 1 || candidate.some(point => point.x !== centerA.x)) && !collides(candidate));
+      if (clear) points = clear;
+      else {
+        markUnsupported(relation.id, "no collision-free route avoids non-endpoint nodes");
+        if (pairCount > 1) points = candidates[pairIndex % candidates.length];
+      }
+    }
+    routedMaxY = Math.max(routedMaxY, ...points.map(point => point.y));
+    if (points.some(point => point.x < 0 || point.x > WIDTH || point.y < 0)) {
+      markUnsupported(relation.id, "route extends outside the renderer canvas");
+    }
+    const end = points[points.length - 1];
+    let ux = 0; let uy = 0;
+    for (let i = points.length - 1; i > 0; i--) {
+      const dx = points[i].x - points[i - 1].x; const dy = points[i].y - points[i - 1].y;
+      const len = Math.hypot(dx, dy);
+      if (len) { ux = dx / len; uy = dy / len; break; }
     }
     const stroke = relation.kind === "promotes" ? COLORS.greenStroke : relation.kind === "inhibits" ? COLORS.redStroke : COLORS.blueStroke;
     if (relation.kind === "unknown") markUnsupported(relation.id, "relation kind is unknown; edge is shown without an inferred meaning");
@@ -267,7 +318,8 @@ export async function renderMemory(input: RenderInput): Promise<RenderResult> {
       warnings.push(`${relation.id}: relation evidence status is ${certaintyLabel(relation.evidence_status)}`);
     }
     const dash = relation.line_style === "dashed" ? ` stroke-dasharray="8 6"` : relation.line_style === "unknown" ? ` stroke-dasharray="2 5"` : "";
-    let line = `<g data-relation-kind="${esc(relation.kind)}" data-direction="${esc(relation.direction)}" data-evidence-status="${esc(relation.evidence_status)}"><line x1="${start.x}" y1="${start.y}" x2="${end.x}" y2="${end.y}" stroke="${stroke}" stroke-width="2.5"${dash}/>`;
+    const path = points.map((point, index) => `${index ? "L" : "M"}${point.x},${point.y}`).join(" ");
+    let line = `<g data-relation-kind="${esc(relation.kind)}" data-direction="${esc(relation.direction)}" data-evidence-status="${esc(relation.evidence_status)}"><path d="${path}" fill="none" stroke="${stroke}" stroke-width="2.5"${dash}/>`;
     const directed = relation.direction === "directed";
     if (directed && relation.kind === "inhibits") {
       // Inhibition is a blunt T bar, never a positive arrow.
@@ -278,11 +330,30 @@ export async function renderMemory(input: RenderInput): Promise<RenderResult> {
       line += `<polygon points="${end.x},${end.y} ${end.x - ux * 15 + px},${end.y - uy * 15 + py} ${end.x - ux * 15 - px},${end.y - uy * 15 - py}" fill="${stroke}"/>`;
     }
     const relationText = relation.label || relation.kind;
-    const mx = (start.x + end.x) / 2; const my = (start.y + end.y) / 2 - 9;
+    const segments = points.slice(1).map((point, index) => {
+      const from = points[index]; const length = Math.hypot(point.x - from.x, point.y - from.y);
+      return { from, point, length };
+    }).filter(segment => segment.length > 0).sort((left, right) => right.length - left.length);
+    const labelSegment = segments[0];
+    const midpoint = labelSegment ? { x: (labelSegment.from.x + labelSegment.point.x) / 2, y: (labelSegment.from.y + labelSegment.point.y) / 2 } : end;
+    const mx = midpoint.x; let my = midpoint.y - 9;
     const relationLines = wrap(relationText, 24);
     const labelHeight = Math.max(20, relationLines.length * 15 + 4);
-    const labelText = relationLines.map((text, index) => `<text class="edge" ${TEXT_FONT.edge} x="${mx}" y="${my + (index - (relationLines.length - 1) / 2) * 15}" text-anchor="middle">${esc(text)}</text>`).join("");
-    addItem(relation.id, `${line}<rect x="${mx - 90}" y="${my - labelHeight / 2}" width="180" height="${labelHeight}" rx="8" fill="white" fill-opacity="0.96"/>${labelText}</g>`);
+    const labelAnchor = mx < 90 ? "start" : mx > WIDTH - 90 ? "end" : "middle";
+    const labelX = labelAnchor === "start" ? mx + 8 : labelAnchor === "end" ? mx - 8 : mx;
+    const labelRectX = labelAnchor === "start" ? labelX - 4 : labelAnchor === "end" ? labelX - 176 : mx - 90;
+    const labelOverlapsAt = (y: number) => relationLabelBoxes.some(box => labelRectX < box.x + box.w && labelRectX + 180 > box.x && y - labelHeight / 2 < box.y + box.h && y + labelHeight / 2 > box.y);
+    if (labelOverlapsAt(my)) {
+      const offset = [24, -24, 48, -48, 72, -72].find(delta => my + delta - labelHeight / 2 > 90 && !labelOverlapsAt(my + delta) && ![...nodeBoxes.values()].some(box => labelRectX < box.x + box.w && labelRectX + 180 > box.x && my + delta - labelHeight / 2 < box.y + box.h && my + delta + labelHeight / 2 > box.y));
+      if (offset !== undefined) my += offset;
+    }
+    if (labelOverlapsAt(my)) {
+      warnings.push(`${relation.id}: relation label overlaps another relation label; visual review required`);
+    }
+    routedMaxY = Math.max(routedMaxY, my + labelHeight / 2);
+    relationLabelBoxes.push({ id: relation.id, x: labelRectX, y: my - labelHeight / 2, w: 180, h: labelHeight });
+    const labelText = relationLines.map((text, index) => `<text class="edge" ${TEXT_FONT.edge} x="${labelX}" y="${my + (index - (relationLines.length - 1) / 2) * 15}" text-anchor="${labelAnchor}">${esc(text)}</text>`).join("");
+    addItem(relation.id, `${line}<rect x="${labelRectX}" y="${my - labelHeight / 2}" width="180" height="${labelHeight}" rx="8" fill="white" fill-opacity="0.96"/>${labelText}</g>`);
   }
 
   for (const node of nodes) {
@@ -403,7 +474,7 @@ export async function renderMemory(input: RenderInput): Promise<RenderResult> {
   ];
   for (const id of allIds) if (!rendered.has(id) && !unsupported.has(id)) markUnsupported(id, "semantic item was not represented by visible output");
 
-  const height = Math.max(240, Math.ceil(y + 40));
+  const height = Math.max(240, Math.ceil(y + 40), Math.ceil(routedMaxY + 40));
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${height}" viewBox="0 0 ${WIDTH} ${height}"><defs><style>
     .title{fill:${COLORS.ink}}.meta{fill:${COLORS.muted}}.summary,.body{fill:${COLORS.ink}}.small{fill:${COLORS.muted}}.nodeLabel{fill:${COLORS.ink}}.group{fill:${COLORS.muted}}.edge{fill:${COLORS.ink}}.section,.plotTitle{fill:${COLORS.ink}}.tick{fill:${COLORS.muted}}.axis,.legend{fill:${COLORS.ink}}
   </style></defs><rect width="100%" height="100%" fill="#ffffff"/>${pieces.join("")}</svg>`;

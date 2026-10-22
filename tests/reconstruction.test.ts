@@ -38,7 +38,9 @@ describe("controlled memory renderer", () => {
   it("renders promotion arrows and inhibition T bars with escaped XML text", async () => {
     const result = await renderMemory(projectForRender(memory));
     expect(result.svg).toContain("&lt;A&gt;");
-    expect(result.svg).toContain("A &lt; B &amp; C");
+    expect(result.svg).toContain("Reconstructed figure");
+    expect(result.svg).not.toContain("A &lt; B &amp; C");
+    expect(result.svg).toContain("x &lt; y");
     expect(result.svg).not.toContain("<A>");
     expect(result.svg).toMatch(/<polygon points=/); // directed promotion arrowhead
     expect(result.svg).toMatch(/stroke-width="4"/); // blunt inhibition bar
@@ -55,8 +57,8 @@ describe("controlled memory renderer", () => {
     expect(result.rendered_item_ids).toEqual(expect.arrayContaining([
       "node-a", "node-b", "promote", "inhibit", "condition-1", "plot-1", "series-1", "fact-1", "uncertainty-1",
     ]));
-    expect(result.unsupported_item_ids).toEqual(expect.arrayContaining(["promote", "inhibit"]));
-    expect(result.structural_audit).toBe("incomplete");
+    expect(result.unsupported_item_ids).not.toEqual(expect.arrayContaining(["promote", "inhibit"]));
+    expect(result.structural_audit).toBe("complete");
     expect(result.visual_review).toBe("not_reviewed");
   });
 
@@ -103,7 +105,7 @@ describe("controlled memory renderer", () => {
     expect(result.png.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
     expect(result.width).toBe(1200);
     expect(result.height).toBeGreaterThan(240);
-    expect(result.renderer_version).toBe("0.2.2");
+    expect(result.renderer_version).toBe("0.2.3");
     expect(result.svg).toContain('font-size="27px"');
     expect(result.svg).toContain('font-family="Arial, Segoe UI, sans-serif"');
     expect(result.svg).toContain('width="1084" height="540"');
@@ -150,7 +152,8 @@ describe("controlled memory renderer", () => {
       },
     };
     const result = await renderMemory(projectForRender(longMemory));
-    expect(result.svg).toContain("TITLETAIL");
+    expect(result.svg).toContain("Reconstructed figure");
+    expect(result.svg).not.toContain("TITLETAIL");
     expect(result.svg).toContain("GROUPTAIL");
     expect(result.svg).toContain("CONDITIONTAIL");
     expect(result.svg).not.toMatch(/>Relations<\/text>/);

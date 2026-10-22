@@ -7,6 +7,7 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import type { CaseIndex, CaseSummary, PublicCase } from "@/lib/examples/case-studies";
 import styles from "@/components/entry.module.css";
 import { fetchVisitorEndpoint } from "@/components/visitor-endpoint";
+import { GraphRecordWarnings } from "@/components/graph-record-warnings";
 import {
   clearPendingVisitorJob,
   clearVisitorResults,
@@ -119,6 +120,7 @@ function SavedVisitorReport({ record }: { record: VisitorResult }) {
     <div className={styles.savedReportHead}><div><p className={styles.kicker}>SAVED IN THIS BROWSER</p><h2>{historyTitle(record)}</h2><p>{new Date(record.createdAt).toLocaleString()} · {String(result.model || "Model not reported")} · {record.status}</p></div></div>
     {record.error && <p className={styles.storageWarning}>{record.error}</p>}
     {Boolean(record.result) && <>
+      <GraphRecordWarnings audit={(result.report as Record<string, unknown> | undefined)?.graph_audit}/>
       <h3>What readers A and B recorded</h3>
       <div className={styles.savedReaderGrid}>{(["a", "b"] as const).map(side => {
         const entry = reader(side);
