@@ -1,0 +1,32 @@
+{
+  "checks": [
+    {
+      "name": "both complete images fit inside comparison cells",
+      "pass": true
+    },
+    {
+      "name": "static homepage has no mobile overflow",
+      "pass": true
+    },
+    {
+      "name": "no page errors",
+      "pass": true
+    }
+  ],
+  "imageBounds": [
+    {
+      "fits": true,
+      "objectFit": "contain",
+      "width": 439,
+      "height": 450
+    },
+    {
+      "fits": true,
+      "objectFit": "contain",
+      "width": 439,
+      "height": 450
+    }
+  ],
+  "errors": [],
+  "scope": "Final display-only probe over a labeled scripted teaching run; no model calls."
+}

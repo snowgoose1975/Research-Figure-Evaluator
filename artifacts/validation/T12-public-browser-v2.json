@@ -1,0 +1,85 @@
+{
+  "label": "T12-public-browser-v2",
+  "base": "http://127.0.0.1:3001",
+  "publicOnly": true,
+  "checks": [
+    {
+      "name": "four reviewed cases load without any private API",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "all twelve protocol outcomes and all four failures are disclosed",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "case physics-nonlinear-system clearly identifies historical provenance",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "case physics-nonlinear-system shows saved report separately from offline audit",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "case materials-lattice-design clearly identifies historical provenance",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "case materials-lattice-design shows saved report separately from offline audit",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "case mathematics-metric-rewiring clearly identifies historical provenance",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "case mathematics-metric-rewiring shows saved report separately from offline audit",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "case mathematics-network-permutation clearly identifies historical provenance",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "failed case has no invented reconstruction or checkpoint success",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "case detail has no mobile horizontal overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "public site honestly stops at recorded cases",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "static package has no run API",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "ambiguous first export is excluded from static package",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "no console or page errors",
+      "pass": true,
+      "detail": "[]"
+    }
+  ],
+  "errors": [],
+  "apiRequests": [],
+  "scope": "Browser/UI validation; saved real cases and at most one explicitly scripted local run. No new model inference."
+}

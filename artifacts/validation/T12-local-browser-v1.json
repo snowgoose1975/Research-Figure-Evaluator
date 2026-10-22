@@ -1,0 +1,123 @@
+{
+  "label": "T12-local-browser-v1",
+  "base": "http://127.0.0.1:3000",
+  "publicOnly": false,
+  "checks": [
+    {
+      "name": "four reviewed cases load without any private API",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "all twelve protocol outcomes and all four failures are disclosed",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "case physics-nonlinear-system clearly identifies historical provenance",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "case physics-nonlinear-system shows saved report separately from offline audit",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "case materials-lattice-design clearly identifies historical provenance",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "case materials-lattice-design shows saved report separately from offline audit",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "case mathematics-metric-rewiring clearly identifies historical provenance",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "case mathematics-metric-rewiring shows saved report separately from offline audit",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "case mathematics-network-permutation clearly identifies historical provenance",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "failed case has no invented reconstruction or checkpoint success",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "case detail has no mobile horizontal overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "step one requires selecting an image",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "step two requires explicit confirmation",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "scripted mode remains labeled and produces no new real model experiment",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "large image comparison precedes the review list",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "technical audits are collapsed",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "workspace results have no mobile horizontal overflow",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "old run deep links still reach the workspace",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "no console or page errors",
+      "pass": true,
+      "detail": "[]"
+    }
+  ],
+  "errors": [],
+  "apiRequests": [
+    "http://127.0.0.1:3000/api/status",
+    "http://127.0.0.1:3000/api/examples",
+    "http://127.0.0.1:3000/api/runs",
+    "http://127.0.0.1:3000/api/runs",
+    "http://127.0.0.1:3000/api/runs/1792649477131-8e0fb9e6",
+    "http://127.0.0.1:3000/api/runs/1792649477131-8e0fb9e6/assets/original.png",
+    "http://127.0.0.1:3000/api/runs/1792649477131-8e0fb9e6",
+    "http://127.0.0.1:3000/api/status",
+    "http://127.0.0.1:3000/api/examples",
+    "http://127.0.0.1:3000/api/runs",
+    "http://127.0.0.1:3000/api/runs/1792649477131-8e0fb9e6/assets/reconstruction.png",
+    "http://127.0.0.1:3000/api/status",
+    "http://127.0.0.1:3000/api/examples",
+    "http://127.0.0.1:3000/api/runs",
+    "http://127.0.0.1:3000/api/runs/1792609657136-e85156a8",
+    "http://127.0.0.1:3000/api/runs/1792609657136-e85156a8/assets/original.png",
+    "http://127.0.0.1:3000/api/runs/1792609657136-e85156a8/assets/reconstruction.png"
+  ],
+  "scope": "Browser/UI validation; saved real cases and at most one explicitly scripted local run. No new model inference."
+}

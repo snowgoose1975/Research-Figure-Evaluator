@@ -1,0 +1,143 @@
+{
+  "version": "T12-v1",
+  "selection": "First completed attempt per figure; first failed attempt when none completed. Full fixed-protocol outcomes are listed below, including all failures. Selection is for inspection, not an accuracy estimate.",
+  "protocol": {
+    "completed": 8,
+    "failed": 4,
+    "total": 12,
+    "model": "qwen3-vl:4b-instruct-16k",
+    "prompt_version": "reader-0.2.2",
+    "rows": [
+      {
+        "example_id": "published-physics-nonlinear-system",
+        "attempt": 1,
+        "run_id": "1792608047857-c8a1d56c",
+        "status": "completed"
+      },
+      {
+        "example_id": "published-physics-nonlinear-system",
+        "attempt": 2,
+        "run_id": "1792608204732-e4de481f",
+        "status": "failed"
+      },
+      {
+        "example_id": "published-physics-nonlinear-system",
+        "attempt": 3,
+        "run_id": "1792608503063-73d05c68",
+        "status": "completed"
+      },
+      {
+        "example_id": "published-materials-lattice-design",
+        "attempt": 1,
+        "run_id": "1792608686957-9d86b9df",
+        "status": "completed"
+      },
+      {
+        "example_id": "published-materials-lattice-design",
+        "attempt": 2,
+        "run_id": "1792608723258-34a4e217",
+        "status": "completed"
+      },
+      {
+        "example_id": "published-materials-lattice-design",
+        "attempt": 3,
+        "run_id": "1792608753655-a21c6ed7",
+        "status": "completed"
+      },
+      {
+        "example_id": "published-mathematics-network-permutation",
+        "attempt": 1,
+        "run_id": "1792608787008-590ca715",
+        "status": "failed"
+      },
+      {
+        "example_id": "published-mathematics-network-permutation",
+        "attempt": 2,
+        "run_id": "1792608943836-62bfa1db",
+        "status": "failed"
+      },
+      {
+        "example_id": "published-mathematics-network-permutation",
+        "attempt": 3,
+        "run_id": "1792609100745-3ac6ea48",
+        "status": "failed"
+      },
+      {
+        "example_id": "published-mathematics-metric-rewiring",
+        "attempt": 1,
+        "run_id": "1792609254557-2193eadd",
+        "status": "completed"
+      },
+      {
+        "example_id": "published-mathematics-metric-rewiring",
+        "attempt": 2,
+        "run_id": "1792609327940-b1927d5f",
+        "status": "completed"
+      },
+      {
+        "example_id": "published-mathematics-metric-rewiring",
+        "attempt": 3,
+        "run_id": "1792609397425-6006b47b",
+        "status": "completed"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "physics-nonlinear-system",
+      "title": "Nonlinear mechanical system",
+      "domain": "physics",
+      "status": "completed",
+      "takeaway": "Labels can survive while the reconstructed mechanical arrangement changes. Inspect the topology; checkpoint retention is not a fidelity score.",
+      "original": "/published/physics-nonlinear-system.png",
+      "reconstruction": "/case-studies/physics-nonlinear-system/reconstruction.png",
+      "record": "/case-studies/physics-nonlinear-system/record-v2.json",
+      "source_run_id": "1792608047857-c8a1d56c",
+      "paper_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0194452",
+      "attribution": "© 2018 Detroux et al. Reproduced under CC BY 4.0. Original publisher figure, no content edits.",
+      "license": "CC BY 4.0"
+    },
+    {
+      "id": "materials-lattice-design",
+      "title": "Lattice topology to porous structure",
+      "domain": "materials",
+      "status": "completed",
+      "takeaway": "The three-step design story survived, but the reconstruction reduced lattice geometry to labeled boxes. Geometry is outside the current automatic audit.",
+      "original": "/published/materials-lattice-design.png",
+      "reconstruction": "/case-studies/materials-lattice-design/reconstruction.png",
+      "record": "/case-studies/materials-lattice-design/record-v2.json",
+      "source_run_id": "1792608686957-9d86b9df",
+      "paper_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0182902",
+      "attribution": "© 2017 Egan et al. Reproduced under CC BY 4.0. Original publisher figure, no content edits.",
+      "license": "CC BY 4.0"
+    },
+    {
+      "id": "mathematics-metric-rewiring",
+      "title": "Metric value and p-value versus rewiring steps",
+      "domain": "mathematics",
+      "status": "completed",
+      "takeaway": "A reference-line label can survive without preserving its plotted height or shape. Compare the curve records and the images independently.",
+      "original": "/published/mathematics-metric-rewiring.png",
+      "reconstruction": "/case-studies/mathematics-metric-rewiring/reconstruction.png",
+      "record": "/case-studies/mathematics-metric-rewiring/record-v2.json",
+      "source_run_id": "1792609254557-2193eadd",
+      "paper_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0309005",
+      "attribution": "© 2024 Salbanya et al. Reproduced under CC BY 4.0. Original publisher figure, no content edits.",
+      "license": "CC BY 4.0"
+    },
+    {
+      "id": "mathematics-network-permutation",
+      "title": "Network permutations and matrix analysis",
+      "domain": "mathematics",
+      "status": "failed",
+      "takeaway": "This complex network figure did not complete the first read. No reconstruction or checkpoint success is inferred from the failure.",
+      "original": "/published/mathematics-network-permutation.png",
+      "reconstruction": null,
+      "record": "/case-studies/mathematics-network-permutation/record-v2.json",
+      "source_run_id": "1792608787008-590ca715",
+      "paper_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0309005",
+      "attribution": "© 2024 Salbanya et al. Reproduced under CC BY 4.0. Original publisher figure, no content edits.",
+      "license": "CC BY 4.0"
+    }
+  ]
+}

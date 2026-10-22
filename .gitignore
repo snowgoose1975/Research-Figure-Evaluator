@@ -8,6 +8,9 @@ coverage/
 /runs/
 artifacts/private/
 artifacts/browser/
+/artifacts/web-preview/
+/public/case-studies/index.json
+/public/case-studies/*/record.json
 playwright-report/
 test-results/
 npm-debug.log*

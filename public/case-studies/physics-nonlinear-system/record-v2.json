@@ -1,0 +1,1389 @@
+{
+  "id": "physics-nonlinear-system",
+  "title": "Nonlinear mechanical system",
+  "domain": "physics",
+  "status": "completed",
+  "takeaway": "Labels can survive while the reconstructed mechanical arrangement changes. Inspect the topology; checkpoint retention is not a fidelity score.",
+  "original": "/published/physics-nonlinear-system.png",
+  "reconstruction": "/case-studies/physics-nonlinear-system/reconstruction.png",
+  "record": "/case-studies/physics-nonlinear-system/record-v2.json",
+  "source_run_id": "1792608047857-c8a1d56c",
+  "paper_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0194452",
+  "attribution": "© 2018 Detroux et al. Reproduced under CC BY 4.0. Original publisher figure, no content edits.",
+  "license": "CC BY 4.0",
+  "provenance": {
+    "kind": "recorded_local_model_run",
+    "created_at": "2026-10-21T18:40:47.857Z",
+    "model": "qwen3-vl:4b-instruct-16k",
+    "prompt_version": "reader-0.2.2",
+    "source_manifest_sha256": "9e3f6cdc9571e72ca9f2e08a51aa5810f760268ee421f195197091190c29f458",
+    "note": "Historical local-model replay, not a new inference. Checkpoints were project-curated and protocol-marked; no independent item-by-item human confirmation is recorded. The ambiguous historical author_confirmed flag is omitted from this public projection. The original saved report is preserved."
+  },
+  "keypoints": [
+    {
+      "id": "published-physics-k1",
+      "text": "In panel (a), spring k₂ connects masses m₁ and m₂.",
+      "claim": null,
+      "confirmation_provenance": "protocol_marked_not_independently_confirmed"
+    },
+    {
+      "id": "published-physics-k2",
+      "text": "In panel (a), the upper and lower transverse springs kᵤ and k_d are attached to m₁.",
+      "claim": null,
+      "confirmation_provenance": "protocol_marked_not_independently_confirmed"
+    },
+    {
+      "id": "published-physics-k3",
+      "text": "The transverse support motion is labelled d sin(ωt).",
+      "claim": null,
+      "confirmation_provenance": "protocol_marked_not_independently_confirmed"
+    },
+    {
+      "id": "published-physics-k4",
+      "text": "Panel (b) plots restoring force f_nl in newtons against relative displacement x in metres.",
+      "claim": null,
+      "confirmation_provenance": "protocol_marked_not_independently_confirmed"
+    }
+  ],
+  "a": {
+    "schema_version": "0.2.0",
+    "title": "Figure with Mechanical System and Restoring Force Plot",
+    "domain": "physics",
+    "figure_type": "mixed",
+    "summary": "The figure contains a mechanical system with two masses, springs, and dampers, and a plot showing the restoring force as a function of relative displacement.",
+    "graph": {
+      "nodes": [
+        {
+          "id": "node_m1",
+          "label": "m1",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.25,
+            "y": 0.35
+          }
+        },
+        {
+          "id": "node_m2",
+          "label": "m2",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.45,
+            "y": 0.35
+          }
+        },
+        {
+          "id": "node_k1",
+          "label": "k1",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.15,
+            "y": 0.4
+          }
+        },
+        {
+          "id": "node_k2",
+          "label": "k2",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.35,
+            "y": 0.4
+          }
+        },
+        {
+          "id": "node_k3",
+          "label": "k3",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.55,
+            "y": 0.4
+          }
+        },
+        {
+          "id": "node_ku",
+          "label": "ku",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.2,
+            "y": 0.25
+          }
+        },
+        {
+          "id": "node_kd",
+          "label": "kd",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.2,
+            "y": 0.55
+          }
+        },
+        {
+          "id": "node_x1",
+          "label": "X1",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.25,
+            "y": 0.45
+          }
+        },
+        {
+          "id": "node_x2",
+          "label": "X2",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.45,
+            "y": 0.45
+          }
+        },
+        {
+          "id": "node_dsinwt",
+          "label": "d sin( wt)",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.1,
+            "y": 0.1
+          }
+        },
+        {
+          "id": "node_ground1",
+          "label": "Ground",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.05,
+            "y": 0.05
+          }
+        },
+        {
+          "id": "node_ground2",
+          "label": "Ground",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.05,
+            "y": 0.8
+          }
+        },
+        {
+          "id": "node_ground3",
+          "label": "Ground",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.85,
+            "y": 0.8
+          }
+        },
+        {
+          "id": "node_ground4",
+          "label": "Ground",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.85,
+            "y": 0.05
+          }
+        }
+      ],
+      "relations": [
+        {
+          "id": "rel_1",
+          "source_id": "node_m1",
+          "target_id": "node_k1",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_2",
+          "source_id": "node_k1",
+          "target_id": "node_ground1",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_3",
+          "source_id": "node_m1",
+          "target_id": "node_ku",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_4",
+          "source_id": "node_ku",
+          "target_id": "node_ground4",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_5",
+          "source_id": "node_m1",
+          "target_id": "node_kd",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_6",
+          "source_id": "node_kd",
+          "target_id": "node_ground2",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_7",
+          "source_id": "node_m1",
+          "target_id": "node_m2",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_8",
+          "source_id": "node_m2",
+          "target_id": "node_k2",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_9",
+          "source_id": "node_k2",
+          "target_id": "node_k3",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_10",
+          "source_id": "node_k3",
+          "target_id": "node_ground3",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_11",
+          "source_id": "node_m2",
+          "target_id": "node_x2",
+          "kind": "contains",
+          "direction": "directed",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Displacement"
+        },
+        {
+          "id": "rel_12",
+          "source_id": "node_m1",
+          "target_id": "node_x1",
+          "kind": "contains",
+          "direction": "directed",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Displacement"
+        },
+        {
+          "id": "rel_13",
+          "source_id": "node_dsinwt",
+          "target_id": "node_ku",
+          "kind": "flows_to",
+          "direction": "directed",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Force"
+        },
+        {
+          "id": "rel_14",
+          "source_id": "node_ku",
+          "target_id": "node_m1",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_15",
+          "source_id": "node_kd",
+          "target_id": "node_m1",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        }
+      ],
+      "groups": [],
+      "conditions": []
+    },
+    "plots": [
+      {
+        "id": "plot_1",
+        "title": "Restoring force vs. Relative displacement",
+        "x_axis": {
+          "label": "Relative displacement x (m)",
+          "unit": "m",
+          "scale": "linear",
+          "min": -0.1,
+          "max": 0.1
+        },
+        "y_axis": {
+          "label": "Restoring force f_nl (N)",
+          "unit": "N",
+          "scale": "linear",
+          "min": -80,
+          "max": 80
+        },
+        "series": [
+          {
+            "id": "plot_1_series_1",
+            "label": "Restoring force",
+            "points": [
+              {
+                "x": -0.1,
+                "y": -80
+              },
+              {
+                "x": -0.05,
+                "y": -40
+              },
+              {
+                "x": 0,
+                "y": 0
+              },
+              {
+                "x": 0.05,
+                "y": 40
+              },
+              {
+                "x": 0.1,
+                "y": 80
+              }
+            ],
+            "style": "line",
+            "approximate": true
+          }
+        ],
+        "notes": []
+      }
+    ],
+    "facts": [],
+    "uncertainties": [],
+    "evidence": [],
+    "completeness": "complete"
+  },
+  "b": {
+    "schema_version": "0.2.0",
+    "title": "Figure with Mechanical System and Restoring Force Plot",
+    "domain": "physics",
+    "figure_type": "mixed",
+    "summary": "A mechanical system with two masses, springs, and dampers, and a plot showing restoring force as a function of relative displacement.",
+    "graph": {
+      "nodes": [
+        {
+          "id": "node_m1",
+          "label": "m1",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.1,
+            "y": 0.1
+          }
+        },
+        {
+          "id": "node_m2",
+          "label": "m2",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.3,
+            "y": 0.1
+          }
+        },
+        {
+          "id": "node_k1",
+          "label": "k1",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.5,
+            "y": 0.1
+          }
+        },
+        {
+          "id": "node_k2",
+          "label": "k2",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.7,
+            "y": 0.1
+          }
+        },
+        {
+          "id": "node_k3",
+          "label": "k3",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.1,
+            "y": 0.2
+          }
+        },
+        {
+          "id": "node_ku",
+          "label": "ku",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.3,
+            "y": 0.2
+          }
+        },
+        {
+          "id": "node_kd",
+          "label": "kd",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.5,
+            "y": 0.2
+          }
+        },
+        {
+          "id": "node_X1",
+          "label": "X1",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.7,
+            "y": 0.2
+          }
+        },
+        {
+          "id": "node_X2",
+          "label": "X2",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.1,
+            "y": 0.3
+          }
+        },
+        {
+          "id": "node_d_sin_wt",
+          "label": "d sin( wt )",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.3,
+            "y": 0.3
+          }
+        },
+        {
+          "id": "node_Ground_1",
+          "label": "Ground",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.7,
+            "y": 0.2
+          }
+        },
+        {
+          "id": "node_Ground_2",
+          "label": "Ground",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.9,
+            "y": 0.2
+          }
+        },
+        {
+          "id": "node_Ground_3",
+          "label": "Ground",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.7,
+            "y": 0.3
+          }
+        },
+        {
+          "id": "node_Ground_4",
+          "label": "Ground",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.9,
+            "y": 0.3
+          }
+        },
+        {
+          "id": "node_Ground_5",
+          "label": "Ground",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.1,
+            "y": 0.4
+          }
+        },
+        {
+          "id": "node_Ground_6",
+          "label": "Ground",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.3,
+            "y": 0.4
+          }
+        }
+      ],
+      "relations": [
+        {
+          "id": "rel_1",
+          "source_id": "node_m1",
+          "target_id": "node_k1",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_2",
+          "source_id": "node_k1",
+          "target_id": "node_Ground_1",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_3",
+          "source_id": "node_m1",
+          "target_id": "node_ku",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_4",
+          "source_id": "node_ku",
+          "target_id": "node_Ground_2",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_5",
+          "source_id": "node_m1",
+          "target_id": "node_kd",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_6",
+          "source_id": "node_kd",
+          "target_id": "node_Ground_3",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_7",
+          "source_id": "node_m1",
+          "target_id": "node_m2",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_8",
+          "source_id": "node_m2",
+          "target_id": "node_k2",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_9",
+          "source_id": "node_k2",
+          "target_id": "node_k3",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_10",
+          "source_id": "node_k3",
+          "target_id": "node_Ground_4",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_11",
+          "source_id": "node_m2",
+          "target_id": "node_X2",
+          "kind": "contains",
+          "direction": "directed",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Displacement"
+        },
+        {
+          "id": "rel_12",
+          "source_id": "node_m1",
+          "target_id": "node_X1",
+          "kind": "contains",
+          "direction": "directed",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Displacement"
+        },
+        {
+          "id": "rel_13",
+          "source_id": "node_d_sin_wt",
+          "target_id": "node_ku",
+          "kind": "flows_to",
+          "direction": "directed",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Force"
+        },
+        {
+          "id": "rel_14",
+          "source_id": "node_ku",
+          "target_id": "node_m1",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        },
+        {
+          "id": "rel_15",
+          "source_id": "node_kd",
+          "target_id": "node_m1",
+          "kind": "adjacent_to",
+          "direction": "undirected",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Spring"
+        }
+      ],
+      "groups": [],
+      "conditions": []
+    },
+    "plots": [
+      {
+        "id": "plot_1",
+        "title": "Restoring force vs. Relative displacement",
+        "x_axis": {
+          "label": "Relative displacement x (m) · linear",
+          "unit": "m",
+          "scale": "linear",
+          "min": -0.1,
+          "max": 0.1
+        },
+        "y_axis": {
+          "label": "Restoring force _n (N) · linear",
+          "unit": "N",
+          "scale": "linear",
+          "min": -50,
+          "max": 50
+        },
+        "series": [
+          {
+            "id": "plot_1_series_1",
+            "label": "Restoring force · approximate",
+            "points": [
+              {
+                "x": -0.1,
+                "y": -50
+              },
+              {
+                "x": -0.05,
+                "y": -25
+              },
+              {
+                "x": 0,
+                "y": 0
+              },
+              {
+                "x": 0.05,
+                "y": 25
+              },
+              {
+                "x": 0.1,
+                "y": 50
+              }
+            ],
+            "style": "line",
+            "approximate": true
+          }
+        ],
+        "notes": []
+      }
+    ],
+    "facts": [
+      {
+        "id": "fact_1",
+        "subject": "m1",
+        "predicate": "→",
+        "object": "k1",
+        "qualifiers": [
+          "Spring",
+          "kind: adjacent_to",
+          "direction: undirected",
+          "certainty: asserted",
+          "line style: solid"
+        ],
+        "certainty": "asserted",
+        "source_ids": [
+          "rel_1"
+        ]
+      },
+      {
+        "id": "fact_2",
+        "subject": "k1",
+        "predicate": "→",
+        "object": "Ground",
+        "qualifiers": [
+          "Spring",
+          "kind: adjacent_to",
+          "direction: undirected",
+          "certainty: asserted",
+          "line style: solid"
+        ],
+        "certainty": "asserted",
+        "source_ids": [
+          "rel_2"
+        ]
+      },
+      {
+        "id": "fact_3",
+        "subject": "m1",
+        "predicate": "→",
+        "object": "ku",
+        "qualifiers": [
+          "Spring",
+          "kind: adjacent_to",
+          "direction: undirected",
+          "certainty: asserted",
+          "line style: solid"
+        ],
+        "certainty": "asserted",
+        "source_ids": [
+          "rel_3"
+        ]
+      },
+      {
+        "id": "fact_4",
+        "subject": "ku",
+        "predicate": "→",
+        "object": "Ground",
+        "qualifiers": [
+          "Spring",
+          "kind: adjacent_to",
+          "direction: undirected",
+          "certainty: asserted",
+          "line style: solid"
+        ],
+        "certainty": "asserted",
+        "source_ids": [
+          "rel_4"
+        ]
+      },
+      {
+        "id": "fact_5",
+        "subject": "m1",
+        "predicate": "→",
+        "object": "kd",
+        "qualifiers": [
+          "Spring",
+          "kind: adjacent_to",
+          "direction: undirected",
+          "certainty: asserted",
+          "line style: solid"
+        ],
+        "certainty": "asserted",
+        "source_ids": [
+          "rel_5"
+        ]
+      },
+      {
+        "id": "fact_6",
+        "subject": "kd",
+        "predicate": "→",
+        "object": "Ground",
+        "qualifiers": [
+          "Spring",
+          "kind: adjacent_to",
+          "direction: undirected",
+          "certainty: asserted",
+          "line style: solid"
+        ],
+        "certainty": "asserted",
+        "source_ids": [
+          "rel_6"
+        ]
+      },
+      {
+        "id": "fact_7",
+        "subject": "m1",
+        "predicate": "→",
+        "object": "m2",
+        "qualifiers": [
+          "Spring",
+          "kind: adjacent_to",
+          "direction: undirected",
+          "certainty: asserted",
+          "line style: solid"
+        ],
+        "certainty": "asserted",
+        "source_ids": [
+          "rel_7"
+        ]
+      },
+      {
+        "id": "fact_8",
+        "subject": "m2",
+        "predicate": "→",
+        "object": "k2",
+        "qualifiers": [
+          "Spring",
+          "kind: adjacent_to",
+          "direction: undirected",
+          "certainty: asserted",
+          "line style: solid"
+        ],
+        "certainty": "asserted",
+        "source_ids": [
+          "rel_8"
+        ]
+      },
+      {
+        "id": "fact_9",
+        "subject": "k2",
+        "predicate": "→",
+        "object": "k3",
+        "qualifiers": [
+          "Spring",
+          "kind: adjacent_to",
+          "direction: undirected",
+          "certainty: asserted",
+          "line style: solid"
+        ],
+        "certainty": "asserted",
+        "source_ids": [
+          "rel_9"
+        ]
+      },
+      {
+        "id": "fact_10",
+        "subject": "k3",
+        "predicate": "→",
+        "object": "Ground",
+        "qualifiers": [
+          "Spring",
+          "kind: adjacent_to",
+          "direction: undirected",
+          "certainty: asserted",
+          "line style: solid"
+        ],
+        "certainty": "asserted",
+        "source_ids": [
+          "rel_10"
+        ]
+      },
+      {
+        "id": "fact_11",
+        "subject": "m2",
+        "predicate": "→",
+        "object": "X2",
+        "qualifiers": [
+          "Displacement",
+          "kind: contains",
+          "direction: directed",
+          "certainty: asserted",
+          "line style: solid"
+        ],
+        "certainty": "asserted",
+        "source_ids": [
+          "rel_11"
+        ]
+      },
+      {
+        "id": "fact_12",
+        "subject": "m1",
+        "predicate": "→",
+        "object": "X1",
+        "qualifiers": [
+          "Displacement",
+          "kind: contains",
+          "direction: directed",
+          "certainty: asserted",
+          "line style: solid"
+        ],
+        "certainty": "asserted",
+        "source_ids": [
+          "rel_12"
+        ]
+      },
+      {
+        "id": "fact_13",
+        "subject": "d sin( wt )",
+        "predicate": "→",
+        "object": "ku",
+        "qualifiers": [
+          "Force",
+          "kind: flows_to",
+          "direction: directed",
+          "certainty: asserted",
+          "line style: solid"
+        ],
+        "certainty": "asserted",
+        "source_ids": [
+          "rel_13"
+        ]
+      },
+      {
+        "id": "fact_14",
+        "subject": "ku",
+        "predicate": "→",
+        "object": "m1",
+        "qualifiers": [
+          "Spring",
+          "kind: adjacent_to",
+          "direction: undirected",
+          "certainty: asserted",
+          "line style: solid"
+        ],
+        "certainty": "asserted",
+        "source_ids": [
+          "rel_14"
+        ]
+      },
+      {
+        "id": "fact_15",
+        "subject": "kd",
+        "predicate": "→",
+        "object": "m1",
+        "qualifiers": [
+          "Spring",
+          "kind: adjacent_to",
+          "direction: undirected",
+          "certainty: asserted",
+          "line style: solid"
+        ],
+        "certainty": "asserted",
+        "source_ids": [
+          "rel_15"
+        ]
+      }
+    ],
+    "uncertainties": [],
+    "evidence": [],
+    "completeness": "complete"
+  },
+  "report": {
+    "keypoint_results": [
+      {
+        "keypoint_id": "published-physics-k1",
+        "text": "In panel (a), spring k₂ connects masses m₁ and m₂.",
+        "in_a": {
+          "status": "retained",
+          "issue_types": [
+            "identity",
+            "relation_type",
+            "direction",
+            "evidence_status"
+          ],
+          "matched_item_ids": [
+            "rel_7"
+          ],
+          "rationale": "The relation between m1 and m2 is explicitly labeled as 'Spring' in memory_a, matching the keypoint's description of k₂ connecting m₁ and m₂.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "in_b": {
+          "status": "retained",
+          "issue_types": [
+            "identity",
+            "relation_type",
+            "direction",
+            "evidence_status"
+          ],
+          "matched_item_ids": [
+            "rel_7"
+          ],
+          "rationale": "The relation between m1 and m2 is explicitly labeled as 'Spring' in memory_b, matching the keypoint's description of k₂ connecting m₁ and m₂.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "observed_stage": "none",
+        "recovery_in_b": false,
+        "render_item_status": "represented",
+        "suggestions": []
+      },
+      {
+        "keypoint_id": "published-physics-k2",
+        "text": "In panel (a), the upper and lower transverse springs kᵤ and k_d are attached to m₁.",
+        "in_a": {
+          "status": "retained",
+          "issue_types": [
+            "identity",
+            "relation_type",
+            "direction",
+            "evidence_status"
+          ],
+          "matched_item_ids": [
+            "rel_3",
+            "rel_5",
+            "rel_14",
+            "rel_15"
+          ],
+          "rationale": "Memory_a contains nodes ku and kd attached to m1 via springs, matching the keypoint's description of transverse springs attached to m1.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "in_b": {
+          "status": "retained",
+          "issue_types": [
+            "identity",
+            "relation_type",
+            "direction",
+            "evidence_status"
+          ],
+          "matched_item_ids": [
+            "rel_3",
+            "rel_5",
+            "rel_14",
+            "rel_15"
+          ],
+          "rationale": "Memory_b contains nodes ku and kd attached to m1 via springs, matching the keypoint's description of transverse springs attached to m1.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "observed_stage": "none",
+        "recovery_in_b": false,
+        "render_item_status": "represented",
+        "suggestions": []
+      },
+      {
+        "keypoint_id": "published-physics-k3",
+        "text": "The transverse support motion is labelled d sin(ωt).",
+        "in_a": {
+          "status": "retained",
+          "issue_types": [
+            "identity",
+            "direction",
+            "relation_type",
+            "evidence_status"
+          ],
+          "matched_item_ids": [
+            "node_dsinwt"
+          ],
+          "rationale": "The node labeled 'd sin( wt )' in memory_a matches the keypoint's description of the transverse support motion.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "in_b": {
+          "status": "retained",
+          "issue_types": [
+            "identity",
+            "direction",
+            "relation_type",
+            "evidence_status"
+          ],
+          "matched_item_ids": [
+            "node_d_sin_wt"
+          ],
+          "rationale": "The node labeled 'd sin( wt )' in memory_b matches the keypoint's description of the transverse support motion.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "observed_stage": "none",
+        "recovery_in_b": false,
+        "render_item_status": "represented",
+        "suggestions": []
+      },
+      {
+        "keypoint_id": "published-physics-k4",
+        "text": "Panel (b) plots restoring force f_nl in newtons against relative displacement x in metres.",
+        "in_a": {
+          "status": "retained",
+          "issue_types": [
+            "identity",
+            "relation_type",
+            "direction",
+            "evidence_status",
+            "unit",
+            "scale"
+          ],
+          "matched_item_ids": [
+            "plot_1"
+          ],
+          "rationale": "The plot in memory_a is titled 'Restoring force vs. Relative displacement' with axes labeled in meters and newtons, matching the keypoint's description.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "in_b": {
+          "status": "retained",
+          "issue_types": [
+            "identity",
+            "relation_type",
+            "direction",
+            "evidence_status",
+            "unit",
+            "scale"
+          ],
+          "matched_item_ids": [
+            "plot_1"
+          ],
+          "rationale": "The plot in memory_b is titled 'Restoring force vs. Relative displacement' with axes labeled in meters and newtons, matching the keypoint's description.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "observed_stage": "none",
+        "recovery_in_b": false,
+        "render_item_status": "represented",
+        "suggestions": []
+      }
+    ],
+    "a_to_b": [],
+    "unmatched_b_claims": [
+      {
+        "id": "fact_1",
+        "text": "m1 → k1 (Spring; kind: adjacent_to; direction: undirected; certainty: asserted; line style: solid)",
+        "review_required": true
+      },
+      {
+        "id": "fact_2",
+        "text": "k1 → Ground (Spring; kind: adjacent_to; direction: undirected; certainty: asserted; line style: solid)",
+        "review_required": true
+      },
+      {
+        "id": "fact_3",
+        "text": "m1 → ku (Spring; kind: adjacent_to; direction: undirected; certainty: asserted; line style: solid)",
+        "review_required": true
+      },
+      {
+        "id": "fact_4",
+        "text": "ku → Ground (Spring; kind: adjacent_to; direction: undirected; certainty: asserted; line style: solid)",
+        "review_required": true
+      },
+      {
+        "id": "fact_5",
+        "text": "m1 → kd (Spring; kind: adjacent_to; direction: undirected; certainty: asserted; line style: solid)",
+        "review_required": true
+      },
+      {
+        "id": "fact_6",
+        "text": "kd → Ground (Spring; kind: adjacent_to; direction: undirected; certainty: asserted; line style: solid)",
+        "review_required": true
+      },
+      {
+        "id": "fact_7",
+        "text": "m1 → m2 (Spring; kind: adjacent_to; direction: undirected; certainty: asserted; line style: solid)",
+        "review_required": true
+      },
+      {
+        "id": "fact_8",
+        "text": "m2 → k2 (Spring; kind: adjacent_to; direction: undirected; certainty: asserted; line style: solid)",
+        "review_required": true
+      },
+      {
+        "id": "fact_9",
+        "text": "k2 → k3 (Spring; kind: adjacent_to; direction: undirected; certainty: asserted; line style: solid)",
+        "review_required": true
+      },
+      {
+        "id": "fact_10",
+        "text": "k3 → Ground (Spring; kind: adjacent_to; direction: undirected; certainty: asserted; line style: solid)",
+        "review_required": true
+      },
+      {
+        "id": "fact_11",
+        "text": "m2 → X2 (Displacement; kind: contains; direction: directed; certainty: asserted; line style: solid)",
+        "review_required": true
+      },
+      {
+        "id": "fact_12",
+        "text": "m1 → X1 (Displacement; kind: contains; direction: directed; certainty: asserted; line style: solid)",
+        "review_required": true
+      },
+      {
+        "id": "fact_13",
+        "text": "d sin( wt ) → ku (Force; kind: flows_to; direction: directed; certainty: asserted; line style: solid)",
+        "review_required": true
+      },
+      {
+        "id": "fact_14",
+        "text": "ku → m1 (Spring; kind: adjacent_to; direction: undirected; certainty: asserted; line style: solid)",
+        "review_required": true
+      },
+      {
+        "id": "fact_15",
+        "text": "kd → m1 (Spring; kind: adjacent_to; direction: undirected; certainty: asserted; line style: solid)",
+        "review_required": true
+      }
+    ],
+    "summary": {
+      "retained_a": 4,
+      "retained_b": 4,
+      "total": 4,
+      "unresolved": 0,
+      "renderer_warnings": 0
+    },
+    "limitations": [
+      "AI reader feedback does not establish human readability or scientific correctness.",
+      "Independent requests to the same model do not imply independent errors.",
+      "Unmatched B assertions are candidates for review, not proven hallucinations.",
+      "Plot reconstruction is approximate, not precision digitization.",
+      "Semantic judgments require review of their cited extracted items.",
+      "This reconstruction has not received an independent visual-review pass."
+    ]
+  },
+  "render_audit": {
+    "width": 1200,
+    "height": 2284,
+    "rendered_item_ids": [
+      "rel_1",
+      "rel_2",
+      "rel_3",
+      "rel_4",
+      "rel_5",
+      "rel_6",
+      "rel_7",
+      "rel_8",
+      "rel_9",
+      "rel_10",
+      "rel_11",
+      "rel_12",
+      "rel_13",
+      "rel_14",
+      "rel_15",
+      "node_m1",
+      "node_m2",
+      "node_k1",
+      "node_k2",
+      "node_k3",
+      "node_ku",
+      "node_kd",
+      "node_x1",
+      "node_x2",
+      "node_dsinwt",
+      "node_ground1",
+      "node_ground2",
+      "node_ground3",
+      "node_ground4",
+      "plot_1",
+      "plot_1_series_1"
+    ],
+    "unsupported_item_ids": [],
+    "warnings": [],
+    "structural_audit": "complete",
+    "visual_review": "not_reviewed",
+    "renderer_version": "0.2.1"
+  },
+  "error": null,
+  "offline_audit": {
+    "note": "Current deterministic rule audit of the saved A/B memories, computed offline for this case page. It does not replace the original report or change historical statistics. Findings concern records and require image review.",
+    "coverage": {
+      "fact_comparison": {
+        "executed": false,
+        "a_facts": 0,
+        "b_facts": 15,
+        "reason": "Reader A recorded no explicit facts. Fact-by-fact comparison was not executed. Node and curve differences outside the recorded plots are not covered by this report."
+      },
+      "relation_audit": {
+        "executed": false,
+        "reason": "Reader A recorded no explicit facts. Fact-by-fact comparison was not executed. Node and curve differences outside the recorded plots are not covered by this report."
+      },
+      "condition_audit": {
+        "executed": false,
+        "reason": "Reader A recorded no explicit facts. Fact-by-fact comparison was not executed. Node and curve differences outside the recorded plots are not covered by this report."
+      },
+      "plot_audit": {
+        "executed": true,
+        "axis_executed": true,
+        "series_executed": true,
+        "a_plots": 1,
+        "b_plots": 1,
+        "matched_plots": 1,
+        "matched_series": 1,
+        "unmatched_a_plots": [],
+        "unmatched_a_series": [],
+        "unmatched_b_plots": [],
+        "unmatched_b_series": [],
+        "reason": null
+      },
+      "unchecked": [
+        "Fact-by-fact assertion comparison",
+        "Unlabelled node and edge changes",
+        "Geometry and relative position",
+        "Confidence bands and shaded ranges",
+        "Precision digitization of plotted values",
+        "Semantic equivalence of paraphrased labels and conditions"
+      ],
+      "note": "Coverage states which automatic checks ran. An empty finding list does not mean the figure is unchanged. Panels are matched only by a unique title or axis-label key, and series only by a unique label within a uniquely matched panel."
+    },
+    "findings": []
+  }
+}

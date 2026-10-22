@@ -35,7 +35,7 @@ const check = (name, ok, detail = "") => { checks.push({ name, ok: Boolean(ok), 
 const resultTitle = () => page.locator(".result-title p").innerText();
 
 try {
-  await page.goto(baseURL, { waitUntil: "networkidle", timeout: 30_000 });
+  await page.goto(`${baseURL}/?workspace=1`, { waitUntil: "networkidle", timeout: 30_000 });
 
   await page.locator(".history-button").click();
   await page.locator("#run-history").waitFor();
@@ -111,7 +111,7 @@ try {
 
   await page.setViewportSize({ width: 390, height: 844 });
   currentStep = "mobile layout";
-  await page.goto(baseURL, { waitUntil: "networkidle" });
+  await page.goto(`${baseURL}/?workspace=1`, { waitUntil: "networkidle" });
   await page.locator(".history-button").click();
   await page.locator("#run-history").waitFor();
   const metrics = await page.evaluate(() => ({ width: document.documentElement.clientWidth, scroll: document.documentElement.scrollWidth, tableScroll: document.querySelector(".history-table-wrap")?.scrollWidth, tableClient: document.querySelector(".history-table-wrap")?.clientWidth }));

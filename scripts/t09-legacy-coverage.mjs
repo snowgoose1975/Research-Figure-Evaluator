@@ -25,6 +25,7 @@ const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
 page.on("console", message => { if (message.type() === "error") consoleErrors.push(message.text()); });
 try {
   await page.goto(`${baseURL}/?run=${encodeURIComponent(runId)}`, { waitUntil: "networkidle", timeout: 30_000 });
+  await page.getByText("Technical checks & audit", { exact: true }).click();
   await page.locator(".coverage-panel").waitFor({ timeout: 15_000 });
   check("legacy run opens by deep link", (await page.locator(".result-title p").innerText()).includes(runId));
   const panelText = await page.locator(".coverage-panel").innerText();

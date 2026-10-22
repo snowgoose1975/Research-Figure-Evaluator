@@ -1,0 +1,694 @@
+{
+  "id": "mathematics-metric-rewiring",
+  "title": "Metric value and p-value versus rewiring steps",
+  "domain": "mathematics",
+  "status": "completed",
+  "takeaway": "A reference-line label can survive without preserving its plotted height or shape. Compare the curve records and the images independently.",
+  "original": "/published/mathematics-metric-rewiring.png",
+  "reconstruction": "/case-studies/mathematics-metric-rewiring/reconstruction.png",
+  "record": "/case-studies/mathematics-metric-rewiring/record-v2.json",
+  "source_run_id": "1792609254557-2193eadd",
+  "paper_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0309005",
+  "attribution": "© 2024 Salbanya et al. Reproduced under CC BY 4.0. Original publisher figure, no content edits.",
+  "license": "CC BY 4.0",
+  "provenance": {
+    "kind": "recorded_local_model_run",
+    "created_at": "2026-10-21T19:00:54.557Z",
+    "model": "qwen3-vl:4b-instruct-16k",
+    "prompt_version": "reader-0.2.2",
+    "source_manifest_sha256": "6fa19eca6265a77b87bb5acbfab382207186e8e2c627e00597729f3b01de1859",
+    "note": "Historical local-model replay, not a new inference. Checkpoints were project-curated and protocol-marked; no independent item-by-item human confirmation is recorded. The ambiguous historical author_confirmed flag is omitted from this public projection. The original saved report is preserved."
+  },
+  "keypoints": [
+    {
+      "id": "published-mathematics-rewiring-k1",
+      "text": "Panel (a) plots Metric Value against the number of rewirings from 0 to 3.",
+      "claim": null,
+      "confirmation_provenance": "protocol_marked_not_independently_confirmed"
+    },
+    {
+      "id": "published-mathematics-rewiring-k2",
+      "text": "Panel (a) compares the Original, Random Rewiring and Controlled Rewiring series.",
+      "claim": null,
+      "confirmation_provenance": "protocol_marked_not_independently_confirmed"
+    },
+    {
+      "id": "published-mathematics-rewiring-k3",
+      "text": "Panel (b) plots p-value against the number of rewirings.",
+      "claim": null,
+      "confirmation_provenance": "protocol_marked_not_independently_confirmed"
+    },
+    {
+      "id": "published-mathematics-rewiring-k4",
+      "text": "Panel (b) includes a reference line labelled alpha = 0.05.",
+      "claim": null,
+      "confirmation_provenance": "protocol_marked_not_independently_confirmed"
+    }
+  ],
+  "a": {
+    "schema_version": "0.2.0",
+    "title": "Figure with two plots showing metric values and p-values against number of rewirings",
+    "domain": "other",
+    "figure_type": "plot",
+    "summary": "Two plots (a and b) show how metric values and p-values change with the number of rewirings. Plot (a) shows metric values on a linear scale, while plot (b) shows p-values on a linear scale. Both plots include lines for 'Original', 'Random Rewiring', and 'Controlled Rewiring', with shaded regions indicating confidence intervals or uncertainty.",
+    "graph": {
+      "nodes": [],
+      "relations": [],
+      "groups": [],
+      "conditions": []
+    },
+    "plots": [
+      {
+        "id": "plot_a",
+        "title": "Plot (a)",
+        "x_axis": {
+          "label": "Number of rewirings",
+          "unit": "none",
+          "scale": "linear",
+          "min": 0,
+          "max": 3
+        },
+        "y_axis": {
+          "label": "Metric Value",
+          "unit": "none",
+          "scale": "linear",
+          "min": 4,
+          "max": 5.4
+        },
+        "series": [
+          {
+            "id": "plot_a_series_1",
+            "label": "Original",
+            "points": [
+              {
+                "x": 0,
+                "y": 5
+              },
+              {
+                "x": 3,
+                "y": 5
+              }
+            ],
+            "style": "line",
+            "approximate": true
+          },
+          {
+            "id": "plot_a_series_2",
+            "label": "Random Rewiring",
+            "points": [
+              {
+                "x": 0,
+                "y": 5
+              },
+              {
+                "x": 3,
+                "y": 4.6
+              }
+            ],
+            "style": "line",
+            "approximate": true
+          },
+          {
+            "id": "plot_a_series_3",
+            "label": "Controlled Rewiring",
+            "points": [
+              {
+                "x": 0,
+                "y": 5
+              },
+              {
+                "x": 3,
+                "y": 5
+              }
+            ],
+            "style": "line",
+            "approximate": true
+          }
+        ],
+        "notes": []
+      },
+      {
+        "id": "plot_b",
+        "title": "Plot (b)",
+        "x_axis": {
+          "label": "Number of rewirings",
+          "unit": "none",
+          "scale": "linear",
+          "min": 0,
+          "max": 3
+        },
+        "y_axis": {
+          "label": "p-value",
+          "unit": "none",
+          "scale": "linear",
+          "min": 0,
+          "max": 1
+        },
+        "series": [
+          {
+            "id": "plot_b_series_1",
+            "label": "alpha = 0.05",
+            "points": [
+              {
+                "x": 0,
+                "y": 0
+              },
+              {
+                "x": 3,
+                "y": 0
+              }
+            ],
+            "style": "line",
+            "approximate": true
+          },
+          {
+            "id": "plot_b_series_2",
+            "label": "Controlled Rewiring",
+            "points": [
+              {
+                "x": 0,
+                "y": 1
+              },
+              {
+                "x": 3,
+                "y": 0.3
+              }
+            ],
+            "style": "line",
+            "approximate": true
+          },
+          {
+            "id": "plot_b_series_3",
+            "label": "Permutation",
+            "points": [
+              {
+                "x": 0,
+                "y": 1
+              },
+              {
+                "x": 3,
+                "y": 0.2
+              }
+            ],
+            "style": "line",
+            "approximate": true
+          },
+          {
+            "id": "plot_b_series_4",
+            "label": "Random Rewiring",
+            "points": [
+              {
+                "x": 0,
+                "y": 1
+              },
+              {
+                "x": 3,
+                "y": 0.6
+              }
+            ],
+            "style": "line",
+            "approximate": true
+          }
+        ],
+        "notes": []
+      }
+    ],
+    "facts": [],
+    "uncertainties": [],
+    "evidence": [],
+    "completeness": "complete"
+  },
+  "b": {
+    "schema_version": "0.2.0",
+    "title": "Figure with two plots showing metric values and p-values against number of rewirings",
+    "domain": "other",
+    "figure_type": "plot",
+    "summary": "Two plots show metric values and p-values changing with the number of rewirings. Plot (a) shows metric values on a linear scale, and Plot (b) shows p-values on a linear scale. Both plots include lines for 'Original', 'Random Rewiring', and 'Controlled Rewiring', with shaded regions indicating confidence intervals or uncertainty.",
+    "graph": {
+      "nodes": [],
+      "relations": [],
+      "groups": [],
+      "conditions": []
+    },
+    "plots": [
+      {
+        "id": "plot_a",
+        "title": "Plot (a)",
+        "x_axis": {
+          "label": "Number of rewirings · linear",
+          "unit": "linear",
+          "scale": "linear",
+          "min": 0,
+          "max": 3
+        },
+        "y_axis": {
+          "label": "Metric Value · linear",
+          "unit": "linear",
+          "scale": "linear",
+          "min": 4,
+          "max": 5
+        },
+        "series": [
+          {
+            "id": "plot_a_series_1",
+            "label": "Original · approximate",
+            "points": [
+              {
+                "x": 0,
+                "y": 5
+              },
+              {
+                "x": 3,
+                "y": 5
+              }
+            ],
+            "style": "line",
+            "approximate": true
+          },
+          {
+            "id": "plot_a_series_2",
+            "label": "Random Rewiring · approximate",
+            "points": [
+              {
+                "x": 0,
+                "y": 5
+              },
+              {
+                "x": 3,
+                "y": 4.5
+              }
+            ],
+            "style": "line",
+            "approximate": true
+          },
+          {
+            "id": "plot_a_series_3",
+            "label": "Controlled Rewiring · approximate",
+            "points": [
+              {
+                "x": 0,
+                "y": 5
+              },
+              {
+                "x": 3,
+                "y": 5
+              }
+            ],
+            "style": "line",
+            "approximate": true
+          }
+        ],
+        "notes": []
+      },
+      {
+        "id": "plot_b",
+        "title": "Plot (b)",
+        "x_axis": {
+          "label": "Number of rewirings · linear",
+          "unit": "linear",
+          "scale": "linear",
+          "min": 0,
+          "max": 3
+        },
+        "y_axis": {
+          "label": "p-value · linear",
+          "unit": "linear",
+          "scale": "linear",
+          "min": 0,
+          "max": 1
+        },
+        "series": [
+          {
+            "id": "plot_b_series_1",
+            "label": "alpha = 0.05 · approximate",
+            "points": [
+              {
+                "x": 0,
+                "y": 0
+              },
+              {
+                "x": 3,
+                "y": 0
+              }
+            ],
+            "style": "line",
+            "approximate": true
+          },
+          {
+            "id": "plot_b_series_2",
+            "label": "Controlled Rewiring · approximate",
+            "points": [
+              {
+                "x": 0,
+                "y": 1
+              },
+              {
+                "x": 3,
+                "y": 0.3
+              }
+            ],
+            "style": "line",
+            "approximate": true
+          },
+          {
+            "id": "plot_b_series_3",
+            "label": "Permutation · approximate",
+            "points": [
+              {
+                "x": 0,
+                "y": 1
+              },
+              {
+                "x": 3,
+                "y": 0.2
+              }
+            ],
+            "style": "line",
+            "approximate": true
+          },
+          {
+            "id": "plot_b_series_4",
+            "label": "Random Rewiring · approximate",
+            "points": [
+              {
+                "x": 0,
+                "y": 1
+              },
+              {
+                "x": 3,
+                "y": 0.6
+              }
+            ],
+            "style": "line",
+            "approximate": true
+          }
+        ],
+        "notes": []
+      }
+    ],
+    "facts": [],
+    "uncertainties": [],
+    "evidence": [],
+    "completeness": "complete"
+  },
+  "report": {
+    "keypoint_results": [
+      {
+        "keypoint_id": "published-mathematics-rewiring-k1",
+        "text": "Panel (a) plots Metric Value against the number of rewirings from 0 to 3.",
+        "in_a": {
+          "status": "retained",
+          "issue_types": [
+            "identity",
+            "scale",
+            "unit",
+            "geometry"
+          ],
+          "matched_item_ids": [
+            "plot_a",
+            "plot_a_series_1",
+            "plot_a_series_2",
+            "plot_a_series_3"
+          ],
+          "rationale": "Plot (a) explicitly plots Metric Value against number of rewirings, with linear scale and no unit specified, matching the keypoint’s description.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "in_b": {
+          "status": "retained",
+          "issue_types": [
+            "identity",
+            "scale",
+            "unit",
+            "geometry"
+          ],
+          "matched_item_ids": [
+            "plot_a",
+            "plot_a_series_1",
+            "plot_a_series_2",
+            "plot_a_series_3"
+          ],
+          "rationale": "Plot (a) in memory_b matches the keypoint’s description of Metric Value vs. rewirings with linear scale and approximate line styles.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "observed_stage": "none",
+        "recovery_in_b": false,
+        "render_item_status": "represented",
+        "suggestions": []
+      },
+      {
+        "keypoint_id": "published-mathematics-rewiring-k2",
+        "text": "Panel (a) compares the Original, Random Rewiring and Controlled Rewiring series.",
+        "in_a": {
+          "status": "retained",
+          "issue_types": [
+            "identity",
+            "relation_type",
+            "condition"
+          ],
+          "matched_item_ids": [
+            "plot_a",
+            "plot_a_series_1",
+            "plot_a_series_2",
+            "plot_a_series_3"
+          ],
+          "rationale": "Plot (a) includes lines for 'Original', 'Random Rewiring', and 'Controlled Rewiring', matching the keypoint’s claim.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "in_b": {
+          "status": "retained",
+          "issue_types": [
+            "identity",
+            "relation_type",
+            "condition"
+          ],
+          "matched_item_ids": [
+            "plot_a",
+            "plot_a_series_1",
+            "plot_a_series_2",
+            "plot_a_series_3"
+          ],
+          "rationale": "Plot (a) in memory_b contains the same three series as described in keypoint, confirming identity and relation type.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "observed_stage": "none",
+        "recovery_in_b": false,
+        "render_item_status": "represented",
+        "suggestions": []
+      },
+      {
+        "keypoint_id": "published-mathematics-rewiring-k3",
+        "text": "Panel (b) plots p-value against the number of rewirings.",
+        "in_a": {
+          "status": "retained",
+          "issue_types": [
+            "identity",
+            "scale",
+            "unit",
+            "geometry"
+          ],
+          "matched_item_ids": [
+            "plot_b"
+          ],
+          "rationale": "Plot (b) explicitly plots p-value against number of rewirings, matching the keypoint’s description.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "in_b": {
+          "status": "retained",
+          "issue_types": [
+            "identity",
+            "scale",
+            "unit",
+            "geometry"
+          ],
+          "matched_item_ids": [
+            "plot_b"
+          ],
+          "rationale": "Plot (b) in memory_b plots p-value against rewirings with linear scale, matching keypoint’s description.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "observed_stage": "none",
+        "recovery_in_b": false,
+        "render_item_status": "represented",
+        "suggestions": []
+      },
+      {
+        "keypoint_id": "published-mathematics-rewiring-k4",
+        "text": "Panel (b) includes a reference line labelled alpha = 0.05.",
+        "in_a": {
+          "status": "retained",
+          "issue_types": [
+            "identity",
+            "value",
+            "unit",
+            "geometry"
+          ],
+          "matched_item_ids": [
+            "plot_b_series_1"
+          ],
+          "rationale": "Plot (b) includes a line explicitly labeled 'alpha = 0.05', matching the keypoint’s description.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "in_b": {
+          "status": "retained",
+          "issue_types": [
+            "identity",
+            "value",
+            "unit",
+            "geometry"
+          ],
+          "matched_item_ids": [
+            "plot_b_series_1"
+          ],
+          "rationale": "Plot (b) in memory_b contains a line labeled 'alpha = 0.05', matching keypoint’s description.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "observed_stage": "none",
+        "recovery_in_b": false,
+        "render_item_status": "represented",
+        "suggestions": []
+      }
+    ],
+    "a_to_b": [],
+    "unmatched_b_claims": [],
+    "summary": {
+      "retained_a": 4,
+      "retained_b": 4,
+      "total": 4,
+      "unresolved": 0,
+      "renderer_warnings": 0
+    },
+    "limitations": [
+      "AI reader feedback does not establish human readability or scientific correctness.",
+      "Independent requests to the same model do not imply independent errors.",
+      "Unmatched B assertions are candidates for review, not proven hallucinations.",
+      "Plot reconstruction is approximate, not precision digitization.",
+      "Semantic judgments require review of their cited extracted items.",
+      "This reconstruction has not received an independent visual-review pass."
+    ]
+  },
+  "render_audit": {
+    "width": 1200,
+    "height": 766,
+    "rendered_item_ids": [
+      "plot_a",
+      "plot_a_series_1",
+      "plot_a_series_2",
+      "plot_a_series_3",
+      "plot_b",
+      "plot_b_series_1",
+      "plot_b_series_2",
+      "plot_b_series_3",
+      "plot_b_series_4"
+    ],
+    "unsupported_item_ids": [],
+    "warnings": [],
+    "structural_audit": "complete",
+    "visual_review": "not_reviewed",
+    "renderer_version": "0.2.1"
+  },
+  "error": null,
+  "offline_audit": {
+    "note": "Current deterministic rule audit of the saved A/B memories, computed offline for this case page. It does not replace the original report or change historical statistics. Findings concern records and require image review.",
+    "coverage": {
+      "fact_comparison": {
+        "executed": false,
+        "a_facts": 0,
+        "b_facts": 0,
+        "reason": "Reader A recorded no explicit facts. Fact-by-fact comparison was not executed. Node and curve differences outside the recorded plots are not covered by this report."
+      },
+      "relation_audit": {
+        "executed": false,
+        "reason": "Reader A recorded no explicit facts. Fact-by-fact comparison was not executed. Node and curve differences outside the recorded plots are not covered by this report."
+      },
+      "condition_audit": {
+        "executed": false,
+        "reason": "Reader A recorded no explicit facts. Fact-by-fact comparison was not executed. Node and curve differences outside the recorded plots are not covered by this report."
+      },
+      "plot_audit": {
+        "executed": true,
+        "axis_executed": true,
+        "series_executed": true,
+        "a_plots": 2,
+        "b_plots": 2,
+        "matched_plots": 2,
+        "matched_series": 7,
+        "unmatched_a_plots": [],
+        "unmatched_a_series": [],
+        "unmatched_b_plots": [],
+        "unmatched_b_series": [],
+        "reason": null
+      },
+      "unchecked": [
+        "Fact-by-fact assertion comparison",
+        "Unlabelled node and edge changes",
+        "Geometry and relative position",
+        "Confidence bands and shaded ranges",
+        "Precision digitization of plotted values",
+        "Semantic equivalence of paraphrased labels and conditions"
+      ],
+      "note": "Coverage states which automatic checks ran. An empty finding list does not mean the figure is unchanged. Panels are matched only by a unique title or axis-label key, and series only by a unique label within a uniquely matched panel."
+    },
+    "findings": [
+      {
+        "id": "sf-axis_unit_scale-plot_a-plot_a-x-unit",
+        "category": "axis_unit_scale",
+        "status": "confirmed",
+        "summary": "Panel \"Plot (a)\" x-axis unit field changed from \"none\" to \"linear\".",
+        "a_item_ids": [
+          "plot_a"
+        ],
+        "b_item_ids": [
+          "plot_a"
+        ],
+        "review_required": true
+      },
+      {
+        "id": "sf-axis_unit_scale-plot_a-plot_a-y-unit",
+        "category": "axis_unit_scale",
+        "status": "confirmed",
+        "summary": "Panel \"Plot (a)\" y-axis unit field changed from \"none\" to \"linear\".",
+        "a_item_ids": [
+          "plot_a"
+        ],
+        "b_item_ids": [
+          "plot_a"
+        ],
+        "review_required": true
+      },
+      {
+        "id": "sf-axis_unit_scale-plot_b-plot_b-x-unit",
+        "category": "axis_unit_scale",
+        "status": "confirmed",
+        "summary": "Panel \"Plot (b)\" x-axis unit field changed from \"none\" to \"linear\".",
+        "a_item_ids": [
+          "plot_b"
+        ],
+        "b_item_ids": [
+          "plot_b"
+        ],
+        "review_required": true
+      },
+      {
+        "id": "sf-axis_unit_scale-plot_b-plot_b-y-unit",
+        "category": "axis_unit_scale",
+        "status": "confirmed",
+        "summary": "Panel \"Plot (b)\" y-axis unit field changed from \"none\" to \"linear\".",
+        "a_item_ids": [
+          "plot_b"
+        ],
+        "b_item_ids": [
+          "plot_b"
+        ],
+        "review_required": true
+      }
+    ]
+  }
+}

@@ -43,8 +43,10 @@
 | `data/fixtures/` | 不含保留集内容的模块输入输出、绘图正控、接口示例 |
 | `runs/<run-id>/` | 私有上传、真实调用记录、运行产物、错误和审计；不进 git |
 | `artifacts/` | 非敏感、经审查的可分享报告、截图和演示回放；默认不纳入用户私图 |
+| `artifacts/web-preview/<version>/` | 由白名单源码构建的只读静态网页包；新版本新增，默认不进Git；实际发布另行授权 |
 | `scripts/`、`tests/` | 必需的开发/验证工具与有实际风险覆盖的测试 |
 | `public/examples/` | 可公开自绘的示例 SVG/PNG；SVG 仅由内置生成程序输出，上传仍仅收 PNG/JPEG |
+| `public/case-studies/<case-id>/` | 经审核公开论文图的历史真实回放白名单 JSON 与重建 PNG；不复制私有运行目录，不包含配置、请求或上传；版本新增不覆盖 |
 | `src/lib/examples/` | 经主代理审核的跨领域示例配方与明确标注的脚本演示记忆；不得冒充真实读图 |
 | `data/published/`、`public/published/` | 原始论文图和可公开分发版本，来源/许可/参考检查点规则先读 `docs/REAL_FIGURES.md` |
 

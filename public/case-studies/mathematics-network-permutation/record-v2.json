@@ -1,0 +1,58 @@
+{
+  "id": "mathematics-network-permutation",
+  "title": "Network permutations and matrix analysis",
+  "domain": "mathematics",
+  "status": "failed",
+  "takeaway": "This complex network figure did not complete the first read. No reconstruction or checkpoint success is inferred from the failure.",
+  "original": "/published/mathematics-network-permutation.png",
+  "reconstruction": null,
+  "record": "/case-studies/mathematics-network-permutation/record-v2.json",
+  "source_run_id": "1792608787008-590ca715",
+  "paper_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0309005",
+  "attribution": "© 2024 Salbanya et al. Reproduced under CC BY 4.0. Original publisher figure, no content edits.",
+  "license": "CC BY 4.0",
+  "provenance": {
+    "kind": "recorded_local_model_run",
+    "created_at": "2026-10-21T18:53:07.008Z",
+    "model": "qwen3-vl:4b-instruct-16k",
+    "prompt_version": "reader-0.2.2",
+    "source_manifest_sha256": "d615215f4057d729620d3453fbce233a6ee04d1584e77c0dff45f8952b693ab2",
+    "note": "Historical local-model replay, not a new inference. Checkpoints were project-curated and protocol-marked; no independent item-by-item human confirmation is recorded. The ambiguous historical author_confirmed flag is omitted from this public projection. The original saved report is preserved."
+  },
+  "keypoints": [
+    {
+      "id": "published-mathematics-k1",
+      "text": "Panel (a) swaps the node labels 4 and 6 while retaining the drawn connection pattern.",
+      "claim": null,
+      "confirmation_provenance": "protocol_marked_not_independently_confirmed"
+    },
+    {
+      "id": "published-mathematics-k2",
+      "text": "Panel (b) compares the original and permuted adjacency matrices.",
+      "claim": null,
+      "confirmation_provenance": "protocol_marked_not_independently_confirmed"
+    },
+    {
+      "id": "published-mathematics-k3",
+      "text": "In panel (d), the individual calculation is labelled p = 1.",
+      "claim": null,
+      "confirmation_provenance": "protocol_marked_not_independently_confirmed"
+    },
+    {
+      "id": "published-mathematics-k4",
+      "text": "In panel (d), the aggregate curve is labelled p = 1/n and is compared with α = 0.05.",
+      "claim": null,
+      "confirmation_provenance": "protocol_marked_not_independently_confirmed"
+    }
+  ],
+  "a": null,
+  "b": null,
+  "report": null,
+  "render_audit": null,
+  "error": {
+    "code": "incomplete",
+    "stage": "reading_a",
+    "message": "Reader A did not complete a valid extraction within the recorded output budget. No checkpoint omissions were scored."
+  },
+  "offline_audit": null
+}

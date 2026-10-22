@@ -4,13 +4,15 @@
 
 **Evidence:** 4 published, CC BY figures across physics, materials and mathematics; 8/12 attempts completed under a fixed local-model protocol. The 4 failures remain counted. Label retention did not guarantee fidelity: a threshold line changed shape and lattice geometry was lost. See the [English write-up](docs/submission/WRITEUP.md), [latest one-page PDF](artifacts/validation/T11-public-writeup-writeup-one-page.pdf) and [validation record](docs/DELIVERY_VALIDATION.md).
 
-**Try locally:** Node.js >=22.12, then `npm ci` and `npm run dev`; open http://127.0.0.1:3000. Without a model, choose **Engineering controls → Scripted tutorial** (clearly labeled, not model evidence). For real inference, install Ollama separately, run `ollama pull qwen3-vl:4b-instruct`, then `ollama create qwen3-vl:4b-instruct-16k -f scripts/Modelfile.qwen3-vl-4b-instruct-16k`. The app defaults to that local model. Historical private run files are not included in a fresh clone; shareable evidence is in `artifacts/validation/`.
+**Try locally:** Node.js >=22.12, then `npm ci` and `npm run dev`; open http://127.0.0.1:3000. Browse four **recorded real cases** immediately, without a model or private run files. Choose **Check my figure** for the three-step workspace. Engineering controls also offer a clearly labeled Scripted tutorial under Advanced options in step 3. For real inference, install Ollama separately, run `ollama pull qwen3-vl:4b-instruct`, then `ollama create qwen3-vl:4b-instruct-16k -f scripts/Modelfile.qwen3-vl-4b-instruct-16k`. The app defaults to that local model. Shareable evidence is in `artifacts/validation/`.
+
+**Public website package:** `node scripts/build-public-demo.mjs --label my-public-version` builds a separate static site in `artifacts/web-preview/my-public-version/`. It includes reviewed historical replays and Hugging Face Static Space metadata; it excludes private APIs, uploads, model access and unreviewed first-export JSON. This edition explicitly does **not** analyze new images online. Free ZeroGPU analysis requires a separate Gradio adaptation and has not been implemented or tested. Do not expose the current single-user workspace server as a multi-user service.
 
 ---
 
 科研图 → AI 阅读 → 显式记忆 → 确定性重建 → AI 再读 → 逐项检查作者的关键信息。
 
-**当前为可运行应用，已含真实本地视觉模型闭环证据。** 四张真实论文图已接入（物理、材料、数学网络、数学 metric 双面板），来源和 CC BY 许可随图显示。固定协议 4 图 × 3 次共完成 8/12；所有失败显式记录，未重跑替换。T09 修正了语义结果覆盖科学规则、双侧面板歧义、阈值容差和 partial usage；T10 修正小量级阈值误判与 B-only 面板漏报，并给证据生成脚本加独立命名和默认拒绝覆盖保护；T11 增加报告复核导读、可读 A/B 引用和下一步动作，并修复公开源码的 API 忽略规则。当前 12 个测试文件 84 项通过。数字与限制见 `docs/DELIVERY_VALIDATION.md`。教学样例使用明确标记的脚本记忆，不代表模型实验结果。
+**当前可浏览真实历史案例，也可在本地运行新图分析。** 四张论文图覆盖物理、材料、数学，来源与CC BY许可随图显示；固定协议4图×3次完成8/12，失败均保留，不能当作泛化准确率。新版提供案例首页、三步工作台、大图对照与复核清单，13个测试文件90项通过，生产构建成功。独立静态网页包已验收但尚未部署，新图在线推理尚未接通。教学脚本、历史真实回放和当前真实推理严格区分。具体数字与限制见 `docs/DELIVERY_VALIDATION.md`。
 
 ## 启动
 
@@ -25,7 +27,7 @@ npm run dev
 
 ## 使用
 
-选择真实论文图或上传 PNG/JPEG，填写并确认 3–5 条关键点，启动真实检查。报告展示原图、重建图、A/B 记忆、逐项保留或偏差、绘图审计、检测覆盖（哪些检查实际执行、哪些未覆盖）和科学发现，支持 Markdown/JSON 导出、同条件运行比较、历史列表与深链接回放（`/?run=<run-id>`）。
+首页可直接浏览四个真实历史案例（含失败）与全部12次固定协议结果。点击 Check my figure 后按“选图 → 确认信息 → 运行”三步操作，填写并确认3–5条关键点。报告优先大图对照与复核清单，A/B记忆和技术审计默认收起，支持Markdown/JSON导出、同条件运行比较、历史列表与深链接回放（`/?run=<run-id>`）。公开案例另有 `/?case=<case-id>`，不依赖私有runs。
 
 完整操作步骤、结果字段解释和故障排查见 [使用手册](docs/USER_GUIDE.md)。
 

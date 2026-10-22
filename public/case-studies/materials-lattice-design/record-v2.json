@@ -1,0 +1,405 @@
+{
+  "id": "materials-lattice-design",
+  "title": "Lattice topology to porous structure",
+  "domain": "materials",
+  "status": "completed",
+  "takeaway": "The three-step design story survived, but the reconstruction reduced lattice geometry to labeled boxes. Geometry is outside the current automatic audit.",
+  "original": "/published/materials-lattice-design.png",
+  "reconstruction": "/case-studies/materials-lattice-design/reconstruction.png",
+  "record": "/case-studies/materials-lattice-design/record-v2.json",
+  "source_run_id": "1792608686957-9d86b9df",
+  "paper_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0182902",
+  "attribution": "© 2017 Egan et al. Reproduced under CC BY 4.0. Original publisher figure, no content edits.",
+  "license": "CC BY 4.0",
+  "provenance": {
+    "kind": "recorded_local_model_run",
+    "created_at": "2026-10-21T18:51:26.957Z",
+    "model": "qwen3-vl:4b-instruct-16k",
+    "prompt_version": "reader-0.2.2",
+    "source_manifest_sha256": "1d98243c719a2c68a36de81659bbed0b7b274815c594c146fd929521f0cfe107",
+    "note": "Historical local-model replay, not a new inference. Checkpoints were project-curated and protocol-marked; no independent item-by-item human confirmation is recorded. The ambiguous historical author_confirmed flag is omitted from this public projection. The original saved report is preserved."
+  },
+  "keypoints": [
+    {
+      "id": "published-materials-k1",
+      "text": "Panel A represents the unit-cell topology, before beam thickness is specified.",
+      "claim": null,
+      "confirmation_provenance": "protocol_marked_not_independently_confirmed"
+    },
+    {
+      "id": "published-materials-k2",
+      "text": "Panel B represents a unit cell with specified porosity.",
+      "claim": null,
+      "confirmation_provenance": "protocol_marked_not_independently_confirmed"
+    },
+    {
+      "id": "published-materials-k3",
+      "text": "Panel C shows a repeated lattice associated with the desired pore size.",
+      "claim": null,
+      "confirmation_provenance": "protocol_marked_not_independently_confirmed"
+    },
+    {
+      "id": "published-materials-k4",
+      "text": "The figure links A to B and then B to C, in that order.",
+      "claim": null,
+      "confirmation_provenance": "protocol_marked_not_independently_confirmed"
+    }
+  ],
+  "a": {
+    "schema_version": "0.2.0",
+    "title": "",
+    "domain": "materials",
+    "figure_type": "geometry",
+    "summary": "A diagram illustrating the progression from a unit cell topology to a specified porosity and then to a desired pore size, represented by three stages labeled A, B, and C.",
+    "graph": {
+      "nodes": [
+        {
+          "id": "A",
+          "label": "Unit cell topology",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.15,
+            "y": 0.3
+          }
+        },
+        {
+          "id": "B",
+          "label": "Specified porosity",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.5,
+            "y": 0.3
+          }
+        },
+        {
+          "id": "C",
+          "label": "Desired pore size",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.85,
+            "y": 0.3
+          }
+        }
+      ],
+      "relations": [
+        {
+          "id": "R1",
+          "source_id": "A",
+          "target_id": "B",
+          "kind": "flows_to",
+          "direction": "directed",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Arrow from A to B"
+        },
+        {
+          "id": "R2",
+          "source_id": "B",
+          "target_id": "C",
+          "kind": "flows_to",
+          "direction": "directed",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Arrow from B to C"
+        }
+      ],
+      "groups": [],
+      "conditions": []
+    },
+    "plots": [],
+    "facts": [],
+    "uncertainties": [],
+    "evidence": [],
+    "completeness": "complete"
+  },
+  "b": {
+    "schema_version": "0.2.0",
+    "title": "Untitled scientific figure",
+    "domain": "materials",
+    "figure_type": "geometry",
+    "summary": "A diagram illustrating the progression from a unit cell topology to a specified porosity and then to a desired pore size, represented by three stages labeled A, B, and C.",
+    "graph": {
+      "nodes": [
+        {
+          "id": "node_A",
+          "label": "Unit cell topology",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.25,
+            "y": 0.4
+          }
+        },
+        {
+          "id": "node_B",
+          "label": "Specified porosity",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.5,
+            "y": 0.4
+          }
+        },
+        {
+          "id": "node_C",
+          "label": "Desired pore size",
+          "aliases": [],
+          "group_id": null,
+          "semantic_position": {
+            "x": 0.75,
+            "y": 0.4
+          }
+        }
+      ],
+      "relations": [
+        {
+          "id": "rel_A_B",
+          "source_id": "node_A",
+          "target_id": "node_B",
+          "kind": "flows_to",
+          "direction": "directed",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Arrow from A to B"
+        },
+        {
+          "id": "rel_B_C",
+          "source_id": "node_B",
+          "target_id": "node_C",
+          "kind": "flows_to",
+          "direction": "directed",
+          "line_style": "solid",
+          "evidence_status": "asserted",
+          "label": "Arrow from B to C"
+        }
+      ],
+      "groups": [],
+      "conditions": []
+    },
+    "plots": [],
+    "facts": [],
+    "uncertainties": [],
+    "evidence": [],
+    "completeness": "complete"
+  },
+  "report": {
+    "keypoint_results": [
+      {
+        "keypoint_id": "published-materials-k1",
+        "text": "Panel A represents the unit-cell topology, before beam thickness is specified.",
+        "in_a": {
+          "status": "retained",
+          "issue_types": [
+            "identity"
+          ],
+          "matched_item_ids": [
+            "A"
+          ],
+          "rationale": "Node A is labeled 'Unit cell topology' and matches the keypoint's description.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "in_b": {
+          "status": "retained",
+          "issue_types": [
+            "identity"
+          ],
+          "matched_item_ids": [
+            "node_A"
+          ],
+          "rationale": "Node node_A is labeled 'Unit cell topology' and matches the keypoint's description.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "observed_stage": "none",
+        "recovery_in_b": false,
+        "render_item_status": "represented",
+        "suggestions": []
+      },
+      {
+        "keypoint_id": "published-materials-k2",
+        "text": "Panel B represents a unit cell with specified porosity.",
+        "in_a": {
+          "status": "retained",
+          "issue_types": [
+            "identity"
+          ],
+          "matched_item_ids": [
+            "B"
+          ],
+          "rationale": "Node B is labeled 'Specified porosity' and matches the keypoint's description.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "in_b": {
+          "status": "retained",
+          "issue_types": [
+            "identity"
+          ],
+          "matched_item_ids": [
+            "node_B"
+          ],
+          "rationale": "Node node_B is labeled 'Specified porosity' and matches the keypoint's description.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "observed_stage": "none",
+        "recovery_in_b": false,
+        "render_item_status": "represented",
+        "suggestions": []
+      },
+      {
+        "keypoint_id": "published-materials-k3",
+        "text": "Panel C shows a repeated lattice associated with the desired pore size.",
+        "in_a": {
+          "status": "retained",
+          "issue_types": [
+            "identity"
+          ],
+          "matched_item_ids": [
+            "C"
+          ],
+          "rationale": "Node C is labeled 'Desired pore size' and matches the keypoint's description.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "in_b": {
+          "status": "retained",
+          "issue_types": [
+            "identity"
+          ],
+          "matched_item_ids": [
+            "node_C"
+          ],
+          "rationale": "Node node_C is labeled 'Desired pore size' and matches the keypoint's description.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "observed_stage": "none",
+        "recovery_in_b": false,
+        "render_item_status": "represented",
+        "suggestions": []
+      },
+      {
+        "keypoint_id": "published-materials-k4",
+        "text": "The figure links A to B and then B to C, in that order.",
+        "in_a": {
+          "status": "retained",
+          "issue_types": [
+            "relation_type",
+            "direction",
+            "geometry"
+          ],
+          "matched_item_ids": [
+            "R1",
+            "R2"
+          ],
+          "rationale": "Relations R1 (A to B) and R2 (B to C) are directed and form a sequential flow, matching the keypoint's stated order.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "in_b": {
+          "status": "retained",
+          "issue_types": [
+            "relation_type",
+            "direction",
+            "geometry"
+          ],
+          "matched_item_ids": [
+            "rel_A_B",
+            "rel_B_C"
+          ],
+          "rationale": "Relations rel_A_B (A to B) and rel_B_C (B to C) are directed and form a sequential flow, matching the keypoint's stated order.",
+          "method": "semantic_assist",
+          "review_required": true
+        },
+        "observed_stage": "none",
+        "recovery_in_b": false,
+        "render_item_status": "represented",
+        "suggestions": []
+      }
+    ],
+    "a_to_b": [],
+    "unmatched_b_claims": [],
+    "summary": {
+      "retained_a": 4,
+      "retained_b": 4,
+      "total": 4,
+      "unresolved": 0,
+      "renderer_warnings": 0
+    },
+    "limitations": [
+      "AI reader feedback does not establish human readability or scientific correctness.",
+      "Independent requests to the same model do not imply independent errors.",
+      "Unmatched B assertions are candidates for review, not proven hallucinations.",
+      "Plot reconstruction is approximate, not precision digitization.",
+      "Semantic judgments require review of their cited extracted items.",
+      "This reconstruction has not received an independent visual-review pass."
+    ]
+  },
+  "render_audit": {
+    "width": 1200,
+    "height": 1142,
+    "rendered_item_ids": [
+      "R1",
+      "R2",
+      "A",
+      "B",
+      "C"
+    ],
+    "unsupported_item_ids": [],
+    "warnings": [],
+    "structural_audit": "complete",
+    "visual_review": "not_reviewed",
+    "renderer_version": "0.2.1"
+  },
+  "error": null,
+  "offline_audit": {
+    "note": "Current deterministic rule audit of the saved A/B memories, computed offline for this case page. It does not replace the original report or change historical statistics. Findings concern records and require image review.",
+    "coverage": {
+      "fact_comparison": {
+        "executed": false,
+        "a_facts": 0,
+        "b_facts": 0,
+        "reason": "Reader A recorded no explicit facts. Fact-by-fact comparison was not executed. Node and curve differences outside the recorded plots are not covered by this report."
+      },
+      "relation_audit": {
+        "executed": false,
+        "reason": "Reader A recorded no explicit facts. Fact-by-fact comparison was not executed. Node and curve differences outside the recorded plots are not covered by this report."
+      },
+      "condition_audit": {
+        "executed": false,
+        "reason": "Reader A recorded no explicit facts. Fact-by-fact comparison was not executed. Node and curve differences outside the recorded plots are not covered by this report."
+      },
+      "plot_audit": {
+        "executed": false,
+        "axis_executed": false,
+        "series_executed": false,
+        "a_plots": 0,
+        "b_plots": 0,
+        "matched_plots": 0,
+        "matched_series": 0,
+        "unmatched_a_plots": [],
+        "unmatched_a_series": [],
+        "unmatched_b_plots": [],
+        "unmatched_b_series": [],
+        "reason": "A recorded no plots, so plot-axis and series-shape comparison was not executed."
+      },
+      "unchecked": [
+        "Fact-by-fact assertion comparison",
+        "Unlabelled node and edge changes",
+        "Geometry and relative position",
+        "Confidence bands and shaded ranges",
+        "Axis units and scales",
+        "Series shapes",
+        "Precision digitization of plotted values",
+        "Semantic equivalence of paraphrased labels and conditions"
+      ],
+      "note": "Coverage states which automatic checks ran. An empty finding list does not mean the figure is unchanged. Panels are matched only by a unique title or axis-label key, and series only by a unique label within a uniquely matched panel."
+    },
+    "findings": []
+  }
+}
