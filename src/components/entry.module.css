@@ -63,3 +63,4 @@
 .savedJson pre{max-height:400px;overflow:auto;padding:12px;background:#f2f3ef;font:11px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
 @media(max-width:900px){.visitorGrid{grid-template-columns:1fr}.historyPanel{position:static;max-height:none}.historyList{max-height:500px}.analysisFrame{height:760px}}
 @media(max-width:700px){.visitorWorkspace{padding:30px 14px}.visitorHeading{align-items:flex-start}.visitorHeading h1{font-size:36px}.visitorHeading>.runBadge{margin-top:6px}.analysisPanelHead{align-items:flex-start}.analysisPanelHead p{max-width:240px;line-height:1.45}.smallButton{font-size:11px;padding-inline:8px}.analysisFrame{height:720px}.historyHead{padding-inline:13px}.savedReport{padding:15px}.savedReaderGrid{grid-template-columns:1fr}}
+@media(max-width:390px){.header nav a:first-child{display:none}}

@@ -1,83 +1,65 @@
-# Research Figure Evaluator / Figure Relay
+# Figure Relay
 
-**AI-reader round-trip diagnostics for scientific figures.** An image-only reader extracts a structured memory; a deterministic renderer reconstructs it; a separate image-only request reads the reconstruction. Reports compare author checkpoints, expose record-level scientific differences, and distinguish reconstruction gaps from unchecked content. This is not a measure of human memory or scientific correctness.
+### AI-simulated reader round-trip diagnostics for scientific figures
 
-**Evidence-first update (T15):** actual A/B extractions are separate from evaluator explanations. Unsupported free-text judgments remain **Needs verification**, with the evaluator's original suggestion and readable citations preserved. Uniquely matched graph connections are compared, and reconstruction occlusions are flagged. Structured facts/explicit directed claims and project-curated numerical checks can receive bounded rule checks; free-text entailment and reliable arrow reading are **not solved**. The 4B reader still misread arrows in the development counterexample. New protocol: `reader-0.2.3 / renderer-0.2.2 / evidence-0.3.0`; original reports and 8/12 statistics stay unchanged.
+Figure Relay helps researchers inspect whether a figure communicates the message they intend. It gives a scientific figure to an AI-simulated reader, reconstructs an image from that reader’s saved reading, and asks a second reader to interpret the reconstruction. The report highlights information that may be missed, changed, or left uncertain.
 
-**Public website:** [Figure Relay](https://figure-relay.chicchair5.chatgpt.site) — browse four recorded real cases, or choose **Check my figure** for a free host-computer analysis trial. Completed visitor reports are saved in IndexedDB for that browser only; visitors can search, reopen offline, download, and delete them. The reports are not synced to the host or other devices. Analysis uses the author's local GPU with a bounded queue and may pause or go offline. Public figures only; private processing records stay on the host. Temporary addresses are discovered from this repository's separate `service-status` branch. Image previews close in-page. See [local hosting and controls](docs/LOCAL_HOSTING.md).
+A research-software project built for the 2026 Open Scientific Intelligence Hackathon.
 
-**T16 history verification:** the deployed visitor workspace passed a 12-check controlled end-to-end browser run using a completed public-materials report and stubbed worker responses. It covered transient 502 recovery, one-time submission, browser-local save/search/reload/offline reopen/delete, and image-data exclusion. The live tunnel itself has not yet passed a clean end-to-end transfer; one real public-figure run completed on the host, but the browser saw repeated HTTP 502 responses before confirming a saved visitor record. See the [T16 validation report](docs/handoffs/T16-history-and-submission-readiness.md) and [delivery validation](docs/DELIVERY_VALIDATION.md).
+[Open the public demo](https://figure-relay.chicchair5.chatgpt.site) · [Read the project write-up](docs/submission/WRITEUP.md) · [Browse the source repository](https://github.com/snowgoose1975/Research-Figure-Evaluator)
 
-**Evidence:** 4 published, CC BY figures across physics, materials and mathematics; 8/12 attempts completed under a fixed local-model protocol. The 4 failures remain counted. Label retention did not guarantee fidelity: a threshold line changed shape and lattice geometry was lost. See the [English write-up](docs/submission/WRITEUP.md), [latest one-page PDF](artifacts/validation/T11-public-writeup-writeup-one-page.pdf) and [validation record](docs/DELIVERY_VALIDATION.md).
+## How it works
 
-**Try locally:** Node.js >=22.12, then `npm ci` and `npm run dev`; open http://127.0.0.1:3000. Browse four **recorded real cases** immediately, without a model or private run files. Choose **Check my figure** for the three-step workspace. Engineering controls also offer a clearly labeled Scripted tutorial under Advanced options in step 3. For real inference, install Ollama separately, run `ollama pull qwen3-vl:4b-instruct`, then `ollama create qwen3-vl:4b-instruct-16k -f scripts/Modelfile.qwen3-vl-4b-instruct-16k`. The app defaults to that local model. Shareable evidence is in `artifacts/validation/`.
+1. **Set the intended message.** The author records three to five points a reader should take away.
+2. **Read the original.** Reader A receives the figure image and creates a structured account. The author’s checkpoints are withheld from the reader.
+3. **Reconstruct from memory.** A deterministic renderer turns Reader A’s saved account into an approximate diagram.
+4. **Read again and compare.** A separate image-only request reads the reconstruction. The report compares the two reader accounts with the intended points and marks areas that were not checked.
 
-**Public website package:** `node scripts/build-public-demo.mjs --label my-public-version` builds a separate static site in `artifacts/web-preview/my-public-version/`. It excludes private APIs, uploads, model access and unreviewed first-export JSON. The free ZeroGPU candidate is in `adapters/huggingface/`; prepare it with `node scripts/build-hf-space.mjs --label my-space-v1`. Its GPU runtime is unvalidated: the HF connector cannot select ZeroGPU hardware and default Gradio creation was rejected by the platform's PRO requirement. The first local integration of this new relay failed explicitly at reader A; it is not included in the original 8/12. Do not expose the current single-user workspace server as a multi-user service.
+The report separates possible first-read omissions from reconstruction differences and second-read changes. It is a review aid, not an overall figure-quality score.
 
----
+## Try the public demo
 
-科研图 → AI 阅读 → 显式记忆 → 确定性重建 → AI 再读 → 逐项检查作者的关键信息。
+The public site includes four recorded cases in physics, materials, and mathematics. These replays are available without installing a model.
 
-**公开网页已接入本机承担算力的免费分析试用。** 手动启动`scripts/start-sharing.cmd`，控制页 http://127.0.0.1:9041 可暂停/恢复；不添加开机启动项。单任务、最多3个等待、每小时12次/滚动24小时100次，低内存暂不接单，空闲卸载模型。临时隧道可能中断/轮换，不能承诺生产可用性。四张论文图与旧固定协议8/12保留，新服务验证独立记录。教学脚本、历史回放和当前真实推理严格区分。具体限制见 `docs/DELIVERY_VALIDATION.md`。
+- Select **Check my figure** to open the visitor workspace. New analysis is available only while the author’s host computer is online and accepting requests.
+- Select **Saved checks** to find reports saved by this browser. Search, reopen, download, or remove them from the workspace.
+- Visitor reports are stored in this browser’s local IndexedDB. They do not sync to an account, the host computer’s history, or another device.
 
-## 启动
+Online analysis runs on the author’s computer through a limited free trial. Only submit figures that are already public and that you are authorized to share. Submitted images are processed and retained in a private run record on the host computer. Do not upload confidential or unpublished research. The service can pause or go offline; it has no uptime guarantee. See [local hosting and privacy details](docs/LOCAL_HOSTING.md).
 
-需要 Node.js >=22.12；依赖均为项目局部安装。
+## Evidence and limitations
 
-```powershell
+The fixed local-model protocol covers four published figures and twelve attempts across physics, materials, and mathematics. Eight attempts completed; four ended during Reader A and remain counted as failures. Completion is not accuracy, and this small sample does not establish generalization.
+
+Observed cases show why the comparison can be useful and why its output needs review: a reconstructed threshold curve changed shape, lattice geometry was lost, and the model has misread arrow direction. Example checkpoints were curated by the project and marked by the protocol; they were not independently confirmed by the paper authors.
+
+Figure Relay does not measure human understanding, establish scientific correctness, or prove that a figure is defective. The same model is used for separate reader requests, so their errors are not statistically independent. Free-text scientific interpretation, reliable arrow reading, and several geometric details remain outside the validated coverage.
+
+## Run locally
+
+Use Node.js 22.12 or newer. The recorded cases work without a local model:
+
+```bash
 npm ci
 npm run dev
 ```
 
-打开 http://127.0.0.1:3000 。当前工作区已安装依赖，可直接运行第二条。生产模式使用 `npm run build` 后 `npm start`。
+Open `http://127.0.0.1:3000`. For local inference, install Ollama and create the project’s 16k-context model:
 
-## 使用
-
-首页可直接浏览四个真实历史案例（含失败）与全部12次固定协议结果。点击 Check my figure 后按“选图 → 确认信息 → 运行”三步操作，填写并确认3–5条关键点。报告优先大图对照与复核清单，A/B记忆和技术审计默认收起，支持Markdown/JSON导出、同条件运行比较、历史列表与深链接回放（`/?run=<run-id>`）。公开案例另有 `/?case=<case-id>`，不依赖私有runs。
-
-完整操作步骤、结果字段解释和故障排查见 [使用手册](docs/USER_GUIDE.md)。
-
-没有视觉模型时，可在 Engineering controls 中体验六组教学样例；真实论文图禁止使用脚本模式。产品模拟 AI 读者，不测量真人记忆，不验证论文结论，也不提供未经验证的综合质量分。
-
-## 本地视觉模型
-
-默认连接 Ollama：`http://127.0.0.1:11434/v1`，无需 API key。实测在 8GB 显存机器上 `qwen3-vl:4b-instruct` 可用，需派生 16k 上下文版本（8B 在此配置下溢出显存，仅适合更大显存）：
-
-```powershell
+```bash
 ollama pull qwen3-vl:4b-instruct
 ollama create qwen3-vl:4b-instruct-16k -f scripts/Modelfile.qwen3-vl-4b-instruct-16k
-npm run dev
 ```
 
-应用默认对本地 Ollama 使用 `qwen3-vl:4b-instruct-16k` 和 10000 输出上限，通常不需要设置环境变量。要显式覆盖时，在 PowerShell 中先设置再启动：
+Then restart the app. The default model is `qwen3-vl:4b-instruct-16k`. Run the project checks with:
 
-```powershell
-$env:RFE_MODEL="qwen3-vl:4b-instruct-16k"
-$env:RFE_MAX_OUTPUT_TOKENS="10000"
-npm run dev
-```
-
-默认 4096 上下文放不下“图片 + 完整 JSON schema + 提取结果”，必须用派生模型或调大 `num_ctx`；输出上限 10000 是实测下较快且能完成多数图的配置。32k/14000 在 8GB 显存上会溢出到 CPU，单次约 20 分钟；8000 输出会让复杂的物理图截断。思考型 `qwen3-vl:*b` 会把输出预算耗在隐藏推理上，应使用 `-instruct` 变体；8B 在本机同样溢出显存，只作抽查。
-
-本机 `ollama pull` 曾在 Cloudflare 层卡住（下载目标解析到 198.18.0.7），绕开办法是用 curl 按 registry manifest 逐个 blob 下载到 `~/.ollama/models/blobs/`，写入 `~/.ollama/models/manifests/registry.ollama.ai/library/<model>/<tag>`，再用 `ollama list` 和 sha256 校验。这是网络环境适配，不是产品逻辑；不要修改系统 DNS/代理或关闭下载安全检查。
-
-`/api/status` 显示 `configured: true` 才可做真实运行。主链路三次模型调用（A、B、语义检查），可选独立直接检查增加一次；同模型独立请求不等于统计独立。
-
-## 验证和交接
-
-```powershell
+```bash
 npm run validate
-node scripts/smoke-api.mjs --label T11-api-smoke
-node scripts/browser-smoke.mjs --label T11-browser-smoke
-node scripts/history-browser.mjs --label T11-history-browser
-node scripts/t09-legacy-coverage.mjs --label T11-legacy-coverage
-npx tsx scripts/t09-boundary-probes.ts --label T11-boundary-probes
-npx tsx scripts/t08-scientific-regression.ts --label T11-scientific-regression
-npx tsx scripts/t08-audit-stub.ts --label T11-audit-stub
 ```
 
-后几项需要本地服务运行；浏览器脚本使用本机 Microsoft Edge。验证产物在 `artifacts/validation/`，私有输入和运行记录在忽略提交的 `runs/`。证据文件不可覆盖：脚本默认拒绝写入已存在的同名文件，重跑时用新的 `--label`；已存在的历史证据不要删除或改名来绕过保护。
+## Project documentation
 
-继续开发先读 [项目规则](AGENTS.md)、[DeepSeek 交接](docs/HANDOFF.md)、[当前实现合同](docs/IMPLEMENTATION.md)。[真实论文图来源](docs/REAL_FIGURES.md)、[比赛信息](docs/COMPETITION.md)、[历史总纲](docs/MASTER_PLAN.md) 保留供复核。
-
-代码已推送到 [GitHub 仓库](https://github.com/snowgoose1975/Research-Figure-Evaluator) 的 `main`。本地私有 `runs/` 不随仓库公开；旧运行的离线回归和历史检查需要对应本地记录，新克隆可直接运行单测和教学流程。尚未部署、发布社交帖子或提交比赛。
+- [Project write-up](docs/submission/WRITEUP.md) — method, results, and interpretation.
+- [User guide](docs/USER_GUIDE.md) — operating the local application and reading reports.
+- [Figure sources and permissions](docs/REAL_FIGURES.md).
+- [Validation record](docs/DELIVERY_VALIDATION.md) — test evidence and remaining verification limits.

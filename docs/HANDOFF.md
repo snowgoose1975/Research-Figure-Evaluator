@@ -1,6 +1,14 @@
 # 接续交接 · 2026-10-22
 
-## T16 历史功能收尾与续办入口（最新）
+## T17 README 与访客历史入口（最新）
+
+GitHub 首页文案已改为面向评审者和新用户的英文项目说明，介绍产品目的、读者往返流程、公开体验、隐私边界、固定协议结果与验证限制；移除开发任务编号、调参流水和聊天式接续语气。首页公开演示导航新增 `Saved checks`，直达访客工作区的浏览器本地历史；窄屏下隐藏次要的案例导航以避免导航溢出。本机工作台不显示此入口。访客报告仅保存在同一浏览器、同一站点 origin 的 IndexedDB，不跨设备同步。
+
+公开站 Sites version 5 已部署，主页与新脚本均返回 HTTP 200。Playwright 在等待页面 hydration 后点击 `Saved checks`，确认打开 `Your figure checks` / `Saved visitor reports`，无页面错误。首次 smoke 在 hydration 完成前点击，属于检查时序竞争；等待 `networkidle` 后复验通过。完整项目验证通过：typecheck、lint、19 个测试文件 / 125 项和生产构建。构建包为 `artifacts/web-preview/T16-saved-checks-nav-v1/`。实际 live worker 的完整公网传输闭环仍未验证，受控 stub 浏览器测试不能代替真实模型与隧道请求；在线分析只在主机服务启动并接单时可用。
+
+本轮根仓库变更：`README.md`、首页导航与窄屏样式。公开站源码提交 `532edee9efef6a795ad15431308b7e2e1bed4258`；Sites version `appgver_2df185a2a1348191b142ce092821a85e`，deployment `appgdep_6ada1cc939508191a7787d6280c28926`，地址 https://figure-relay.chicchair5.chatgpt.site 。根仓库改动与本交接一并进入 GitHub `main`。比赛帖子与比赛条目仍未发布/提交。
+
+## T16 历史功能收尾与续办入口（历史）
 
 本机历史新增全量摘要搜索和分页，不再限于最近50条；公网访客报告存入当前固定站点origin的IndexedDB，支持搜索、刷新后回看、离线打开、下载和删除。访客历史不回传服务端，也不暴露机主runs。固定公开站已部署T16 v4：`https://figure-relay.chicchair5.chatgpt.site`（Sites version `appgver_132cff8c1f308191955a4fe9af33b429`，deployment `appgdep_6ad9f8794a188191aa8125da23af0606`）。项目实现与安全边界见 `docs/IMPLEMENTATION.md` T16节。
 
