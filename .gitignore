@@ -5,7 +5,7 @@ node_modules/
 coverage/
 *.tsbuildinfo
 .env*
-runs/
+/runs/
 artifacts/private/
 artifacts/browser/
 playwright-report/
