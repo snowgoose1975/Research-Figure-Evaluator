@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import type { CaseIndex, CaseSummary, PublicCase } from "@/lib/examples/case-studies";
 import styles from "@/components/entry.module.css";
+import { fetchVisitorEndpoint } from "@/components/visitor-endpoint";
 import {
   clearPendingVisitorJob,
   clearVisitorResults,
@@ -29,7 +30,6 @@ const demoOnly = process.env.NEXT_PUBLIC_RFE_DEMO_ONLY === "1";
 const onlineAnalysisUrl = process.env.NEXT_PUBLIC_RFE_ANALYSIS_URL || "";
 const githubUrl = "https://github.com/snowgoose1975/Research-Figure-Evaluator";
 const stableSiteOrigin = "https://figure-relay.chicchair5.chatgpt.site";
-const discoveryUrl = "https://raw.githubusercontent.com/snowgoose1975/Research-Figure-Evaluator/service-status/endpoint.json";
 const domainNames: Record<string, string> = { physics: "Physics", materials: "Materials", mathematics: "Mathematics" };
 
 function validTunnelUrl(value: unknown): string | null {
@@ -238,9 +238,7 @@ function VisitorWorkspace({ onHome }: { onHome: () => void }) {
       return;
     }
     try {
-      const response = await fetch(`${discoveryUrl}?t=${Math.floor(Date.now() / 10000)}`, { cache: "no-store" });
-      if (!response.ok) throw new Error("The host is not reachable right now.");
-      const current = await response.json() as { url?: unknown; online?: unknown; updated_at?: unknown };
+      const current = await fetchVisitorEndpoint() as { url?: unknown; online?: unknown; updated_at?: unknown };
       const origin = validTunnelUrl(current.url);
       const updated = typeof current.updated_at === "string" ? Date.parse(current.updated_at) : NaN;
       if (current.online !== true || !origin || !Number.isFinite(updated) || Date.now() - updated > 6 * 60 * 60 * 1000 || updated > Date.now() + 60_000) {
