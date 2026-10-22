@@ -1,12 +1,20 @@
 # 接续交接 · 2026-10-22
 
-## T10 已通过独立定向复验（最新）
+## T11 公开源码与报告导读（最新）
+
+玉米已明确授权 Git 推送，完整候选版已发布至 `snowgoose1975/Research-Figure-Evaluator` 的 `main`，首次完整交付 commit `0095caa`。修复 `.gitignore` 中 `runs/` 误忽略 `src/app/api/runs/` 的问题，改为 `/runs/`，四个 API 源码均已入库，私有运行未公开。
+
+报告新增可展开复核导读和可读 A/B 引用，Markdown 同步包含；不改旧 run、评估结论、检查点或实验参数。最终 `npm run validate` 通过，12 files / 84 tests / 生产构建成功；浏览器 20/20，最终生产回放与手机展开布局 4/4，真实旧数学记录离线回归 11/11，临时报告副本的导读检查 4/4。真实模型统计仍为原 8/12；旧报告不自动补算新审计。证据与限制见 [T11 交接](handoffs/T11-publication-and-review.md)。
+
+README 已补英文评审入口与无模型体验路径。社交发帖、部署和比赛提交仍未执行，未获得这些操作授权；公开源码不能等同于已参赛。
+
+## T10 已通过独立定向复验（历史）
 
 Codex独立重跑75项测试及生产构建、18项边界探针、默认拒绝覆盖和wx二次写入保护，均符合预期；N1/N2与防覆盖可关闭。验收记录见 [ACCEPTANCE_T10_REVIEW](ACCEPTANCE_T10_REVIEW.md)。下一步进入真实图修改对照与参赛成品准备，不再扩大工程修复清单。
 
-比赛提交已复核：Moment活动页与官方Agenda均为10月22日19:00 CDT，即**北京时间10月23日08:00**，不是北京时间今天19:00。当前平台必需公开帖子、write-up、公开仓库含README、规则确认；视频选填≤4分钟，允许单人。入口与详情见 [COMPETITION](COMPETITION.md) 和 [提交检查表](submission/CHECKLIST.md)。发布、push、提交尚未授权或执行。
+比赛提交已复核：Moment活动页与官方Agenda均为10月22日19:00 CDT，即**北京时间10月23日08:00**，不是北京时间今天19:00。当前平台必需公开帖子、write-up、公开仓库含README、规则确认；视频选填≤4分钟，允许单人。入口与详情见 [COMPETITION](COMPETITION.md) 和 [提交检查表](submission/CHECKLIST.md)。Git push 已在 T11 获授权并执行；发帖、部署、最终提交仍未执行。
 
-## T10 边界收尾与防覆盖（最新）
+## T10 边界收尾与防覆盖（历史）
 
 T09 复验遗留的 N1/N2 已修：`1e-10 A` 对 `1e-12 A` 容差的实际零值不再被判 retained；A 无 plot、B 有面板/系列时 `unmatched_b_plots`/`unmatched_b_series` 会列出；证据生成脚本使用独立 label、预检和拒绝覆盖写入。当前 `npm run validate` 为 11 个测试文件 75 项通过；T10 边界探针 18/18、科学回归 11/11、受控审计 16/16；最终构建浏览器 16/16 界面、24/24 历史/深链接、7/7 旧 coverage；一页 PDF 1 页、998/1020px。详见 [T10 交接](handoffs/T10-review-boundaries.md)。没有启动新的完整真实模型实验，旧运行与旧检查点未改动。
 

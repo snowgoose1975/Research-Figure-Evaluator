@@ -1,8 +1,16 @@
 # Research Figure Evaluator / Figure Relay
 
+**AI-reader round-trip diagnostics for scientific figures.** An image-only reader extracts a structured memory; a deterministic renderer reconstructs it; a separate image-only request reads the reconstruction. Reports compare author checkpoints, expose record-level scientific differences, and distinguish reconstruction gaps from unchecked content. This is not a measure of human memory or scientific correctness.
+
+**Evidence:** 4 published, CC BY figures across physics, materials and mathematics; 8/12 attempts completed under a fixed local-model protocol. The 4 failures remain counted. Label retention did not guarantee fidelity: a threshold line changed shape and lattice geometry was lost. See the [English write-up](docs/submission/WRITEUP.md), [latest one-page PDF](artifacts/validation/T11-public-writeup-writeup-one-page.pdf) and [validation record](docs/DELIVERY_VALIDATION.md).
+
+**Try locally:** Node.js >=22.12, then `npm ci` and `npm run dev`; open http://127.0.0.1:3000. Without a model, choose **Engineering controls → Scripted tutorial** (clearly labeled, not model evidence). For real inference, install Ollama separately, run `ollama pull qwen3-vl:4b-instruct`, then `ollama create qwen3-vl:4b-instruct-16k -f scripts/Modelfile.qwen3-vl-4b-instruct-16k`. The app defaults to that local model. Historical private run files are not included in a fresh clone; shareable evidence is in `artifacts/validation/`.
+
+---
+
 科研图 → AI 阅读 → 显式记忆 → 确定性重建 → AI 再读 → 逐项检查作者的关键信息。
 
-**当前为可运行应用，已含真实本地视觉模型闭环证据。** 四张真实论文图已接入（物理、材料、数学网络、数学 metric 双面板），来源和 CC BY 许可随图显示。固定协议 4 图 × 3 次共完成 8/12；所有失败显式记录，未重跑替换。T09 修正了语义结果覆盖科学规则、双侧面板歧义、阈值容差和 partial usage；T10 修正小量级阈值误判与 B-only 面板漏报，并给证据生成脚本加独立命名和默认拒绝覆盖保护。当前 11 个测试文件 75 项通过。数字与限制见 `docs/DELIVERY_VALIDATION.md`。教学样例使用明确标记的脚本记忆，不代表模型实验结果。
+**当前为可运行应用，已含真实本地视觉模型闭环证据。** 四张真实论文图已接入（物理、材料、数学网络、数学 metric 双面板），来源和 CC BY 许可随图显示。固定协议 4 图 × 3 次共完成 8/12；所有失败显式记录，未重跑替换。T09 修正了语义结果覆盖科学规则、双侧面板歧义、阈值容差和 partial usage；T10 修正小量级阈值误判与 B-only 面板漏报，并给证据生成脚本加独立命名和默认拒绝覆盖保护；T11 增加报告复核导读、可读 A/B 引用和下一步动作，并修复公开源码的 API 忽略规则。当前 12 个测试文件 84 项通过。数字与限制见 `docs/DELIVERY_VALIDATION.md`。教学样例使用明确标记的脚本记忆，不代表模型实验结果。
 
 ## 启动
 
@@ -64,4 +72,4 @@ npx tsx scripts/t08-audit-stub.ts --label T11-audit-stub
 
 继续开发先读 [项目规则](AGENTS.md)、[DeepSeek 交接](docs/HANDOFF.md)、[当前实现合同](docs/IMPLEMENTATION.md)。[真实论文图来源](docs/REAL_FIGURES.md)、[比赛信息](docs/COMPETITION.md)、[历史总纲](docs/MASTER_PLAN.md) 保留供复核。
 
-尚未 git push、部署、发布或提交比赛；这些操作需玉米明确许可。
+代码已推送到 [GitHub 仓库](https://github.com/snowgoose1975/Research-Figure-Evaluator) 的 `main`。本地私有 `runs/` 不随仓库公开；旧运行的离线回归和历史检查需要对应本地记录，新克隆可直接运行单测和教学流程。尚未部署、发布社交帖子或提交比赛。

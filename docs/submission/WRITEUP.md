@@ -20,4 +20,4 @@ The local application uses Next.js, a schema-validated model adapter, determinis
 
 The reconstruction is a diagnostic artifact, not a scientific truth oracle. The same model in independent requests can share errors, so A and B agreement is not statistical independence, and a reconstruction can introduce losses. The sample is small and does not establish cross-domain generalization or an advantage over direct checking.
 
-Repository: https://github.com/snowgoose1975/Research-Figure-Evaluator (local implementation not yet pushed).
+Repository: https://github.com/snowgoose1975/Research-Figure-Evaluator (public source and README).

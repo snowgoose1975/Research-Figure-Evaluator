@@ -1,0 +1,200 @@
+{
+  "evidence_id": "T11-scientific-regression",
+  "frozen_at": "2026-10-22",
+  "supersedes": "T08-scientific-regression-v1",
+  "synthetic_fixture_version": "T09-scientific-v2",
+  "source_run_id": "1792609657136-e85156a8",
+  "source_input_digest": "2667ad982e76ef0b6e8dd68c9a444289b0cc2d83dbac57aac24d8fc9036ebd04",
+  "scope": "Offline rule audit over the saved A/B memories of one real run. No model call and no change to the saved run. The T08 checkpoint/regression are preserved but superseded because their 0.05 tolerance accepted y=0 as retained.",
+  "checkpoint": {
+    "id": "t09-kp-math-alpha-threshold",
+    "provenance": "project_curated",
+    "author_confirmed": false,
+    "tolerance_basis": "Value tolerance is 10% of the 0.05 reference level; flatness tolerance is 0.2% of the 0-1 y-axis span. Both were fixed from the source panel's tick spacing before the revised audit and are not chosen from the A/B observations.",
+    "expected": {
+      "in_a": "contradicted",
+      "in_b": "contradicted"
+    },
+    "observed": {
+      "in_a": {
+        "status": "contradicted",
+        "issue_types": [
+          "value"
+        ],
+        "matched_item_ids": [
+          "plot_b",
+          "plot_b_series_1"
+        ],
+        "rationale": "Project-curated plot check (not author-confirmed): expected a flat \"alpha = 0.05\" series near y=0.05 (value tolerance 0.005, flatness tolerance 0.002; basis: Value tolerance is 10% of the 0.05 reference level; flatness tolerance is 0.2% of the 0-1 y-axis span. Both were fixed from the source panel's tick spacing before the revised audit and are not chosen from the A/B observations.); observed y range 0 across 2 sampled points.",
+        "method": "rule",
+        "review_required": true
+      },
+      "in_b": {
+        "status": "contradicted",
+        "issue_types": [
+          "value"
+        ],
+        "matched_item_ids": [
+          "plot_2",
+          "plot_2_series_1"
+        ],
+        "rationale": "Project-curated plot check (not author-confirmed): expected a flat \"alpha = 0.05\" series near y=0.05 (value tolerance 0.005, flatness tolerance 0.002; basis: Value tolerance is 10% of the 0.05 reference level; flatness tolerance is 0.2% of the 0-1 y-axis span. Both were fixed from the source panel's tick spacing before the revised audit and are not chosen from the A/B observations.); observed y range 1 across 2 sampled points.",
+        "method": "rule",
+        "review_required": true
+      }
+    }
+  },
+  "coverage": {
+    "fact_comparison": {
+      "executed": false,
+      "a_facts": 0,
+      "b_facts": 0,
+      "reason": "Reader A recorded no explicit facts. Fact-by-fact comparison was not executed. Node and curve differences outside the recorded plots are not covered by this report."
+    },
+    "relation_audit": {
+      "executed": false,
+      "reason": "Reader A recorded no explicit facts. Fact-by-fact comparison was not executed. Node and curve differences outside the recorded plots are not covered by this report."
+    },
+    "condition_audit": {
+      "executed": false,
+      "reason": "Reader A recorded no explicit facts. Fact-by-fact comparison was not executed. Node and curve differences outside the recorded plots are not covered by this report."
+    },
+    "plot_audit": {
+      "executed": true,
+      "axis_executed": true,
+      "series_executed": true,
+      "a_plots": 2,
+      "b_plots": 2,
+      "matched_plots": 2,
+      "matched_series": 7,
+      "unmatched_a_plots": [],
+      "unmatched_a_series": [],
+      "unmatched_b_plots": [],
+      "unmatched_b_series": [],
+      "reason": null
+    },
+    "unchecked": [
+      "Fact-by-fact assertion comparison",
+      "Unlabelled node and edge changes",
+      "Geometry and relative position",
+      "Confidence bands and shaded ranges",
+      "Precision digitization of plotted values",
+      "Semantic equivalence of paraphrased labels and conditions"
+    ],
+    "note": "Coverage states which automatic checks ran. An empty finding list does not mean the figure is unchanged. Panels are matched only by a unique title or axis-label key, and series only by a unique label within a uniquely matched panel."
+  },
+  "findings": [
+    {
+      "id": "sf-axis_unit_scale-plot_a-plot_1-x-unit",
+      "category": "axis_unit_scale",
+      "status": "confirmed",
+      "summary": "Panel \"Figure (a)\" x-axis unit field changed from \"none\" to \"linear\".",
+      "a_item_ids": [
+        "plot_a"
+      ],
+      "b_item_ids": [
+        "plot_1"
+      ],
+      "review_required": true
+    },
+    {
+      "id": "sf-axis_unit_scale-plot_a-plot_1-y-unit",
+      "category": "axis_unit_scale",
+      "status": "confirmed",
+      "summary": "Panel \"Figure (a)\" y-axis unit field changed from \"none\" to \"linear\".",
+      "a_item_ids": [
+        "plot_a"
+      ],
+      "b_item_ids": [
+        "plot_1"
+      ],
+      "review_required": true
+    },
+    {
+      "id": "sf-axis_unit_scale-plot_b-plot_2-x-unit",
+      "category": "axis_unit_scale",
+      "status": "confirmed",
+      "summary": "Panel \"Figure (b)\" x-axis unit field changed from \"none\" to \"linear\".",
+      "a_item_ids": [
+        "plot_b"
+      ],
+      "b_item_ids": [
+        "plot_2"
+      ],
+      "review_required": true
+    },
+    {
+      "id": "sf-axis_unit_scale-plot_b-plot_2-y-unit",
+      "category": "axis_unit_scale",
+      "status": "confirmed",
+      "summary": "Panel \"Figure (b)\" y-axis unit field changed from \"none\" to \"linear\".",
+      "a_item_ids": [
+        "plot_b"
+      ],
+      "b_item_ids": [
+        "plot_2"
+      ],
+      "review_required": true
+    },
+    {
+      "id": "sf-series_shape_change-plot_b_series_1-plot_2_series_1",
+      "category": "series_shape_change",
+      "status": "confirmed",
+      "summary": "Series \"alpha = 0.05\" is flat in A but not flat in B (A range 0, B range 1; tolerance is 1% of each panel's y-axis span: A 0.01, B 0.01).",
+      "a_item_ids": [
+        "plot_b_series_1"
+      ],
+      "b_item_ids": [
+        "plot_2_series_1"
+      ],
+      "review_required": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "run identity is the frozen real math run",
+      "pass": true
+    },
+    {
+      "name": "fact-by-fact comparison is marked not executed",
+      "pass": true
+    },
+    {
+      "name": "plot-axis audit executed",
+      "pass": true
+    },
+    {
+      "name": "series-shape audit executed separately",
+      "pass": true
+    },
+    {
+      "name": "coverage names geometry and confidence-band limits",
+      "pass": true
+    },
+    {
+      "name": "alpha flat-line loss is detected as confirmed, not retained by label",
+      "pass": true
+    },
+    {
+      "name": "axis unit field changes are detected",
+      "pass": true
+    },
+    {
+      "name": "checkpoint declares an independent tolerance basis",
+      "pass": true
+    },
+    {
+      "name": "known A reading y=0 is not retained against the 0.05 level",
+      "pass": true
+    },
+    {
+      "name": "checkpoint deviates in B",
+      "pass": true
+    },
+    {
+      "name": "all findings remain review-required",
+      "pass": true
+    }
+  ],
+  "pass": true
+}

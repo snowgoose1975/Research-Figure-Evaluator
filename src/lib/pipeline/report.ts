@@ -1,9 +1,21 @@
 import type { RunSnapshot } from "../schemas";
+import { buildReviewQueue } from "../evaluation/review";
 
 export function markdownReport(run: RunSnapshot) {
   const escape = (s: string) => s.replaceAll("|", "\\|").replaceAll("\n", " ");
   const lines = ["# Figure Relay — scientific information recovery", "", `Run: ${run.id}`, `Mode: ${run.mode === "mock" ? "SCRIPTED DEMO — not model output" : "LIVE MODEL RUN"}`, `Created: ${run.created_at}`, `Model: ${run.model}`, `Schema: ${run.schema_version}; prompts: ${run.prompt_version}`, `Status: ${run.status}`, "", "## Keypoint evidence", "", "| Author statement | Reader A | Reader B | Observed stage | Evidence / rationale |", "|---|---|---|---|---|"];
   for (const r of run.report?.keypoint_results ?? []) lines.push(`| ${escape(r.text)} | ${r.in_a.status} | ${r.in_b.status} | ${r.observed_stage} | ${escape(r.in_b.rationale)} |`);
+  lines.push("", "## What to review first", "", "Derived from saved records; these references do not locate pixels or establish defects in the original figure.");
+  const queue = buildReviewQueue(run);
+  if (!queue.length) lines.push("No review items from the available records. This is not proof of full fidelity.");
+  for (const item of queue) {
+    lines.push("", `### ${item.label}: ${item.title}`, "", item.observation, "", `Next step: ${item.action}`);
+    for (const [side, refs] of [["A · first read", item.a], ["B · second read", item.b]] as const) {
+      lines.push("", `${side}:`);
+      if (!refs.length) lines.push("- No cited record item available.");
+      for (const ref of refs) lines.push(`- ${ref.id}: ${ref.text}`);
+    }
+  }
   const scientificKeypoints = run.keypoints.filter(k => k.scientific);
   if (scientificKeypoints.length) {
     lines.push("", "## Project-curated scientific checks", "", "These checks were written by the project from the source figure and are not author-confirmed. They remain review_required.");

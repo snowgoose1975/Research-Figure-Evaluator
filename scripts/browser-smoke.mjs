@@ -77,11 +77,21 @@ try {
   check("scripted demo label visible", await page.getByText("SCRIPTED DEMO", { exact: true }).count() > 0 && await page.getByText("Scripted demonstration").count() > 0);
   check("both source and reconstruction PNGs visible", await page.locator(".image-panel img").count() === 2);
   check("report contains keypoint rows", await page.locator(".report-row").count() >= 3);
+  check("review guide appears before image and memory detail", await page.locator(".review-panel").count() === 1 && await page.evaluate(() => {
+    const guide = document.querySelector(".review-panel");
+    const images = document.querySelector(".image-panel");
+    return Boolean(guide && images && (guide.compareDocumentPosition(images) & Node.DOCUMENT_POSITION_FOLLOWING));
+  }));
+  check("review guide does not equate item count with quality", (await page.locator(".review-panel").innerText()).includes("Item count does not indicate severity or figure quality"));
+  const firstReview = page.locator(".review-item").first();
+  await firstReview.locator(".review-evidence summary").click();
+  check("readable A/B references have explicit location limits", (await firstReview.innerText()).includes("not pixel locations") && await firstReview.locator(".review-reference").count() === 2);
   const runId = await page.locator(".result-title p").innerText().then(t => t.replace(/^Run\s+/, "").split(" · ")[0]);
   const jsonDownload = await downloadText(page.getByRole("button", { name: "JSON" }));
   check("JSON report download contains run record", jsonDownload.text.includes(runId) && jsonDownload.text.includes("report"), jsonDownload.path);
   const markdownDownload = await downloadText(page.getByRole("button", { name: "Markdown" }));
   check("Markdown report download contains keypoint report", markdownDownload.text.includes("#") && /keypoint|claim|figure/i.test(markdownDownload.text), markdownDownload.path);
+  check("Markdown export includes review guide and next step", markdownDownload.text.includes("## What to review first") && markdownDownload.text.includes("Next step:"));
   await page.screenshot({ path: files.result, fullPage: true });
 
   await page.getByRole("button", { name: /Engineering controls/ }).click();

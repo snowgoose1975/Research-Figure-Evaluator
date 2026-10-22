@@ -1,0 +1,44 @@
+{
+  "scope": "Read-only offline display check over a saved public-figure run, with current rule audit supplied only to a temporary report copy. No model call, no saved-report rewrite, no change to historical statistics. The normal legacy replay still displays its original saved report and coverage limits.",
+  "source_run_id": "1792609657136-e85156a8",
+  "source_sha256": "7b968ecae47c1110e33c775c3fc26d77ec3a84b7b32cf5c0fbfa69dee9a9f7b4",
+  "checks": [
+    {
+      "name": "shape difference precedes repetitive axis fields despite retained checkpoints",
+      "pass": true
+    },
+    {
+      "name": "both sides contain readable alpha coordinates",
+      "pass": true
+    },
+    {
+      "name": "saved source was not modified",
+      "pass": true
+    },
+    {
+      "name": "coverage limit remains visible",
+      "pass": true
+    }
+  ],
+  "first_item": {
+    "id": "finding-sf-series_shape_change-plot_b_series_1-plot_2_series_1",
+    "source": "record_difference",
+    "label": "RULE-LEVEL RECORD DIFFERENCE",
+    "title": "series shape change",
+    "observation": "Series \"alpha = 0.05\" is flat in A but not flat in B (A range 0, B range 1; tolerance is 1% of each panel's y-axis span: A 0.01, B 0.01).",
+    "action": "Trace the cited series through its sampled coordinates in A, the reconstructed curve and B. Confirm whether the renderer or the second read introduced the shape change.",
+    "a": [
+      {
+        "id": "plot_b_series_1",
+        "text": "Figure (b) / alpha = 0.05: (0, 0) → (3, 0) [approximate samples]"
+      }
+    ],
+    "b": [
+      {
+        "id": "plot_2_series_1",
+        "text": "Figure (b) / alpha = 0.05 · approximate: (0, 1) → (3, 0) [approximate samples]"
+      }
+    ]
+  },
+  "pass": true
+}

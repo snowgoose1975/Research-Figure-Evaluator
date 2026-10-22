@@ -1,0 +1,26 @@
+{
+  "scope": "Final production browser replay; no model calls or historical record changes",
+  "checks": [
+    {
+      "name": "final production replay shows guide and references",
+      "pass": true
+    },
+    {
+      "name": "expanded guide has no mobile horizontal overflow",
+      "pass": true,
+      "metrics": {
+        "width": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "name": "legacy real run reports unavailable coverage without rewriting it",
+      "pass": true
+    },
+    {
+      "name": "no browser errors",
+      "pass": true
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,109 @@
+{
+  "evidence_id": "T11-review-browser",
+  "baseURL": "http://127.0.0.1:3000",
+  "checks": [
+    {
+      "name": "home responds",
+      "ok": true,
+      "detail": "HTTP 200"
+    },
+    {
+      "name": "published-first default filter",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "four published cards",
+      "ok": true,
+      "detail": "found 4"
+    },
+    {
+      "name": "publication attribution and paper links visible",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "published script mode disabled",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "published checkpoints start unconfirmed",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "published provenance instructions visible",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "teaching selected enables scripted mode",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "scripted demo label visible",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "both source and reconstruction PNGs visible",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "report contains keypoint rows",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "review guide appears before image and memory detail",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "review guide does not equate item count with quality",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "readable A/B references have explicit location limits",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "JSON report download contains run record",
+      "ok": true,
+      "detail": "C:\\Users\\czc12\\OneDrive - HKUST (Guangzhou)\\Documents\\ChatGPT\\hackathon\\artifacts\\validation\\T11-review-browser-figure-relay-1792647021859-49849f9e.json"
+    },
+    {
+      "name": "Markdown report download contains keypoint report",
+      "ok": true,
+      "detail": "C:\\Users\\czc12\\OneDrive - HKUST (Guangzhou)\\Documents\\ChatGPT\\hackathon\\artifacts\\validation\\T11-review-browser-figure-relay-1792647021859-49849f9e.md"
+    },
+    {
+      "name": "Markdown export includes review guide and next step",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "clear/challenged comparison renders",
+      "ok": true,
+      "detail": "1792647021859-49849f9e vs 1792647054394-d51d6a7c"
+    },
+    {
+      "name": "390px mobile no horizontal overflow",
+      "ok": true,
+      "detail": "{\"width\":390,\"scroll\":390,\"height\":2047}"
+    },
+    {
+      "name": "mobile controls usable",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "consoleErrors": [],
+  "pageErrors": [],
+  "failedResponses": []
+}
