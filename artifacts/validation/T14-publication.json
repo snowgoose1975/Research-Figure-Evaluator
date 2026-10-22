@@ -1,0 +1,28 @@
+{
+  "scope": "Free host-computer trial, not an uptime guarantee or new generalization benchmark",
+  "website": "https://figure-relay.chicchair5.chatgpt.site",
+  "status": "succeeded",
+  "audience": "public",
+  "site_source_commit": "69b8706fb1e614badf9c17e67dd918a3a37492ca",
+  "version_id": "appgprj_6ad9acebaf7081918c9ec818c1421b67~appgver_8fda4dcc6e2c81919f5e50def9382633",
+  "deployment_id": "appgdep_6ad9c23f83548191af2d47d3177c2d3f",
+  "discovery_branch": "service-status",
+  "local_controls": "http://127.0.0.1:9041",
+  "automatic_windows_startup": false,
+  "startup_decision": "User explicitly chose manual startup",
+  "limits": { "active": 1, "waiting": 3, "per_hour": 12, "per_rolling_24_hours": 100, "minimum_free_ram_mib_for_new_work": 1024 },
+  "validation": {
+    "full_validate": "16 files / 104 tests / typecheck / lint / production build passed",
+    "final_affected_tests": "10/10",
+    "final_browser": "T14-browser-final-v3.json; 16/16; zero console/page errors; actual navigation/controls and explicit report replay without new model calls",
+    "real_inference": "T14-live-first-recovered.json; one HTTPS-admitted local run completed; interrupted GET recovered the same job without model rerun",
+    "prior_failures": "Browser v1 expired hostname, v2 button label/favicon issue; original live GET interruption; all retained"
+  },
+  "limitations": [
+    "Free temporary tunnel rotates and may fail. Public Git address announcement can lag.",
+    "Host must remain awake, connected and running Ollama, the application, worker and discovery processes.",
+    "Only public figures: private processing records remain on the host computer.",
+    "Model used about 6.6GB VRAM; low-memory gate cannot guarantee normal application responsiveness.",
+    "Original fixed-protocol statistics remain 8/12 and are not updated by this trial."
+  ]
+}

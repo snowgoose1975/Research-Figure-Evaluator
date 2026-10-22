@@ -1,0 +1,15 @@
+{
+  "label": "T14-browser-final",
+  "base": "https://3e9a92939ca50f.lhr.life",
+  "scope": "Actual published navigation, service controls, responsive UI and controlled replay of the already-completed real report. Submit route intercepted: zero new model calls; separate live evidence is T14-live-first-recovered.json.",
+  "checks": [
+    {
+      "name": "published landing page opens the verified real service",
+      "pass": true
+    }
+  ],
+  "errors": [
+    "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+    "Failed to load resource: the server responded with a status of 502 (Bad Gateway)"
+  ]
+}

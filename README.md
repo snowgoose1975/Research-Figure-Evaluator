@@ -2,7 +2,7 @@
 
 **AI-reader round-trip diagnostics for scientific figures.** An image-only reader extracts a structured memory; a deterministic renderer reconstructs it; a separate image-only request reads the reconstruction. Reports compare author checkpoints, expose record-level scientific differences, and distinguish reconstruction gaps from unchecked content. This is not a measure of human memory or scientific correctness.
 
-**Public website:** [Figure Relay](https://figure-relay.chicchair5.chatgpt.site) — browse four recorded real cases without installing anything. Image previews close with the Close image button, Escape, or the backdrop. **New-image analysis is available locally; free hosted analysis is not connected yet.**
+**Public website:** [Figure Relay](https://figure-relay.chicchair5.chatgpt.site) — browse four recorded real cases, or choose **Check my figure** for a free host-computer analysis trial. It uses the author's local GPU with a bounded queue and may pause or go offline. Public figures only; processing records remain on the host. Temporary addresses are discovered from this repository's separate `service-status` branch. Image previews close in-page. See [local hosting and controls](docs/LOCAL_HOSTING.md).
 
 **Evidence:** 4 published, CC BY figures across physics, materials and mathematics; 8/12 attempts completed under a fixed local-model protocol. The 4 failures remain counted. Label retention did not guarantee fidelity: a threshold line changed shape and lattice geometry was lost. See the [English write-up](docs/submission/WRITEUP.md), [latest one-page PDF](artifacts/validation/T11-public-writeup-writeup-one-page.pdf) and [validation record](docs/DELIVERY_VALIDATION.md).
 
@@ -14,7 +14,7 @@
 
 科研图 → AI 阅读 → 显式记忆 → 确定性重建 → AI 再读 → 逐项检查作者的关键信息。
 
-**公开网页已上线，可浏览真实历史案例；新图分析仍需本地运行。** 四张论文图覆盖物理、材料、数学，来源与CC BY许可随图显示；固定协议4图×3次完成8/12，失败均保留，不能当作泛化准确率。首页围绕作者预期信息、模拟阅读与修改展开；大图支持关闭按钮/Esc/遮罩退出，外网13项交互检查通过。教学脚本、历史真实回放和当前真实推理严格区分。具体数字与限制见 `docs/DELIVERY_VALIDATION.md`。
+**公开网页已接入本机承担算力的免费分析试用。** 手动启动`scripts/start-sharing.cmd`，控制页 http://127.0.0.1:9041 可暂停/恢复；不添加开机启动项。单任务、最多3个等待、每小时12次/滚动24小时100次，低内存暂不接单，空闲卸载模型。临时隧道可能中断/轮换，不能承诺生产可用性。四张论文图与旧固定协议8/12保留，新服务验证独立记录。教学脚本、历史回放和当前真实推理严格区分。具体限制见 `docs/DELIVERY_VALIDATION.md`。
 
 ## 启动
 

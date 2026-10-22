@@ -1,5 +1,7 @@
 # Delivery validation · 2026-10-22
 
+T14增量：固定网页接入受限本机分析服务。正式流水线通过HTTPS接受一张公开材料图并完成；首次浏览器GET发生ECONNRESET，同任务恢复领取报告/重建，未重新提交或重跑，T14-live-first-recovered.json保留限制。显存峰值6627MiB，GPU外部观察96%、采样窗口75%；最低空闲RAM289MiB与开发构建重叠，不作隔离基准或日常流畅保证。暂停/恢复真实操作通过，空闲显存恢复约12MiB。免费临时隧道实际自动轮换，独立service-status公告分支和原网页发现当前地址；不能承诺SLA。最终validate 16文件104项、lint/typecheck/build通过；HTTP边界4项、队列6项均计入总数。新证据不混入旧8/12。用户选择手动启动，不添加系统启动项。T14首次完整浏览器验收因轮换过期域名中断，v2发现Close文本不一致与favicon404，失败证据均保留；最终状态见T14交接和后续v3证据。
+
 T13增量（最新）：公开案例站 https://figure-relay.chicchair5.chatgpt.site 已成功部署。`T13-public-online.json`外网Edge13/13、无console/page错误；静态v3本地13/13，早期失败保留。图片关闭/手机交互和作者预期信息的首页目标已修。最终`npm run validate`：14文件94测试、typecheck/lint/build通过。首次沙箱构建EPERM，同命令完整复验通过。Python relay6项通过；HF候选入口只做语法检查。首次新relay真实本地测试A阶段失败，见`T13-local-relay-live.json`，不混入旧8/12。HF创建被PRO限制拒绝，用户截图确认Gradio/Docker均为Paid，线上新图推理未接通。发布版本、失败和待办见`handoffs/T13-publication.md`。
 
 T12增量（最新）：重整首页/工作台，新增不依赖私有runs的4个真实案例白名单回放（含失败），完整披露12次固定协议。最终 `npm run validate`：13 files / 90 tests，typecheck/lint/build通过；`T12-public-final-browser.json` 15/15、`T12-local-browser-v1.json` 19/19、`T12-history-browser-v1.json` 24/24、`T12-final-visual.json` 3/3（图片无裁边、390px首页无横溢）。初版静态包曾缺favicon产生404，失败记录 `T12-public-browser-v1.json` 保留，最终包已补齐图标且无console/page错误。公开v2投影不声称作者确认；旧run/统计/检查点未改。只读包已经构建和验收，但尚未部署；免费在线新图推理仍未实现。

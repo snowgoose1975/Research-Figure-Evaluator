@@ -1,0 +1,56 @@
+import { readFileSync } from "node:fs";
+import { chromium } from "@playwright/test";
+import { evidenceFile, evidenceLabel, assertNewEvidence, writeNewEvidence } from "./lib/evidence.mjs";
+const label = evidenceLabel("T14-browser-final");
+const files = { report: evidenceFile(label, ".json"), desktop: evidenceFile(label, ".png"), mobile: evidenceFile(label, "-mobile.png"), admin: evidenceFile(label, "-admin.png") }; assertNewEvidence(Object.values(files));
+const base = readFileSync("runs/service-control/public-url.txt", "utf8").trim();
+const checks = [], errors = []; let completed = false; const check = (name, pass) => { checks.push({ name, pass: !!pass }); if (!pass) throw new Error(name); };
+const browser = await chromium.launch({ executablePath: "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe", headless: true });
+const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+page.on("pageerror", error => errors.push(error.message)); page.on("console", message => { if (message.type() === "error") errors.push(message.text()); });
+try {
+  await page.goto("https://figure-relay.chicchair5.chatgpt.site", { waitUntil: "networkidle" });
+  await page.getByRole("button", { name: "Check my figure", exact: true }).first().click();
+  await page.waitForURL(`${base}/`, { timeout: 30000 });
+  check("published landing page opens the verified real service", page.url() === `${base}/`);
+  const status = await page.request.get(`${base}/status`); check("public service ready", (await status.json()).accepting);
+  check("no public control or local history link", !await page.locator('a[href*="9041"],a[href*="api/runs"]').count());
+  await page.locator('input[type="file"]').setInputFiles("public/published/materials-lattice-design.png");
+  const points = page.getByRole("textbox", { name: "Expected scientific statement" });
+  for (let index = 0; index < 3; index++) await points.nth(index).fill(`Expected scientific message ${index + 1}`);
+  check("explicit consent required", await page.getByRole("button", { name: "Agree and submit figure" }).isDisabled());
+  await page.locator("#consent").check();
+  // UI-only replay of the one already-completed real service report. No model call.
+  const prior = JSON.parse(readFileSync("runs/T14-live-first/result.json", "utf8")); let posts = 0;
+  await page.route(`${base}/jobs`, async route => { posts++; await route.fulfill({ status: 202, contentType: "application/json", body: JSON.stringify({ id: "a".repeat(64), status: "completed", position: 0, result: prior.result }) }); });
+  await page.getByRole("button", { name: "Agree and submit figure" }).click();
+  await page.getByText("Completed. Review each item against your scientific context.", { exact: true }).waitFor();
+  check("report replay displays each author's statement", await page.locator(".judgment").count() === 3);
+  check("only one submit and no capability in page URL", posts === 1 && !page.url().includes("jobs"));
+  check("report offers next check", await page.getByRole("button", { name: "New check", exact: true }).isVisible());
+  await page.screenshot({ path: files.desktop, fullPage: true });
+  await page.locator("img.reconstruction").click();
+  check("reconstruction opens in modal", await page.locator("dialog[open]").count() === 1);
+  await page.keyboard.press("Tab"); check("modal focus stays trapped", await page.evaluate(() => document.querySelector("dialog[open]").contains(document.activeElement)));
+  await page.keyboard.press("Escape"); check("Escape restores image focus", await page.locator("dialog[open]").count() === 0 && await page.evaluate(() => document.activeElement.classList.contains("reconstruction")));
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator("img.reconstruction").click();
+  check("mobile close stays visible", await page.getByRole("button", { name: "Close image" }).isVisible());
+  await page.getByRole("button", { name: "Close image" }).click();
+  check("mobile has no horizontal overflow", await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+  await page.screenshot({ path: files.mobile, fullPage: true });
+  await page.getByRole("button", { name: "New check", exact: true }).click();
+  check("new check clears consent and image", !await page.locator("#consent").isChecked() && await page.getByRole("button", { name: "Agree and submit figure" }).isDisabled());
+  const admin = await browser.newPage(); await admin.goto("http://127.0.0.1:9041", { waitUntil: "networkidle" });
+  await admin.getByRole("button", { name: "暂停接单", exact: true }).click(); await admin.getByText("已暂停", { exact: true }).waitFor();
+  check("manual pause updates public status", (await (await page.request.get(`${base}/status`)).json()).paused);
+  await admin.screenshot({ path: files.admin, fullPage: true });
+  await admin.getByRole("button", { name: "恢复接单", exact: true }).click(); await admin.getByText("正在接单", { exact: true }).waitFor();
+  check("manual resume updates public status", (await (await page.request.get(`${base}/status`)).json()).accepting);
+  check("no unexpected browser error", errors.length === 0);
+  completed = true;
+} finally {
+  writeNewEvidence(files.report, JSON.stringify({ label, base, outcome: completed ? "passed" : "failed", scope: "Actual published navigation, service controls, responsive UI and controlled replay of the already-completed real report. Submit route intercepted: zero new model calls; separate live evidence is T14-live-first-recovered.json.", checks, errors }, null, 2) + "\n");
+  await browser.close();
+}
+console.log(JSON.stringify({ label, checks, errors }, null, 2));

@@ -1,0 +1,54 @@
+{
+  "label": "T14-browser-final-v2",
+  "base": "https://5cc5a5f6986297.lhr.life",
+  "scope": "Actual published navigation, service controls, responsive UI and controlled replay of the already-completed real report. Submit route intercepted: zero new model calls; separate live evidence is T14-live-first-recovered.json.",
+  "checks": [
+    {
+      "name": "published landing page opens the verified real service",
+      "pass": true
+    },
+    {
+      "name": "public service ready",
+      "pass": true
+    },
+    {
+      "name": "no public control or local history link",
+      "pass": true
+    },
+    {
+      "name": "explicit consent required",
+      "pass": true
+    },
+    {
+      "name": "report replay displays each author's statement",
+      "pass": true
+    },
+    {
+      "name": "only one submit and no capability in page URL",
+      "pass": true
+    },
+    {
+      "name": "report offers next check",
+      "pass": true
+    },
+    {
+      "name": "reconstruction opens in modal",
+      "pass": true
+    },
+    {
+      "name": "modal focus stays trapped",
+      "pass": true
+    },
+    {
+      "name": "Escape restores image focus",
+      "pass": true
+    },
+    {
+      "name": "mobile close stays visible",
+      "pass": false
+    }
+  ],
+  "errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ]
+}

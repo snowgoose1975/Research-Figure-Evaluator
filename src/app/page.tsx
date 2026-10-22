@@ -13,6 +13,7 @@ const Workbench = dynamic(() => import("@/components/workbench"), {
 const base = process.env.NEXT_PUBLIC_RFE_BASE_PATH || "";
 const asset = (path: string) => `${base}${path.startsWith("/") ? path : `/${path}`}`;
 const demoOnly = process.env.NEXT_PUBLIC_RFE_DEMO_ONLY === "1";
+const onlineAnalysisUrl = process.env.NEXT_PUBLIC_RFE_ANALYSIS_URL || "";
 const githubUrl = "https://github.com/snowgoose1975/Research-Figure-Evaluator";
 const domainNames: Record<string, string> = { physics: "Physics", materials: "Materials", mathematics: "Mathematics" };
 
@@ -152,8 +153,20 @@ export default function Home() {
     return () => controller.abort();
   }, [openCase]);
 
-  const enterWorkbench = () => {
-    if (demoOnly) { setShowDemoInfo(true); setActive(false); return; }
+  const enterWorkbench = async () => {
+    if (demoOnly) {
+      if (onlineAnalysisUrl) {
+        try {
+          const response = await fetch(`https://raw.githubusercontent.com/snowgoose1975/Research-Figure-Evaluator/service-status/endpoint.json?t=${Math.floor(Date.now() / 10000)}`, { cache: "no-store" });
+          const current = await response.json();
+          if (response.ok && current.online !== false && /^https:\/\/[a-z0-9-]+\.(?:lhr\.life|localhost\.run)$/.test(current.url) && Date.now() - Date.parse(current.updated_at) < 6 * 60 * 60 * 1000) {
+            window.location.assign(current.url); return;
+          }
+        } catch { /* Do not silently navigate to a known potentially expired URL. */ }
+        setError("The live host is temporarily unreachable. Please return to the recorded cases and try later.");
+      }
+      setShowDemoInfo(true); setActive(false); return;
+    }
     setShowDemoInfo(false); setCaseData(null); setActive(true); syncUrl({ workspace: true });
   };
   const selectCase = (item: CaseSummary) => { setActive(false); setShowDemoInfo(false); syncUrl({ caseId: item.id }); void openCase(item); };
@@ -169,7 +182,7 @@ export default function Home() {
       <nav aria-label="Main navigation"><a href="#cases" onClick={goHome}>View cases</a><button onClick={enterWorkbench}>Check my figure</button><a href={githubUrl} target="_blank" rel="noreferrer">GitHub ↗</a></nav>
     </header>
 
-    {showDemoInfo ? <section className={`${styles.section} ${styles.demoInfo}`}><p className={styles.kicker}>PUBLIC DEMO · READ ONLY</p><h1>Online analysis is not connected yet.</h1><p>The public site currently shows saved historical replays. To check a figure locally, clone the repository, install project dependencies with <code>npm ci</code>, then start the app with <code>npm run dev</code>.</p><div className={styles.buttonRow}><button className={styles.primaryButton} onClick={goHome}>Back to cases</button><a className={styles.secondaryButton} href={githubUrl} target="_blank" rel="noreferrer">Project on GitHub ↗</a></div></section> : showDetail ? <CaseDetail item={selected!} data={caseData} loading={loading} error={error} onBack={goHome} onRetry={() => void openCase(selected!)} /> : <>
+    {showDemoInfo ? <section className={`${styles.section} ${styles.demoInfo}`}><p className={styles.kicker}>{onlineAnalysisUrl ? "HOST-COMPUTER TRIAL" : "PUBLIC DEMO · READ ONLY"}</p><h1>{onlineAnalysisUrl ? "The live host is temporarily unavailable." : "Online analysis is not connected yet."}</h1><p>{onlineAnalysisUrl ? "This free analysis service runs on the author's computer. It may pause, rotate its temporary address or go offline. Browse the recorded cases while it is unavailable, or try again later." : <>The public site currently shows saved historical replays. To check a figure locally, clone the repository, install project dependencies with <code>npm ci</code>, then start the app with <code>npm run dev</code>.</>}</p><div className={styles.buttonRow}><button className={styles.primaryButton} onClick={goHome}>Back to cases</button><a className={styles.secondaryButton} href={githubUrl} target="_blank" rel="noreferrer">Project on GitHub ↗</a></div></section> : showDetail ? <CaseDetail item={selected!} data={caseData} loading={loading} error={error} onBack={goHome} onRetry={() => void openCase(selected!)} /> : <>
       <section className={styles.hero}>
         <div className={styles.heroCopy}><p className={styles.kicker}>REVIEW THE MESSAGE YOUR FIGURE CARRIES</p><h1>Will readers understand your scientific figure?</h1><p className={styles.heroText}>Compare 3–5 points you expect readers to take away with an AI-simulated reader’s account. Review what it missed, changed, or found uncertain, then use the visual comparison to guide revisions. This does not measure human understanding or prove a figure is wrong.</p><div className={styles.buttonRow}><a className={styles.primaryButton} href="#cases">View real cases <span>↓</span></a><button className={styles.secondaryButton} onClick={enterWorkbench}>Check my figure <span>↗</span></button></div><div className={styles.flow} aria-label="Expected message, simulated reader understanding, review and revise"><span>Your intended message</span><i>→</i><span>Simulated reader understanding</span><i>→</i><span>Review and revise</span></div></div>
         <div className={styles.heroVisual}><div className={styles.visualLabel}>A SAVED MATERIALS CASE <span>RECORDED REAL RUN</span></div><div className={styles.heroImages}><Figure src="/published/materials-lattice-design.png" alt="Original published materials lattice figure" priority/><span>→</span><Figure src="/case-studies/materials-lattice-design/reconstruction.png" alt="AI reconstruction from saved materials case memory" priority/></div><div className={styles.imageCaptions}><span>Original paper figure</span><span>Reconstructed from saved memory</span></div><p className={styles.captionNote}>Images are shown in full; reconstruction is a concept rendering and needs visual review.</p></div>
@@ -180,7 +193,7 @@ export default function Home() {
         {index ? <div className={styles.caseGrid}>{index.cases.map(item => <button className={styles.caseCard} key={item.id} onClick={() => selectCase(item)}><div className={styles.cardImage}><Image src={asset(item.original)} alt={`Original figure: ${item.title}`} width={800} height={600} unoptimized sizes="(max-width: 700px) 92vw, (max-width: 1000px) 45vw, 24vw"/></div><div className={styles.cardBody}><div className={styles.cardMeta}><span>{domainNames[item.domain] || item.domain}</span><b className={item.status === "failed" ? styles.failed : styles.completed}>{item.status === "failed" ? "Reader failed" : "Recorded real run"}</b></div><h3>{item.title}</h3><p>{item.takeaway}</p><span className={styles.cardLink}>Inspect this replay <b>↗</b></span></div></button>)}</div> : <div className={styles.loadingBox}>Loading saved cases…</div>}
       </section>
       {index && <section className={`${styles.section} ${styles.protocol}`}><details><summary><span><b>{index.protocol.completed}/{index.protocol.total} runs completed</b> in the fixed protocol</span><span>{index.protocol.failed} failed · completion rate, not accuracy ↗</span></summary><p className={styles.selectionNote}>{index.selection}</p><div className={styles.protocolMeta}>Model: {index.protocol.model} · Prompt: {index.protocol.prompt_version}</div><div className={styles.tableScroll}><table><thead><tr><th>Figure</th><th>Attempt</th><th>Saved run</th><th>Status</th></tr></thead><tbody>{index.protocol.rows.map((row, i) => <tr key={`${row.run_id}-${i}`}><td>{row.example_id}</td><td>{row.attempt}</td><td><code>{row.run_id}</code></td><td><b className={row.status === "failed" ? styles.failed : styles.completed}>{row.status}</b></td></tr>)}</tbody></table></div></details></section>}
-      <footer className={styles.footer}><a href={asset("/")} className={styles.brand}>Figure Relay</a><span>AI simulated reader feedback · saved replays · no human-memory measurement</span><button onClick={enterWorkbench}>Check my figure</button></footer>
+      <footer className={styles.footer}><a href={asset("/")} className={styles.brand}>Figure Relay</a><span>{demoOnly && onlineAnalysisUrl ? "Live analysis: free host-computer trial · may pause or go offline" : "AI simulated reader feedback · saved replays · no human-memory measurement"}</span><button onClick={enterWorkbench}>Check my figure</button></footer>
     </>}
   </main>;
 }

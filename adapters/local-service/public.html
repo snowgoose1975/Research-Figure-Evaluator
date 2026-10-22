@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Check a research figure · Figure Relay</title>
+  <style>
+    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#172421;background:#f2f5f1;font-synthesis:none;text-rendering:optimizeLegibility;--ink:#172421;--muted:#566761;--line:#d5ded8;--paper:#fff;--green:#176b50;--green-dark:#10523d;--soft:#e5f2eb;--gold:#8b5b16;--red:#a53432;--radius:18px}*{box-sizing:border-box}body{margin:0;min-width:320px}.shell{max-width:980px;margin:auto;padding:36px 22px 70px}.topline{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:48px}.brand{font-size:14px;letter-spacing:.11em;text-transform:uppercase;font-weight:800;color:var(--green)}.back{color:var(--green-dark);font-size:14px;font-weight:650;text-underline-offset:3px}.hero{max-width:720px;margin-bottom:32px}.eyebrow{color:var(--green);font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}h1{font-size:clamp(36px,7vw,62px);line-height:1.02;letter-spacing:-.055em;margin:12px 0 17px}p{line-height:1.65;color:var(--muted);margin:0 0 14px}.statusbar{display:flex;gap:12px;align-items:flex-start;background:#e9efea;border:1px solid var(--line);padding:14px 16px;border-radius:14px;margin:24px 0 34px;color:#43534d;font-size:14px}.dot{flex:0 0 9px;width:9px;height:9px;border-radius:50%;margin-top:5px;background:#a8751d}.dot.online{background:#16865c;box-shadow:0 0 0 4px #d0ecdd}.dot.offline{background:#b43d39}.layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);gap:20px;align-items:start}.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:0 5px 22px #17242108}.card h2{font-size:20px;letter-spacing:-.025em;margin:0 0 6px}.section-note{font-size:14px;margin-bottom:20px}.field-label{display:block;font-size:13px;font-weight:750;margin:18px 0 8px}.drop{display:block;position:relative;padding:20px;border:1.5px dashed #9eb4a8;border-radius:13px;background:#f8fbf8;text-align:center;cursor:pointer}.drop:hover,.drop:focus-within{border-color:var(--green);background:#f2f8f4}.drop input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}.drop strong{display:block;color:var(--green-dark);font-size:14px}.drop span{font-size:12px;color:var(--muted)}.preview{display:none;margin-top:14px;max-width:100%;max-height:240px;border-radius:10px;object-fit:contain;background:#eef2ef}.preview.show{display:block}.keypoints{display:grid;gap:9px}.keypoint{display:flex;gap:10px;align-items:center}.keypoint input[type=text]{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:12px 13px;font:inherit;font-size:14px;color:var(--ink)}.keypoint input:focus{outline:3px solid #badcc9;border-color:var(--green)}.remove{border:0;background:transparent;color:#7b4e4a;font-size:20px;cursor:pointer;padding:6px}.text-button{border:0;background:transparent;color:var(--green-dark);font:inherit;font-weight:750;cursor:pointer;padding:10px 0}.consent{display:flex;gap:11px;align-items:flex-start;padding:15px;background:#f3f7f3;border-radius:12px;margin:20px 0;color:#344740;font-size:13px;line-height:1.55}.consent input{width:18px;height:18px;flex:0 0 18px;accent-color:var(--green);margin:2px 0 0}.primary{display:flex;justify-content:center;align-items:center;width:100%;border:0;border-radius:11px;padding:14px 18px;background:var(--green);color:white;font:inherit;font-weight:800;cursor:pointer;transition:background .15s,transform .15s}.primary:hover:not(:disabled){background:var(--green-dark);transform:translateY(-1px)}.primary:disabled{opacity:.45;cursor:not-allowed}.privacy{font-size:12px;line-height:1.6;margin:12px 0 0}.aside{background:#e7f0e9;border:1px solid #ceddd2;border-radius:var(--radius);padding:23px}.aside h2{font-size:17px;margin:0 0 12px}.aside ul{margin:0;padding-left:19px;color:#43554c;font-size:13px;line-height:1.7}.aside li+li{margin-top:8px}.result{display:none;margin-top:22px}.result.show{display:block}.result h2{margin:0 0 14px}.state{padding:12px 14px;background:#f2f6f2;border-radius:11px;margin-bottom:14px;font-size:14px;color:#3a4b43}.state.error{background:#fff0ef;color:#7c2825}.state.ok{background:#e9f6ee;color:#1b583c}.result-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:10px 0 18px}.secondary{background:white;color:var(--green-dark);border:1px solid #a8beb0;border-radius:9px;padding:9px 13px;font:inherit;font-weight:700;cursor:pointer}.secondary:hover{background:#f0f6f1}.result h3{font-size:15px;margin:20px 0 10px}.judgment{border-top:1px solid var(--line);padding:13px 0}.judgment-head{display:flex;justify-content:space-between;gap:12px;font-size:13px;font-weight:750}.badge{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#41584d;background:#edf2ee;border-radius:999px;padding:4px 7px}.judgment p{font-size:13px;margin:8px 0}.suggestions{font-size:13px;color:#41584d;margin:5px 0 0 18px;padding:0}.reconstruction{display:block;max-width:100%;max-height:560px;margin:10px auto 4px;border:1px solid var(--line);border-radius:12px;cursor:zoom-in;background:#fff}.details{margin-top:16px;border-top:1px solid var(--line);padding-top:13px}.details summary{cursor:pointer;font-size:13px;font-weight:700;color:#43554c}.details pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:360px;overflow:auto;background:#f4f6f4;padding:13px;border-radius:9px;font-size:11px;color:#36443e}dialog{padding:0;border:0;border-radius:15px;max-width:min(94vw,1200px);max-height:94vh;background:#172421;box-shadow:0 24px 80px #0006}dialog::backdrop{background:#111b19d9}.dialog-inner{position:relative;padding:14px}.dialog-close{position:absolute;right:20px;top:20px;border:0;border-radius:99px;background:#fff;color:#14221d;padding:9px 14px;font:inherit;font-weight:800;cursor:pointer}.dialog-image{display:block;max-width:calc(94vw - 28px);max-height:calc(94vh - 28px);object-fit:contain}.footnote{text-align:center;font-size:12px;margin:28px 0 0}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:760px){.shell{padding:24px 15px 45px}.topline{margin-bottom:38px}.layout{grid-template-columns:1fr}.card,.aside{padding:20px}.aside{order:-1}.hero{margin-bottom:24px}.statusbar{margin:20px 0 22px}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topline"><div class="brand">Figure Relay</div><a class="back" href="https://figure-relay.chicchair5.chatgpt.site">← Explore research figure examples</a></header>
+    <section class="hero" aria-labelledby="title"><div class="eyebrow">A private, author-led check</div><h1 id="title">Does your figure say what you mean?</h1><p>Describe the scientific statements you expect readers to recover. The service will compare them with an AI reading and a reconstruction made from that reading.</p></section>
+    <div id="service-status" class="statusbar" role="status" aria-live="polite"><span class="dot" aria-hidden="true"></span><span>Checking service availability…</span></div>
+    <div class="layout">
+      <section class="card" aria-labelledby="form-title">
+        <h2 id="form-title">Check your figure</h2><p class="section-note">Only PNG or JPEG images up to 10 MB. Add 3–5 statements in your own words.</p>
+        <form id="job-form">
+          <label class="field-label" for="image">Research figure</label>
+          <label class="drop" for="image"><input id="image" name="image" type="file" accept="image/png,image/jpeg" required><strong>Choose a PNG or JPEG</strong><span id="file-hint">Maximum 10 MB</span></label>
+          <img id="image-preview" class="preview" alt="Selected figure preview">
+          <span class="field-label">What should a reader understand?</span>
+          <div id="keypoints" class="keypoints" aria-live="polite"></div>
+          <button id="add-keypoint" class="text-button" type="button">+ Add another statement</button>
+          <label class="consent"><input id="consent" type="checkbox" required><span>I confirm these are my intended statements, and I agree to share this figure publicly. The image will be processed on the author's local computer and retained as part of a private run record. Do not upload confidential or unpublished images.</span></label>
+          <button id="submit" class="primary" type="submit" disabled>Agree and submit figure</button>
+          <p class="privacy">Your original image is sent only when you submit this form. A failed submission is never retried automatically.</p>
+        </form>
+      </section>
+      <aside class="aside"><h2>What to expect</h2><ul><li>The local service may be paused, busy, or rate-limited. A queue position is shown when your job is accepted.</li><li>Results are an AI simulation and need your scientific review. They do not measure human understanding or prove scientific claims.</li><li>The local owner can retain private run records. Your image is not placed in a public gallery by this page.</li><li>Only use a figure you have permission to share publicly.</li></ul></aside>
+    </div>
+    <section id="result" class="card result" aria-labelledby="result-title" aria-live="polite"><h2 id="result-title">Your check</h2><div id="job-state" class="state"></div><div id="result-body"></div></section>
+    <p class="footnote">An AI-assisted review for researchers. Interpret every finding in context.</p>
+  </main>
+  <dialog id="image-dialog" aria-label="Enlarged reconstruction"><div class="dialog-inner"><button class="dialog-close" type="button">Close image</button><img class="dialog-image" alt="Enlarged reconstructed figure"></div></dialog>
+  <script>
+    (() => {
+      const MAX_BYTES = 10 * 1024 * 1024;
+      const statusEl = document.querySelector('#service-status');
+      const form = document.querySelector('#job-form');
+      const imageInput = document.querySelector('#image');
+      const preview = document.querySelector('#image-preview');
+      const hint = document.querySelector('#file-hint');
+      const keypointsEl = document.querySelector('#keypoints');
+      const addButton = document.querySelector('#add-keypoint');
+      const submitButton = document.querySelector('#submit');
+      const resultSection = document.querySelector('#result');
+      const stateEl = document.querySelector('#job-state');
+      const resultBody = document.querySelector('#result-body');
+      const dialog = document.querySelector('#image-dialog');
+      let imageDataUrl = null;
+      let jobId = null;
+      let pollTimer = null;
+      let stoppedLocally = false;
+      let serviceAccepting = false;
+      let submitted = false;
+      let dialogTrigger = null;
+      let previousBodyOverflow = '';
+
+      function addKeypoint(value = '') {
+        const row = document.createElement('div');
+        row.className = 'keypoint';
+        const input = document.createElement('input');
+        input.type = 'text'; input.maxLength = 1200; input.required = true;
+        input.placeholder = 'e.g. The treatment reduces the measured response';
+        input.setAttribute('aria-label', 'Expected scientific statement'); input.value = value;
+        const remove = document.createElement('button');
+        remove.type = 'button'; remove.className = 'remove'; remove.textContent = '×'; remove.setAttribute('aria-label', 'Remove statement');
+        remove.addEventListener('click', () => { if (keypointsEl.children.length > 3) row.remove(); updateSubmit(); });
+        row.append(input, remove); keypointsEl.append(row); updateSubmit();
+      }
+
+      function updateSubmit() {
+        const count = keypointsEl.querySelectorAll('input').length;
+        addButton.disabled = count >= 5;
+        submitButton.disabled = submitted || !(serviceAccepting && imageDataUrl && document.querySelector('#consent').checked && count >= 3 && count <= 5 && [...keypointsEl.querySelectorAll('input')].every(input => input.value.trim().length >= 3));
+      }
+
+      addKeypoint(); addKeypoint(); addKeypoint();
+      addButton.addEventListener('click', () => { if (keypointsEl.children.length < 5) addKeypoint(); });
+      keypointsEl.addEventListener('input', updateSubmit);
+      document.querySelector('#consent').addEventListener('change', updateSubmit);
+
+      imageInput.addEventListener('change', () => {
+        const file = imageInput.files && imageInput.files[0]; imageDataUrl = null; preview.removeAttribute('src'); preview.classList.remove('show');
+        if (!file) { hint.textContent = 'Maximum 10 MB'; updateSubmit(); return; }
+        if (!['image/png', 'image/jpeg'].includes(file.type)) { hint.textContent = 'Choose a PNG or JPEG image.'; imageInput.value = ''; updateSubmit(); return; }
+        if (file.size > MAX_BYTES) { hint.textContent = 'This image is larger than 10 MB.'; imageInput.value = ''; updateSubmit(); return; }
+        hint.textContent = `${file.name} · ${(file.size / 1024 / 1024).toFixed(2)} MB`;
+        const reader = new FileReader();
+        reader.addEventListener('load', () => { if (typeof reader.result === 'string') { imageDataUrl = reader.result; preview.src = imageDataUrl; preview.classList.add('show'); updateSubmit(); } });
+        reader.addEventListener('error', () => { hint.textContent = 'Could not read this image. Choose it again.'; updateSubmit(); });
+        reader.readAsDataURL(file);
+      });
+
+      async function request(path, options = {}) {
+        const response = await fetch(path, { cache: 'no-store', credentials: 'same-origin', ...options });
+        const raw = await response.text(); let data;
+        try { data = raw ? JSON.parse(raw) : {}; } catch { data = { message: raw || `HTTP ${response.status}` }; }
+        if (!response.ok) throw new Error(data.message || (typeof data.error === 'string' ? data.error : data.error?.message) || `Request failed (HTTP ${response.status})`);
+        return data;
+      }
+
+      async function refreshStatus() {
+        try {
+          const s = await request('/status');
+          const paused = Boolean(s.paused); const active = Boolean(s.active); const accepting = Boolean(s.accepting);
+          const remainingHour = s.remaining_hour; const remainingSession = s.remaining_session;
+          serviceAccepting = accepting;
+          statusEl.querySelector('.dot').className = `dot ${accepting ? 'online' : paused ? '' : 'offline'}`;
+          const label = paused ? 'Paused' : active ? 'Busy' : accepting ? 'Online' : 'Unavailable';
+          const limits = [Number.isFinite(remainingHour) ? `${remainingHour} runs left this hour` : null, Number.isFinite(remainingSession) ? `${remainingSession} runs left in 24h` : null].filter(Boolean).join(' · ');
+          statusEl.querySelector('span:last-child').textContent = `${label}${s.waiting ? ` · ${s.waiting} waiting` : ''}${limits ? ` · ${limits}` : ''}`;
+        } catch (error) {
+          serviceAccepting = false; statusEl.querySelector('.dot').className = 'dot offline';
+          statusEl.querySelector('span:last-child').textContent = `Offline — ${error.message}`;
+        }
+        updateSubmit();
+      }
+
+      function showState(text, kind = '') { stateEl.textContent = text; stateEl.className = `state ${kind}`; }
+      function appendText(parent, tag, text, className) { const el = document.createElement(tag); if (className) el.className = className; el.textContent = text == null ? '' : String(text); parent.append(el); return el; }
+      function showResult(job) {
+        resultBody.replaceChildren();
+        const result = job.result;
+        if (!result) { showState('The job completed without a report payload.', 'error'); return; }
+        showState('Completed. Review each item against your scientific context.', 'ok');
+        const report = result.report || {};
+        appendText(resultBody, 'p', `Model: ${result.model || 'Not reported'} · Prompt: ${result.prompt_version || 'Not reported'}`);
+        appendText(resultBody, 'h3', 'Author statements and reader observations');
+        const rows = Array.isArray(report.keypoint_results) ? report.keypoint_results : [];
+        if (!rows.length) appendText(resultBody, 'p', 'No itemized findings were returned.');
+        for (const row of rows) {
+          const article = document.createElement('article'); article.className = 'judgment';
+          const head = document.createElement('div'); head.className = 'judgment-head';
+          appendText(head, 'span', row.text || row.keypoint_id || 'Author statement');
+          appendText(head, 'span', `A: ${row.in_a?.status || 'unknown'} · B: ${row.in_b?.status || 'unknown'}`, 'badge'); article.append(head);
+          appendText(article, 'p', `First reading: ${row.in_a?.rationale || 'No rationale returned.'}`, '');
+          appendText(article, 'p', `Reconstruction reading: ${row.in_b?.rationale || 'No rationale returned.'}`, '');
+          if (Array.isArray(row.suggestions) && row.suggestions.length) { const list = document.createElement('ul'); list.className = 'suggestions'; for (const suggestion of row.suggestions) appendText(list, 'li', suggestion); article.append(list); }
+          resultBody.append(article);
+        }
+        const limitations = Array.isArray(result.limitations) ? result.limitations : Array.isArray(report.limitations) ? report.limitations : [];
+        if (limitations.length) { appendText(resultBody, 'h3', 'Limitations'); const list = document.createElement('ul'); list.className = 'suggestions'; for (const item of limitations) appendText(list, 'li', item); resultBody.append(list); }
+        if (result.reconstruction_data_url && /^data:image\/(png|jpeg);base64,/i.test(result.reconstruction_data_url)) {
+          appendText(resultBody, 'h3', 'Reconstruction from the saved reading');
+          const img = document.createElement('img'); img.className = 'reconstruction'; img.src = result.reconstruction_data_url; img.alt = 'AI-generated reconstruction from the saved reading'; img.tabIndex = 0;
+          const open = () => { const large = dialog.querySelector('img'); large.src = img.src; dialogTrigger = img; previousBodyOverflow = document.body.style.overflow; document.body.style.overflow = 'hidden'; dialog.showModal(); dialog.querySelector('button').focus(); };
+          img.addEventListener('click', open); img.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } }); resultBody.append(img);
+        }
+        if (result.render_audit) appendDetails(resultBody, 'Rendering audit', result.render_audit);
+        const technical = { report: result.report ?? null, model: result.model ?? null, prompt_version: result.prompt_version ?? null, render_audit: result.render_audit ?? null, limitations: result.limitations ?? null };
+        appendDetails(resultBody, 'Technical details (no original image)', technical);
+      }
+      function appendDetails(parent, title, value) { const details = document.createElement('details'); details.className = 'details'; const summary = document.createElement('summary'); summary.textContent = title; const pre = document.createElement('pre'); pre.textContent = JSON.stringify(value, null, 2); details.append(summary, pre); parent.append(details); }
+      function appendNewCheckButton() {
+        if (resultBody.querySelector('[data-new-check]')) return;
+        const button = document.createElement('button'); button.type = 'button'; button.className = 'secondary'; button.dataset.newCheck = 'true'; button.textContent = 'New check';
+        button.addEventListener('click', () => {
+          clearInterval(pollTimer); pollTimer = null; jobId = null; stoppedLocally = false; submitted = false;
+          imageInput.value = ''; imageDataUrl = null; preview.removeAttribute('src'); preview.classList.remove('show'); hint.textContent = 'Maximum 10 MB';
+          keypointsEl.querySelectorAll('input').forEach(input => { input.value = ''; });
+          document.querySelector('#consent').checked = false; button.remove(); submitButton.textContent = 'Agree and submit figure';
+          showState('Ready for a new figure. Your previous result remains below until you submit the next check.'); updateSubmit();
+          imageInput.focus();
+        });
+        resultBody.append(button);
+      }
+      function renderJob(job) {
+        resultSection.classList.add('show');
+        if (job.status === 'queued') showState(`Queued${Number.isFinite(job.position) ? ` · position ${job.position}` : ''}. This page checks every 3 seconds.`);
+        else if (job.status === 'running') showState('Your figure is being processed on the local service. This page checks every 3 seconds.');
+        else if (job.status === 'completed') { clearInterval(pollTimer); pollTimer = null; showResult(job); appendNewCheckButton(); }
+        else if (job.status === 'failed') { clearInterval(pollTimer); pollTimer = null; showState(`This run failed${job.error ? `: ${typeof job.error === 'string' ? job.error : job.error.message || 'No report was produced.'}` : '. No report was produced.'}`, 'error'); appendNewCheckButton(); }
+        else if (job.status === 'cancelled') { clearInterval(pollTimer); pollTimer = null; showState('The service cancelled this waiting job.', 'error'); appendNewCheckButton(); }
+        else showState(`Job status: ${job.status || 'unknown'}`);
+      }
+      async function poll() {
+        if (!jobId || stoppedLocally) return;
+        try { const job = await request(`/jobs/${encodeURIComponent(jobId)}`); renderJob(job); }
+        catch (error) { clearInterval(pollTimer); pollTimer = null; showState(`Could not check this job: ${error.message}. No new job was submitted; use Check again to resume status checks.`, 'error'); const again = document.createElement('button'); again.type = 'button'; again.className = 'secondary'; again.textContent = 'Check again'; again.addEventListener('click', () => { stoppedLocally = false; poll(); if (!pollTimer) pollTimer = setInterval(poll, 3000); }); resultBody.replaceChildren(again); }
+      }
+      form.addEventListener('submit', async event => {
+        event.preventDefault(); if (submitButton.disabled || !imageDataUrl) return;
+        const statements = [...keypointsEl.querySelectorAll('input')].map(input => input.value.trim());
+        submitted = true; submitButton.disabled = true; submitButton.textContent = 'Submitting once…'; resultSection.classList.add('show'); resultBody.replaceChildren(); showState('Submitting to the local service. If this request fails, it will not be retried automatically.');
+        const payload = { image_base64: imageDataUrl.slice(imageDataUrl.indexOf(',') + 1), keypoints: statements.map((text, index) => ({ id: `author-${index + 1}`, text, claim: null, author_confirmed: true })), consent: true };
+        try {
+          const job = await request('/jobs', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+          jobId = job.id; stoppedLocally = false; renderJob(job); if (job.status === 'queued' || job.status === 'running') pollTimer = setInterval(poll, 3000);
+          if (jobId && (job.status === 'queued' || job.status === 'running')) {
+            const stop = document.createElement('button'); stop.type = 'button'; stop.className = 'secondary'; stop.textContent = 'Stop waiting on this page'; stop.addEventListener('click', () => { stoppedLocally = true; clearInterval(pollTimer); pollTimer = null; showState('Status checks stopped. The server job may continue in the queue; this action does not cancel it. Keep this page open to check again, or submit no duplicate request.'); resultBody.replaceChildren(); const resume = document.createElement('button'); resume.type = 'button'; resume.className = 'secondary'; resume.textContent = 'Resume status checks'; resume.addEventListener('click', () => { stoppedLocally = false; poll(); pollTimer = setInterval(poll, 3000); }); resultBody.append(resume); });
+            resultBody.append(stop);
+          }
+        } catch (error) { showState(`Submission failed: ${error.message}. It was not automatically retried.`, 'error'); }
+        finally { submitButton.textContent = 'Agree and submit figure'; updateSubmit(); }
+      });
+
+      dialog.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
+      dialog.addEventListener('click', event => { if (event.target === dialog) dialog.close(); });
+      dialog.addEventListener('cancel', event => { event.preventDefault(); dialog.close(); });
+      document.addEventListener('keydown', event => {
+        if (!dialog.open || event.key !== 'Tab') return;
+        const focusable = [...dialog.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')]
+          .filter(element => element.getClientRects().length > 0 && element.getAttribute('aria-hidden') !== 'true');
+        const first = focusable[0]; const last = focusable[focusable.length - 1];
+        const currentIndex = focusable.indexOf(document.activeElement);
+        if (!first || focusable.length === 1) { event.preventDefault(); (first || dialog).focus(); }
+        else if (event.shiftKey && currentIndex <= 0) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && (currentIndex === -1 || currentIndex === focusable.length - 1)) { event.preventDefault(); first.focus(); }
+      });
+      dialog.addEventListener('close', () => { document.body.style.overflow = previousBodyOverflow; if (dialogTrigger?.isConnected) dialogTrigger.focus(); dialogTrigger = null; });
+      refreshStatus(); setInterval(refreshStatus, 10000);
+    })();
+  </script>
+</body>
+</html>

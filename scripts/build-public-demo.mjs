@@ -30,13 +30,15 @@ symlinkSync(path.join(root, "node_modules"), path.join(scratch, "node_modules"),
 const require = createRequire(import.meta.url);
 // Build needs no model/network/credentials. Drop server configuration from the
 // child environment instead of passing any credentials to the isolated build.
-const env = { ...process.env, NEXT_TELEMETRY_DISABLED: "1", NEXT_PUBLIC_RFE_DEMO_ONLY: "1", NEXT_PUBLIC_RFE_BASE_PATH: basePath };
+const analysisUrl = process.env.RFE_PUBLIC_ANALYSIS_URL || "";
+if (analysisUrl && !/^https:\/\/[a-z0-9-]+\.(?:lhr\.life|localhost\.run|trycloudflare\.com)\/?$/.test(analysisUrl)) throw new Error("Expected a verified free HTTPS service URL.");
+const env = { ...process.env, NEXT_TELEMETRY_DISABLED: "1", NEXT_PUBLIC_RFE_DEMO_ONLY: "1", NEXT_PUBLIC_RFE_BASE_PATH: basePath, NEXT_PUBLIC_RFE_ANALYSIS_URL: analysisUrl };
 for (const key of Object.keys(env)) if (/^(OPENAI_|RFE_(?!PUBLIC_BASE_PATH))/.test(key) || /(?:TOKEN|SECRET|PASSWORD|API_KEY)$/.test(key)) delete env[key];
 const result = spawnSync(process.execPath, [require.resolve("next/dist/bin/next"), "build", "--webpack"], { cwd: scratch, env, stdio: "inherit" });
 if (result.status !== 0) throw new Error(`Public build failed (${result.status}); scratch retained at ${scratch}`);
 mkdirSync(path.dirname(destination), { recursive: true });
 cpSync(path.join(scratch, "out"), destination, { recursive: true, force: false, errorOnExist: true });
 cpSync(path.join(root, "docs/submission/HF_SPACE_README.md"), path.join(destination, "README.md"), { force: false, errorOnExist: true });
-const manifest = { label, created_at: new Date().toISOString(), mode: "static-recorded-cases-only", private_api_routes: false, live_inference: false, base_path: basePath, source_allowlist: sources, note: "Deploy only this output folder. No user uploads, private run directory, server configuration or model endpoint is included. Publication still requires user authorization." };
+const manifest = { label, created_at: new Date().toISOString(), mode: "static-recorded-cases", private_api_routes: false, live_inference: false, external_analysis_url: analysisUrl || null, base_path: basePath, source_allowlist: sources, note: "Deploy only this output folder. Static site has no uploads/API/model. Optional external link opens the separate host-computer trial; temporary URL may expire." };
 writeFileSync(path.join(destination, "PUBLIC_BUILD.json"), JSON.stringify(manifest, null, 2) + "\n", { flag: "wx" });
 console.log(`Read-only public site prepared: ${destination}`);

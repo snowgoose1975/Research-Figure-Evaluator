@@ -1,6 +1,12 @@
 # 接续交接 · 2026-10-22
 
-## T13 公开网页与图片交互（最新）
+## T14 本机免费在线试用（最新）
+
+固定网页已接入本机GPU试用，受限访客HTTP服务9040通过免费localhost.run隧道访问；控制页仅127.0.0.1:9041。单任务+3等待，每小时12次/滚动24小时100次自动恢复，低于1GB空闲RAM拒绝新任务，空闲卸载模型。暂停取消等待项，当前完成后释放；恢复不必关机。玉米选择手动启动，不创建启动项。双击`scripts/start-sharing.cmd`，说明见[LOCAL_HOSTING](LOCAL_HOSTING.md)。
+
+域名实际发生同连接自动轮换；后台每20秒健康检查并仅向service-status专用分支发布公开地址/时间/online状态；原网站自动读取，main和私有记录不受更新器影响。Cloudflare隧道当前网络连接失败，未改系统网络；localhost.run有真实网络抖动，无SLA。首次公网材料图正式流水线完成，GET中断后领取同一任务结果，未重新提交/调用模型；证据T14-live-first-recovered.json。峰值显存6627MiB，最低空闲RAM289MiB与开发构建重叠，不能保证日常应用无影响。只允许公开图，私有审计保留本机，结果会话ID不公开。详见[T14交接](handoffs/T14-local-service.md)。
+
+## T13 公开网页与图片交互（历史）
 
 公开案例站已部署：https://figure-relay.chicchair5.chatgpt.site ，外网13/13检查，无console/page错误。图片支持Close image、Esc、遮罩退出、焦点恢复，手机点击修复。首页围绕作者预期→模拟阅读→修改；不把重建缺陷当作原图缺陷。线上仅历史案例，新图分析仍需本地运行。
 

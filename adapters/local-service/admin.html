@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>本机服务控制台</title>
+  <style>
+    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#17231f;background:#f1f4f1;--ink:#17231f;--muted:#596760;--line:#d5ddd7;--paper:#fff;--green:#176b50;--dark:#10523d;--red:#a53230;--amber:#815813}*{box-sizing:border-box}body{margin:0;min-width:320px}.shell{max-width:780px;margin:0 auto;padding:44px 22px 70px}.eyebrow{font-size:12px;letter-spacing:.13em;text-transform:uppercase;font-weight:800;color:var(--green)}h1{font-size:clamp(33px,6vw,48px);letter-spacing:-.045em;line-height:1.04;margin:11px 0 12px}.lede{color:var(--muted);line-height:1.65;margin:0 0 26px}.panel{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 7px 26px #17231f08}.state-head{display:flex;align-items:center;gap:12px;margin-bottom:18px}.lamp{width:12px;height:12px;border-radius:50%;background:#999;flex:none}.lamp.online{background:#138358;box-shadow:0 0 0 5px #d9efe2}.lamp.paused{background:#bc821d;box-shadow:0 0 0 5px #f5ebd5}.lamp.offline{background:#b03a35;box-shadow:0 0 0 5px #f7e1df}.state-title{font-size:21px;font-weight:800;letter-spacing:-.02em}.state-sub{font-size:13px;color:var(--muted);margin-top:3px}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:18px 0 22px}.stat{background:#f3f6f3;border-radius:12px;padding:14px}.stat dt{font-size:12px;color:var(--muted)}.stat dd{font-size:21px;font-weight:800;margin:6px 0 0}.actions{display:flex;gap:10px;flex-wrap:wrap}.button{border:0;border-radius:10px;padding:12px 16px;font:inherit;font-weight:800;cursor:pointer}.button:disabled{opacity:.45;cursor:not-allowed}.pause{background:#8d3a32;color:white}.resume{background:var(--green);color:white}.refresh{background:#e9efea;color:#234438}.notice{margin-top:20px;padding:16px;border-radius:12px;background:#f7f2e7;border:1px solid #eadcba;color:#604919;font-size:13px;line-height:1.7}.notice strong{display:block;margin-bottom:5px}.message{margin-top:16px;padding:12px 14px;border-radius:10px;font-size:14px;color:#43534b;background:#eff4f0}.message.error{color:#7c2825;background:#fff0ef}.footer{font-size:12px;color:#6a756f;margin:22px 2px 0;line-height:1.6}@media(max-width:580px){.shell{padding:28px 15px 50px}.panel{padding:19px}.stats{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:1/-1}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="eyebrow">仅本机管理 · 127.0.0.1:9041</div>
+    <h1>本机推理服务</h1>
+    <p class="lede">控制是否接受新的公开检查请求。此页面只显示当前服务状态和队列数量，不提供访客历史或运行记录。</p>
+    <section class="panel" aria-labelledby="service-title">
+      <div class="state-head"><span id="lamp" class="lamp" aria-hidden="true"></span><div><div id="service-title" class="state-title">正在读取服务状态</div><div id="state-sub" class="state-sub" role="status" aria-live="polite">请稍候…</div></div></div>
+      <dl class="stats">
+        <div class="stat"><dt>当前运行</dt><dd id="active-count">—</dd></div>
+        <div class="stat"><dt>等待队列</dt><dd id="waiting-count">—</dd></div>
+        <div class="stat"><dt>本小时剩余次数</dt><dd id="hour-count">—</dd></div>
+        <div class="stat"><dt>滚动24小时剩余次数</dt><dd id="session-count">—</dd></div>
+      </dl>
+      <div class="actions"><button id="pause" class="button pause" type="button" disabled>暂停接单</button><button id="resume" class="button resume" type="button" disabled>恢复接单</button><button id="refresh" class="button refresh" type="button">立即刷新</button></div>
+      <div id="message" class="message" role="status" aria-live="polite">正在连接管理服务…</div>
+      <div class="notice"><strong>暂停和恢复的效果</strong>暂停不代表当前任务立即停止：它会立即拒绝新请求并取消所有排队任务，正在运行的任务会继续到结束，随后释放显卡。恢复后服务重新接受请求。服务关闭时，暂停偏好由本机控制程序保存。</div>
+    </section>
+    <p class="footer">此控制台应只通过本机地址打开。它没有公开链接、凭据输入框或用户运行历史。</p>
+  </main>
+  <script>
+    (() => {
+      const title = document.querySelector('#service-title');
+      const sub = document.querySelector('#state-sub');
+      const lamp = document.querySelector('#lamp');
+      const activeEl = document.querySelector('#active-count');
+      const waitingEl = document.querySelector('#waiting-count');
+      const hourEl = document.querySelector('#hour-count');
+      const sessionEl = document.querySelector('#session-count');
+      const message = document.querySelector('#message');
+      const pauseButton = document.querySelector('#pause');
+      const resumeButton = document.querySelector('#resume');
+      let busy = false;
+
+      async function request(path, options = {}) {
+        const response = await fetch(path, { cache: 'no-store', credentials: 'same-origin', ...options });
+        const raw = await response.text(); let data;
+        try { data = raw ? JSON.parse(raw) : {}; } catch { data = { message: raw || `HTTP ${response.status}` }; }
+        if (!response.ok) throw new Error(data.message || (typeof data.error === 'string' ? data.error : data.error?.message) || `请求失败（HTTP ${response.status}）`);
+        return data;
+      }
+      function numberOrDash(value) { return Number.isFinite(value) ? String(value) : '—'; }
+      async function refreshStatus() {
+        if (busy) return;
+        try {
+          const status = await request('/status');
+          const paused = Boolean(status.paused); const active = Boolean(status.active); const waiting = Number.isFinite(status.waiting) ? status.waiting : 0;
+          const memoryGuard = status.host_resources_ok === false;
+          title.textContent = memoryGuard ? '内存紧张，暂不接单' : paused ? '已暂停' : active ? '正在处理任务' : '正在接单';
+          sub.textContent = `${memoryGuard ? '内存保护已阻止新任务' : `服务${status.accepting ? '允许' : '不允许'}新任务`}${active ? ' · 当前任务不会立即停止，结束后释放显卡' : ''}`;
+          lamp.className = `lamp ${memoryGuard ? 'offline' : paused ? 'paused' : status.accepting ? 'online' : 'offline'}`;
+          activeEl.textContent = active ? '1' : '0'; waitingEl.textContent = String(waiting);
+          hourEl.textContent = numberOrDash(status.remaining_hour); sessionEl.textContent = numberOrDash(status.remaining_session);
+          pauseButton.disabled = paused || busy; resumeButton.disabled = !paused || busy;
+          message.className = 'message'; message.textContent = `状态已更新 · 等待 ${waiting} 项 · 每 3 秒自动刷新`;
+        } catch (error) {
+          title.textContent = '管理服务离线'; sub.textContent = '无法读取本机服务状态'; lamp.className = 'lamp offline';
+          activeEl.textContent = waitingEl.textContent = hourEl.textContent = sessionEl.textContent = '—';
+          pauseButton.disabled = resumeButton.disabled = true;
+          message.className = 'message error'; message.textContent = `连接失败：${error.message}。自动轮询仍会继续，不会重发控制请求。`;
+        }
+      }
+      async function changeState(action) {
+        if (busy) return;
+        busy = true; pauseButton.disabled = resumeButton.disabled = true;
+        message.className = 'message';
+        message.textContent = action === 'pause' ? '正在暂停：排队任务将取消，当前任务会完成后释放显卡…' : '正在恢复接单…';
+        try {
+          await request(`/${action}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
+          message.textContent = action === 'pause' ? '暂停指令已接受。新请求会被拒绝，当前任务完成后释放显卡。' : '恢复指令已接受。正在刷新接单状态…';
+          await refreshStatus();
+        } catch (error) {
+          message.className = 'message error'; message.textContent = `${action === 'pause' ? '暂停' : '恢复'}请求失败：${error.message}。请先刷新状态，再决定是否重新操作。`;
+          await refreshStatus();
+        } finally { busy = false; await refreshStatus(); }
+      }
+      pauseButton.addEventListener('click', () => changeState('pause'));
+      resumeButton.addEventListener('click', () => changeState('resume'));
+      document.querySelector('#refresh').addEventListener('click', refreshStatus);
+      refreshStatus(); setInterval(refreshStatus, 3000);
+    })();
+  </script>
+</body>
+</html>
