@@ -6,7 +6,7 @@
   <meta name="color-scheme" content="light">
   <title>Check a research figure · Figure Relay</title>
   <style>
-    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#172421;background:#f2f5f1;font-synthesis:none;text-rendering:optimizeLegibility;--ink:#172421;--muted:#566761;--line:#d5ded8;--paper:#fff;--green:#176b50;--green-dark:#10523d;--soft:#e5f2eb;--gold:#8b5b16;--red:#a53432;--radius:18px}*{box-sizing:border-box}body{margin:0;min-width:320px}.shell{max-width:980px;margin:auto;padding:36px 22px 70px}.topline{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:48px}.brand{font-size:14px;letter-spacing:.11em;text-transform:uppercase;font-weight:800;color:var(--green)}.back{color:var(--green-dark);font-size:14px;font-weight:650;text-underline-offset:3px}.hero{max-width:720px;margin-bottom:32px}.eyebrow{color:var(--green);font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}h1{font-size:clamp(36px,7vw,62px);line-height:1.02;letter-spacing:-.055em;margin:12px 0 17px}p{line-height:1.65;color:var(--muted);margin:0 0 14px}.statusbar{display:flex;gap:12px;align-items:flex-start;background:#e9efea;border:1px solid var(--line);padding:14px 16px;border-radius:14px;margin:24px 0 34px;color:#43534d;font-size:14px}.dot{flex:0 0 9px;width:9px;height:9px;border-radius:50%;margin-top:5px;background:#a8751d}.dot.online{background:#16865c;box-shadow:0 0 0 4px #d0ecdd}.dot.offline{background:#b43d39}.layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);gap:20px;align-items:start}.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:0 5px 22px #17242108}.card h2{font-size:20px;letter-spacing:-.025em;margin:0 0 6px}.section-note{font-size:14px;margin-bottom:20px}.field-label{display:block;font-size:13px;font-weight:750;margin:18px 0 8px}.drop{display:block;position:relative;padding:20px;border:1.5px dashed #9eb4a8;border-radius:13px;background:#f8fbf8;text-align:center;cursor:pointer}.drop:hover,.drop:focus-within{border-color:var(--green);background:#f2f8f4}.drop input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}.drop strong{display:block;color:var(--green-dark);font-size:14px}.drop span{font-size:12px;color:var(--muted)}.preview{display:none;margin-top:14px;max-width:100%;max-height:240px;border-radius:10px;object-fit:contain;background:#eef2ef}.preview.show{display:block}.keypoints{display:grid;gap:9px}.keypoint{display:flex;gap:10px;align-items:center}.keypoint input[type=text]{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:12px 13px;font:inherit;font-size:14px;color:var(--ink)}.keypoint input:focus{outline:3px solid #badcc9;border-color:var(--green)}.remove{border:0;background:transparent;color:#7b4e4a;font-size:20px;cursor:pointer;padding:6px}.text-button{border:0;background:transparent;color:var(--green-dark);font:inherit;font-weight:750;cursor:pointer;padding:10px 0}.consent{display:flex;gap:11px;align-items:flex-start;padding:15px;background:#f3f7f3;border-radius:12px;margin:20px 0;color:#344740;font-size:13px;line-height:1.55}.consent input{width:18px;height:18px;flex:0 0 18px;accent-color:var(--green);margin:2px 0 0}.primary{display:flex;justify-content:center;align-items:center;width:100%;border:0;border-radius:11px;padding:14px 18px;background:var(--green);color:white;font:inherit;font-weight:800;cursor:pointer;transition:background .15s,transform .15s}.primary:hover:not(:disabled){background:var(--green-dark);transform:translateY(-1px)}.primary:disabled{opacity:.45;cursor:not-allowed}.privacy{font-size:12px;line-height:1.6;margin:12px 0 0}.aside{background:#e7f0e9;border:1px solid #ceddd2;border-radius:var(--radius);padding:23px}.aside h2{font-size:17px;margin:0 0 12px}.aside ul{margin:0;padding-left:19px;color:#43554c;font-size:13px;line-height:1.7}.aside li+li{margin-top:8px}.result{display:none;margin-top:22px}.result.show{display:block}.result h2{margin:0 0 14px}.state{padding:12px 14px;background:#f2f6f2;border-radius:11px;margin-bottom:14px;font-size:14px;color:#3a4b43}.state.error{background:#fff0ef;color:#7c2825}.state.ok{background:#e9f6ee;color:#1b583c}.result-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:10px 0 18px}.secondary{background:white;color:var(--green-dark);border:1px solid #a8beb0;border-radius:9px;padding:9px 13px;font:inherit;font-weight:700;cursor:pointer}.secondary:hover{background:#f0f6f1}.result h3{font-size:15px;margin:20px 0 10px}.judgment{border-top:1px solid var(--line);padding:13px 0}.judgment-head{display:flex;justify-content:space-between;gap:12px;font-size:13px;font-weight:750}.badge{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#41584d;background:#edf2ee;border-radius:999px;padding:4px 7px}.judgment p{font-size:13px;margin:8px 0}.suggestions{font-size:13px;color:#41584d;margin:5px 0 0 18px;padding:0}.reconstruction{display:block;max-width:100%;max-height:560px;margin:10px auto 4px;border:1px solid var(--line);border-radius:12px;cursor:zoom-in;background:#fff}.details{margin-top:16px;border-top:1px solid var(--line);padding-top:13px}.details summary{cursor:pointer;font-size:13px;font-weight:700;color:#43554c}.details pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:360px;overflow:auto;background:#f4f6f4;padding:13px;border-radius:9px;font-size:11px;color:#36443e}dialog{padding:0;border:0;border-radius:15px;max-width:min(94vw,1200px);max-height:94vh;background:#172421;box-shadow:0 24px 80px #0006}dialog::backdrop{background:#111b19d9}.dialog-inner{position:relative;padding:14px}.dialog-close{position:absolute;right:20px;top:20px;border:0;border-radius:99px;background:#fff;color:#14221d;padding:9px 14px;font:inherit;font-weight:800;cursor:pointer}.dialog-image{display:block;max-width:calc(94vw - 28px);max-height:calc(94vh - 28px);object-fit:contain}.footnote{text-align:center;font-size:12px;margin:28px 0 0}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:760px){.shell{padding:24px 15px 45px}.topline{margin-bottom:38px}.layout{grid-template-columns:1fr}.card,.aside{padding:20px}.aside{order:-1}.hero{margin-bottom:24px}.statusbar{margin:20px 0 22px}}
+    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#172421;background:#f2f5f1;font-synthesis:none;text-rendering:optimizeLegibility;--ink:#172421;--muted:#566761;--line:#d5ded8;--paper:#fff;--green:#176b50;--green-dark:#10523d;--soft:#e5f2eb;--gold:#8b5b16;--red:#a53432;--radius:18px}*{box-sizing:border-box}body{margin:0;min-width:320px}.shell{max-width:980px;margin:auto;padding:36px 22px 70px}.topline{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:48px}.brand{font-size:14px;letter-spacing:.11em;text-transform:uppercase;font-weight:800;color:var(--green)}.back{color:var(--green-dark);font-size:14px;font-weight:650;text-underline-offset:3px}.hero{max-width:720px;margin-bottom:32px}.eyebrow{color:var(--green);font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}h1{font-size:clamp(36px,7vw,62px);line-height:1.02;letter-spacing:-.055em;margin:12px 0 17px}p{line-height:1.65;color:var(--muted);margin:0 0 14px}.statusbar{display:flex;gap:12px;align-items:flex-start;background:#e9efea;border:1px solid var(--line);padding:14px 16px;border-radius:14px;margin:24px 0 34px;color:#43534d;font-size:14px}.dot{flex:0 0 9px;width:9px;height:9px;border-radius:50%;margin-top:5px;background:#a8751d}.dot.online{background:#16865c;box-shadow:0 0 0 4px #d0ecdd}.dot.offline{background:#b43d39}.layout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);gap:20px;align-items:start}.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:0 5px 22px #17242108}.card h2{font-size:20px;letter-spacing:-.025em;margin:0 0 6px}.section-note{font-size:14px;margin-bottom:20px}.field-label{display:block;font-size:13px;font-weight:750;margin:18px 0 8px}.drop{display:block;position:relative;padding:20px;border:1.5px dashed #9eb4a8;border-radius:13px;background:#f8fbf8;text-align:center;cursor:pointer}.drop:hover,.drop:focus-within{border-color:var(--green);background:#f2f8f4}.drop input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}.drop strong{display:block;color:var(--green-dark);font-size:14px}.drop span{font-size:12px;color:var(--muted)}.preview{display:none;margin-top:14px;max-width:100%;max-height:240px;border-radius:10px;object-fit:contain;background:#eef2ef}.preview.show{display:block}.keypoints{display:grid;gap:9px}.keypoint{display:flex;gap:10px;align-items:center}.keypoint input[type=text]{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:12px 13px;font:inherit;font-size:14px;color:var(--ink)}.keypoint input:focus{outline:3px solid #badcc9;border-color:var(--green)}.remove{border:0;background:transparent;color:#7b4e4a;font-size:20px;cursor:pointer;padding:6px}.text-button{border:0;background:transparent;color:var(--green-dark);font:inherit;font-weight:750;cursor:pointer;padding:10px 0}.consent{display:flex;gap:11px;align-items:flex-start;padding:15px;background:#f3f7f3;border-radius:12px;margin:20px 0;color:#344740;font-size:13px;line-height:1.55}.consent input{width:18px;height:18px;flex:0 0 18px;accent-color:var(--green);margin:2px 0 0}.primary{display:flex;justify-content:center;align-items:center;width:100%;border:0;border-radius:11px;padding:14px 18px;background:var(--green);color:white;font:inherit;font-weight:800;cursor:pointer;transition:background .15s,transform .15s}.primary:hover:not(:disabled){background:var(--green-dark);transform:translateY(-1px)}.primary:disabled{opacity:.45;cursor:not-allowed}.privacy{font-size:12px;line-height:1.6;margin:12px 0 0}.aside{background:#e7f0e9;border:1px solid #ceddd2;border-radius:var(--radius);padding:23px}.aside h2{font-size:17px;margin:0 0 12px}.aside ul{margin:0;padding-left:19px;color:#43554c;font-size:13px;line-height:1.7}.aside li+li{margin-top:8px}.result{display:none;margin-top:22px}.result.show{display:block}.result h2{margin:0 0 14px}.state{padding:12px 14px;background:#f2f6f2;border-radius:11px;margin-bottom:14px;font-size:14px;color:#3a4b43}.state.error{background:#fff0ef;color:#7c2825}.state.ok{background:#e9f6ee;color:#1b583c}.state.review{background:#fff5e7;color:#694512;border:1px solid #ead5b5}.result-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:10px 0 18px}.secondary{background:white;color:var(--green-dark);border:1px solid #a8beb0;border-radius:9px;padding:9px 13px;font:inherit;font-weight:700;cursor:pointer}.secondary:hover{background:#f0f6f1}.result h3{font-size:15px;margin:20px 0 10px}.judgment{border-top:1px solid var(--line);padding:13px 0}.judgment-head{display:flex;justify-content:space-between;gap:12px;font-size:13px;font-weight:750}.badge{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#41584d;background:#edf2ee;border-radius:999px;padding:4px 7px}.judgment p{font-size:13px;margin:8px 0}.suggestions{font-size:13px;color:#41554c;margin:5px 0 0 18px;padding:0}.reconstruction{display:block;max-width:100%;max-height:560px;margin:10px auto 4px;border:1px solid var(--line);border-radius:12px;cursor:zoom-in;background:#fff}.details{margin-top:16px;border-top:1px solid var(--line);padding-top:13px}.details summary{cursor:pointer;font-size:13px;font-weight:700;color:#43554c}.details pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:360px;overflow:auto;background:#f4f6f4;padding:13px;border-radius:9px;font-size:11px;color:#36443e}.reader-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.reader-card{border:1px solid var(--line);border-radius:13px;padding:15px;background:#fbfcfb;min-width:0}.reader-card h4{margin:0 0 5px;font-size:15px}.reader-card h5{margin:14px 0 6px;font-size:12px;color:#33483d}.reader-card p,.reader-card li{font-size:12px;overflow-wrap:anywhere}.reader-card ul{margin:4px 0;padding-left:18px}.reader-meta,.small-note{font-size:11px;color:var(--muted)}.audit-box{border:1px solid #e1d5bf;background:#fffaf1;border-radius:10px;padding:10px 12px;margin:8px 0}.audit-box p{margin:4px 0;font-size:12px}.citation{border-left:3px solid #b6c9ba;padding:5px 8px;margin:6px 0;background:#f5f8f5;font-size:12px;overflow-wrap:anywhere}.warning-note{padding:10px 12px;border-left:3px solid #b77925;background:#fff7e9;color:#624719;font-size:12px;margin:10px 0;line-height:1.5}.graph-diff{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.diff-list{padding:10px;border-radius:10px;background:#f6f8f6}.diff-list ul{margin:6px 0;padding-left:18px;font-size:12px}dialog{padding:0;border:0;border-radius:15px;max-width:min(94vw,1200px);max-height:94vh;background:#172421;box-shadow:0 24px 80px #0006}dialog::backdrop{background:#111b19d9}.dialog-inner{position:relative;padding:14px}.dialog-close{position:absolute;right:20px;top:20px;border:0;border-radius:99px;background:#fff;color:#14221d;padding:9px 14px;font:inherit;font-weight:800;cursor:pointer}.dialog-image{display:block;max-width:calc(94vw - 28px);max-height:calc(94vh - 28px);object-fit:contain}.footnote{text-align:center;font-size:12px;margin:28px 0 0}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}@media(max-width:760px){.shell{padding:24px 15px 45px}.topline{margin-bottom:38px}.layout{grid-template-columns:1fr}.card,.aside{padding:20px}.aside{order:-1}.hero{margin-bottom:24px}.statusbar{margin:20px 0 22px}.reader-grid,.graph-diff{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -122,24 +122,122 @@
 
       function showState(text, kind = '') { stateEl.textContent = text; stateEl.className = `state ${kind}`; }
       function appendText(parent, tag, text, className) { const el = document.createElement(tag); if (className) el.className = className; el.textContent = text == null ? '' : String(text); parent.append(el); return el; }
+      function label(value, fallback = 'Not recorded') { return value == null || value === '' ? fallback : String(value); }
+      function addList(parent, title, items, formatter = item => item) {
+        appendText(parent, 'h5', title);
+        if (!Array.isArray(items)) { appendText(parent, 'p', 'This section was not included or is unavailable; it was not checked here.', 'small-note'); return; }
+        if (!items.length) { appendText(parent, 'p', 'No items were recorded in this saved extraction. This does not establish that the figure contains none.', 'small-note'); return; }
+        const list = document.createElement('ul');
+        for (const item of items) appendText(list, 'li', formatter(item));
+        parent.append(list);
+      }
+      function formatFact(item) { return [item.subject, item.predicate, item.object].filter(Boolean).join(' ') + (item.qualifiers?.length ? ` (${item.qualifiers.join('; ')})` : '') + (item.certainty ? ` · certainty: ${item.certainty}` : ''); }
+      function formatRelation(item, names = null) {
+        const source = item.source ?? item.source_id; const target = item.target ?? item.target_id;
+        const resolve = id => names?.get(id) || id;
+        const arrow = item.direction === 'directed' ? '→' : item.direction === 'undirected' ? '↔' : '—';
+        return `${label(resolve(source))} ${arrow} ${label(resolve(target))} · ${label(item.label || item.kind, 'unknown relation')}${item.line_style ? ` · ${item.line_style}` : ''}${item.evidence_status ? ` · evidence: ${item.evidence_status}` : ''}`;
+      }
+      function renderReaderRecord(parent, record, side) {
+        const card = document.createElement('section'); card.className = 'reader-card';
+        appendText(card, 'h4', `Reader ${side} · saved extraction`);
+        if (!record) { appendText(card, 'p', 'This run did not include a reader record (legacy/unavailable).'); parent.append(card); return; }
+        appendText(card, 'p', label(record.title, 'Untitled extraction'));
+        appendText(card, 'p', `Reader-reported extraction completeness: ${label(record.completeness, 'not reported')} — not an independent accuracy check`, 'reader-meta');
+        appendText(card, 'p', `Summary: ${label(record.summary)}`);
+        addList(card, 'Facts extracted', record.facts, formatFact);
+        const nodeNames = new Map((record.graph?.nodes || []).map(item => [item.id, item.label]));
+        addList(card, 'Nodes extracted', record.graph?.nodes, item => `${label(item.label || item.name || item.id)}${item.aliases?.length ? ` · aliases: ${item.aliases.join(', ')}` : ''}${item.group_id ? ` · group: ${nodeNames.get(item.group_id) || item.group_id}` : ''}`);
+        addList(card, 'Relations extracted', record.graph?.relations, item => formatRelation(item, nodeNames));
+        addList(card, 'Groups extracted', record.graph?.groups, item => `${label(item.label)} · id ${label(item.id)}`);
+        addList(card, 'Conditions extracted', record.graph?.conditions, item => typeof item === 'string' ? item : JSON.stringify(item));
+        addList(card, 'Uncertainties recorded', record.uncertainties, item => typeof item === 'string' ? item : JSON.stringify(item));
+        addList(card, 'Evidence notes recorded', record.evidence, item => [item.item_id, item.visible_text, item.note].filter(Boolean).join(' · '));
+        const plots = record.plots;
+        appendText(card, 'h5', 'Plots and axes');
+        if (!Array.isArray(plots)) appendText(card, 'p', 'Plot information was not included or is unavailable; it was not checked here.', 'small-note');
+        else if (!plots.length) appendText(card, 'p', 'No plot panel was recorded in this saved extraction. This does not establish that the figure contains none.', 'small-note');
+        for (const plot of Array.isArray(plots) ? plots : []) {
+          appendText(card, 'p', `Panel: ${label(plot.title)} · x: ${label(plot.x_axis?.label)} (${label(plot.x_axis?.unit, 'unit not reported')}, ${label(plot.x_axis?.scale, 'scale not reported')}) · y: ${label(plot.y_axis?.label)} (${label(plot.y_axis?.unit, 'unit not reported')}, ${label(plot.y_axis?.scale, 'scale not reported')})`);
+          addList(card, 'Series and saved points', plot.series, series => `${label(series.label)} · ${label(series.style, 'style not recorded')}${series.approximate ? ' · approximate' : ''} · points: ${Array.isArray(series.points) ? series.points.map(point => `(${point.x}, ${point.y})`).join(', ') || 'none' : 'not recorded'}`);
+          addList(card, 'Panel notes', plot.notes, note => note);
+        }
+        parent.append(card);
+      }
+      function auditStatus(judgment) {
+        const audit = judgment?.evidence_audit;
+        if (!audit) return judgment?.method === 'semantic_assist' ? 'Legacy / unverified' : 'Audit unavailable';
+        return audit.status === 'verified' ? 'Verified by available evidence' : audit.status === 'invalid' ? 'Invalid evidence' : 'Needs verification';
+      }
+      function renderJudgment(parent, labelText, judgment) {
+        const panel = document.createElement('div'); panel.className = 'audit-box';
+        appendText(panel, 'strong', `${labelText}: ${judgment?.status === 'uncertain' ? 'Needs verification' : label(judgment?.status, 'unknown')}`);
+        const audit = judgment?.evidence_audit;
+        appendText(panel, 'p', `Evidence check: ${auditStatus(judgment)}${audit?.requested_status ? ` · evaluator requested ${audit.requested_status}` : ''}`);
+        if (!audit) appendText(panel, 'p', 'Legacy/unavailable evidence audit; this status is not independently verified.');
+        if (audit?.reasons?.length) for (const reason of audit.reasons) appendText(panel, 'p', reason);
+        const citations = audit?.citations;
+        appendText(panel, 'p', 'Actual cited extraction');
+        if (!Array.isArray(citations) || !citations.length) appendText(panel, 'p', 'No citation was returned. An absent citation does not prove the reader failed to notice the item.');
+        else for (const citation of citations) appendText(panel, 'p', `${label(citation.id)} · ${label(citation.type)}: ${label(citation.text)}`, 'citation');
+        parent.append(panel);
+      }
+      function renderGraphAudit(parent, graphAudit) {
+        appendText(parent, 'h3', 'A/B graph comparison');
+        if (!graphAudit) { appendText(parent, 'p', 'Graph audit unavailable (legacy/unavailable).'); return; }
+        if (!graphAudit.executed) { appendText(parent, 'p', `Graph comparison was not executed. ${label(graphAudit.note, '')}`); return; }
+        appendText(parent, 'p', `${Number(graphAudit.matched_nodes) || 0} uniquely matched nodes · ${Number(graphAudit.unchanged_edges) || 0} unchanged edges.`);
+        appendText(parent, 'p', label(graphAudit.note));
+        appendText(parent, 'p', 'Differences between reader A and reader B cannot be attributed to the original figure without an independent reference answer.', 'warning-note');
+        const grid = document.createElement('div'); grid.className = 'graph-diff';
+        const groups = [
+          ['Edges added in B', graphAudit.added_edges, formatRelation], ['Edges absent in B', graphAudit.removed_edges, formatRelation],
+          ['Nodes only in A', graphAudit.unmatched_a_nodes, item => item], ['Nodes only in B', graphAudit.unmatched_b_nodes, item => item],
+          ['Ambiguous node matches', graphAudit.ambiguous_nodes, item => item]
+        ];
+        for (const [title, items, formatter] of groups) {
+          const box = document.createElement('div'); box.className = 'diff-list';
+          addList(box, title, items, formatter); grid.append(box);
+        }
+        parent.append(grid);
+      }
       function showResult(job) {
         resultBody.replaceChildren();
         const result = job.result;
         if (!result) { showState('The job completed without a report payload.', 'error'); return; }
-        showState('Completed. Review each item against your scientific context.', 'ok');
+        showState('Analysis finished — evidence needs review. This is an AI reading comparison, not a verified answer.', 'review');
         const report = result.report || {};
+        const checkedRows = Array.isArray(report.keypoint_results) ? report.keypoint_results : [];
+        const verified = checkedRows.filter(row => row.in_a?.evidence_audit?.status === 'verified' && row.in_b?.evidence_audit?.status === 'verified').length;
+        appendText(resultBody, 'p', `Assessment coverage: ${verified} of ${checkedRows.length} statements have independently checked record comparisons. Other free-text suggestions need verification. This is not a figure-quality or human-understanding score.`, 'warning-note');
+        if (result.render_audit?.warnings?.length || result.render_audit?.unsupported_item_ids?.length) appendText(resultBody, 'p', `Reconstruction needs review: ${result.render_audit.unsupported_item_ids?.length || 0} items not fully represented and ${result.render_audit.warnings?.length || 0} rendering warnings. Inspect these gaps before attributing differences to the original figure.`, 'warning-note');
+        const coverage = report.coverage;
+        if (coverage) appendText(resultBody, 'p', `Automatic checks executed: graph comparison ${report.graph_audit?.executed ? 'yes (uniquely matched labels only)' : 'no'}; explicit-fact comparison ${coverage.fact_comparison?.executed ? 'yes' : 'no'}; plot audit ${coverage.plot_audit?.executed ? 'yes' : 'no'}. A check not executed provides no assurance of fidelity.`, 'small-note');
         appendText(resultBody, 'p', `Model: ${result.model || 'Not reported'} · Prompt: ${result.prompt_version || 'Not reported'}`);
-        appendText(resultBody, 'h3', 'Author statements and reader observations');
+        appendText(resultBody, 'p', 'The saved A/B records are what each model extracted. Missing from a record means not represented in that saved extraction; it does not by itself prove the figure omitted it.');
+        appendText(resultBody, 'h3', 'What readers A and B actually extracted');
+        const readers = document.createElement('div'); readers.className = 'reader-grid';
+        renderReaderRecord(readers, result.reader_records?.a, 'A · original figure');
+        renderReaderRecord(readers, result.reader_records?.b, 'B · reconstruction');
+        resultBody.append(readers);
+        renderGraphAudit(resultBody, report.graph_audit);
+        appendText(resultBody, 'h3', 'Author statements · judgment and cited evidence');
         const rows = Array.isArray(report.keypoint_results) ? report.keypoint_results : [];
         if (!rows.length) appendText(resultBody, 'p', 'No itemized findings were returned.');
         for (const row of rows) {
           const article = document.createElement('article'); article.className = 'judgment';
           const head = document.createElement('div'); head.className = 'judgment-head';
           appendText(head, 'span', row.text || row.keypoint_id || 'Author statement');
-          appendText(head, 'span', `A: ${row.in_a?.status || 'unknown'} · B: ${row.in_b?.status || 'unknown'}`, 'badge'); article.append(head);
-          appendText(article, 'p', `First reading: ${row.in_a?.rationale || 'No rationale returned.'}`, '');
-          appendText(article, 'p', `Reconstruction reading: ${row.in_b?.rationale || 'No rationale returned.'}`, '');
-          if (Array.isArray(row.suggestions) && row.suggestions.length) { const list = document.createElement('ul'); list.className = 'suggestions'; for (const suggestion of row.suggestions) appendText(list, 'li', suggestion); article.append(list); }
+          appendText(head, 'span', `A: ${row.in_a?.status === 'uncertain' ? 'Needs verification' : row.in_a?.status || 'unknown'} · B: ${row.in_b?.status === 'uncertain' ? 'Needs verification' : row.in_b?.status || 'unknown'}`, 'badge'); article.append(head);
+          const panels = document.createElement('div'); panels.className = 'reader-grid';
+          renderJudgment(panels, 'Assessment of reader A record', row.in_a); renderJudgment(panels, 'Assessment of reader B record', row.in_b); article.append(panels);
+          const suggestion = document.createElement('details'); suggestion.className = 'details';
+          const suggestionSummary = document.createElement('summary'); suggestionSummary.textContent = 'Evaluator suggestion and explanation'; suggestion.append(suggestionSummary);
+          const requested = [row.in_a?.evidence_audit?.requested_status, row.in_b?.evidence_audit?.requested_status].filter(Boolean);
+          appendText(suggestion, 'p', `Evaluator requested status: ${requested.length ? [...new Set(requested)].join(' / ') : 'Legacy/unavailable'}`);
+          appendText(suggestion, 'p', `Judge explanation, not reader wording: A — ${row.in_a?.evidence_audit?.suggestion_rationale || row.in_a?.rationale || 'Not reported'} · B — ${row.in_b?.evidence_audit?.suggestion_rationale || row.in_b?.rationale || 'Not reported'}`);
+          if (Array.isArray(row.suggestions) && row.suggestions.length) { const list = document.createElement('ul'); list.className = 'suggestions'; for (const item of row.suggestions) appendText(list, 'li', item); suggestion.append(list); }
+          article.append(suggestion);
           resultBody.append(article);
         }
         const limitations = Array.isArray(result.limitations) ? result.limitations : Array.isArray(report.limitations) ? report.limitations : [];
@@ -151,7 +249,7 @@
           img.addEventListener('click', open); img.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } }); resultBody.append(img);
         }
         if (result.render_audit) appendDetails(resultBody, 'Rendering audit', result.render_audit);
-        const technical = { report: result.report ?? null, model: result.model ?? null, prompt_version: result.prompt_version ?? null, render_audit: result.render_audit ?? null, limitations: result.limitations ?? null };
+        const technical = { report: result.report ?? null, reader_records: result.reader_records ?? null, model: result.model ?? null, prompt_version: result.prompt_version ?? null, render_audit: result.render_audit ?? null, limitations: result.limitations ?? null };
         appendDetails(resultBody, 'Technical details (no original image)', technical);
       }
       function appendDetails(parent, title, value) { const details = document.createElement('details'); details.className = 'details'; const summary = document.createElement('summary'); summary.textContent = title; const pre = document.createElement('pre'); pre.textContent = JSON.stringify(value, null, 2); details.append(summary, pre); parent.append(details); }

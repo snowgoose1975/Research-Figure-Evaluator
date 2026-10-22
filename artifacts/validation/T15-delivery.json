@@ -1,0 +1,17 @@
+{
+  "scope": "Evidence-first diagnostics update; not a claim of reliable image understanding",
+  "website": "https://figure-relay.chicchair5.chatgpt.site",
+  "delivery": "Existing local trial application and worker updated; existing fixed website/discovery retained",
+  "versions": { "reader": "reader-0.2.3", "renderer": "0.2.2", "evaluation": "evidence-0.3.0" },
+  "validation": { "test_files": 19, "tests_passed": 124, "typecheck": "passed", "lint": "0 errors / 0 warnings", "production_build": "passed", "browser": "T15-browser-delivery.json: 18/18, zero errors", "real_development_runs": "T15-live-v1.json: both completed, no replacement runs" },
+  "regression": "Original 5/5 free-text retained judgments are no longer treated as verified. Eleven unique graph nodes compared; two edges absent in B and one added in B. Original records unchanged.",
+  "disclosure": [
+    "The 4B reader still misread arrows in the user development case.",
+    "Free-text entailment remains unverified; raw extraction, candidate suggestions and rule checks are distinguished.",
+    "A/B graph differences and renderer warnings do not establish a defect in the original figure.",
+    "Original 8/12 protocol statistics remain unchanged; these are two development cases, not a holdout benchmark."
+  ],
+  "service_state": "Paused preference retained from before this work; no active/waiting jobs",
+  "private_data": "No user image, full private extraction or session capability included",
+  "system_startup_changes": false
+}

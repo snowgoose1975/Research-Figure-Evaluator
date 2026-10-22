@@ -1,0 +1,81 @@
+{
+  "label": "T15-browser-final",
+  "base": "https://d8153f0022b2ce.lhr.life",
+  "outcome": "passed",
+  "scope": "Actual public HTML with controlled replay of one newly completed real public-materials report; status and POST intercepted to preserve the owner's paused state; zero additional model calls.",
+  "checks": [
+    {
+      "name": "processing consent required",
+      "pass": true
+    },
+    {
+      "name": "completion clearly requests evidence review",
+      "pass": true
+    },
+    {
+      "name": "actual reader A record shown",
+      "pass": true
+    },
+    {
+      "name": "actual reader B record shown separately",
+      "pass": true
+    },
+    {
+      "name": "each reading panel uses its own saved summary",
+      "pass": true
+    },
+    {
+      "name": "all author checkpoints displayed",
+      "pass": true
+    },
+    {
+      "name": "free-text opinions never displayed as verified retention",
+      "pass": true
+    },
+    {
+      "name": "actual citations presented",
+      "pass": true
+    },
+    {
+      "name": "evaluator explanations separated into details",
+      "pass": true
+    },
+    {
+      "name": "graph audit and attribution limit visible",
+      "pass": true
+    },
+    {
+      "name": "candidate retained status is explicitly an evaluator request",
+      "pass": true
+    },
+    {
+      "name": "modal traps focus",
+      "pass": true
+    },
+    {
+      "name": "modal closes and restores focus",
+      "pass": true
+    },
+    {
+      "name": "mobile has no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "mobile close visible",
+      "pass": true
+    },
+    {
+      "name": "new check resets consent",
+      "pass": true
+    },
+    {
+      "name": "one intercepted submit, no model calls or capability in URL",
+      "pass": true
+    },
+    {
+      "name": "zero browser errors",
+      "pass": true
+    }
+  ],
+  "errors": []
+}

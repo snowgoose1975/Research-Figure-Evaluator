@@ -1,7 +1,7 @@
 import { Resvg } from "@resvg/resvg-js";
 import type { MemoryRecord, RenderInput, RenderResult } from "../schemas";
 
-export const RENDERER_VERSION = "0.2.1";
+export const RENDERER_VERSION = "0.2.2";
 const WIDTH = 1200;
 const COLORS = {
   ink: "#172b3a", muted: "#526579", line: "#9aabba", faint: "#eaf0f4",
@@ -44,6 +44,24 @@ function wrap(value: string, maxChars: number): string[] {
 
 function textLines(text: string, x: number, y: number, maxChars: number, lineHeight = 19, className = "body", anchor = "start"): string {
   return wrap(text, maxChars).map((line, i) => `<text class="${className}" ${TEXT_FONT[className]} x="${x}" y="${y + i * lineHeight}" text-anchor="${anchor}">${esc(line)}</text>`).join("");
+}
+
+function segmentIntersectsBox(start: { x: number; y: number }, end: { x: number; y: number }, box: Box): boolean {
+  const dx = end.x - start.x; const dy = end.y - start.y;
+  const p = [-dx, dx, -dy, dy];
+  const q = [start.x - box.x, box.x + box.w - start.x, start.y - box.y, box.y + box.h - start.y];
+  let t0 = 0; let t1 = 1;
+  for (let i = 0; i < p.length; i++) {
+    if (p[i] === 0) {
+      if (q[i] < 0) return false;
+      continue;
+    }
+    const t = q[i] / p[i];
+    if (p[i] < 0) t0 = Math.max(t0, t);
+    else t1 = Math.min(t1, t);
+    if (t0 > t1) return false;
+  }
+  return true;
 }
 
 // Readers sometimes put the unit inside the axis label and also fill the unit field.
@@ -138,7 +156,7 @@ export async function renderMemory(input: RenderInput): Promise<RenderResult> {
   const cardW = 178; const gapX = 72; const gapY = 72; const left = 74;
   const cols = Math.max(1, Math.min(5, Math.floor((WIDTH - 2 * left + gapX) / (cardW + gapX))));
   const nodeHeights = nodes.map(node => Math.max(74, 34 + wrap(node.label, 23).length * 20 + (node.aliases.length ? wrap(`Aliases: ${node.aliases.join(", ")}`, 27).length * 14 : 0)));
-  const useSemantic = (input.figure_type === "structure" || input.figure_type === "geometry") && nodes.some(n => n.semantic_position !== null);
+  const useSemantic = nodes.some(n => n.semantic_position !== null);
   const positioned = nodes.map((node, i) => ({ node, i })).filter(({ node }) => useSemantic && node.semantic_position !== null);
   const unpositioned = nodes.map((node, i) => ({ node, i })).filter(({ node }) => !useSemantic || node.semantic_position === null);
   const autoRows = Math.ceil(unpositioned.length / cols);
@@ -147,11 +165,23 @@ export async function renderMemory(input: RenderInput): Promise<RenderResult> {
   const groupHeaderHeight = Math.max(0, ...input.graph.groups.map(group => wrap(group.label, 18).length * 16 + 22));
   const graphTop = y + Math.max(30, groupHeaderHeight + 12);
   const positionRange = positioned.length ? Math.max(...positioned.map(({ node }) => node.semantic_position!.y)) - Math.min(...positioned.map(({ node }) => node.semantic_position!.y)) : 0;
+  const positionXRange = positioned.length ? Math.max(...positioned.map(({ node }) => node.semantic_position!.x)) - Math.min(...positioned.map(({ node }) => node.semantic_position!.x)) : 0;
+  const normalizeMechanismX = input.figure_type === "mechanism" || input.figure_type === "mixed";
+  const minPositionX = positioned.length ? Math.min(...positioned.map(({ node }) => node.semantic_position!.x)) : 0;
+  const semanticX = (positionX: number) => {
+    if (!normalizeMechanismX) return 80 + positionX * (WIDTH - 160 - cardW);
+    const xMin = left;
+    const xMax = WIDTH - left - cardW;
+    return positionXRange > 0 ? xMin + (positionX - minPositionX) / positionXRange * (xMax - xMin) : (xMin + xMax) / 2;
+  };
+  if (positioned.length > 1 && positionRange === 0 && positionXRange === 0) {
+    for (const { node } of positioned) markUnsupported(node.id, "semantic positions have zero span; nodes cannot be spatially distinguished");
+  }
   let semanticCanvasH = 600;
   for (let i = 0; i < positioned.length; i++) for (let j = i + 1; j < positioned.length; j++) {
     const a = positioned[i]; const b = positioned[j];
-    const ax = 80 + a.node.semantic_position!.x * (WIDTH - 160 - cardW);
-    const bx = 80 + b.node.semantic_position!.x * (WIDTH - 160 - cardW);
+    const ax = semanticX(a.node.semantic_position!.x);
+    const bx = semanticX(b.node.semantic_position!.x);
     if (ax < bx + cardW && ax + cardW > bx) {
       const dy = Math.abs(a.node.semantic_position!.y - b.node.semantic_position!.y);
       if (dy > 0) semanticCanvasH = Math.max(semanticCanvasH, (nodeHeights[a.i] + nodeHeights[b.i]) / (2 * dy) + gapY / dy);
@@ -166,11 +196,11 @@ export async function renderMemory(input: RenderInput): Promise<RenderResult> {
     const row = Math.floor(autoIndex / cols);
     const rowTop = graphTop + (useSemantic ? semanticCanvasH + (unpositioned.length ? gapY : 0) : 0) + autoRowHeights.slice(0, row).reduce((sum, h) => sum + h + gapY, 0);
     if (isPositioned && node.semantic_position) {
-      x = 80 + node.semantic_position.x * (WIDTH - 160 - cardW);
+      x = semanticX(node.semantic_position.x);
       const minY = Math.min(...positioned.map(({ node: placed }) => placed.semantic_position!.y));
       ny = graphTop + (positionRange ? (node.semantic_position.y - minY) / positionRange * semanticCanvasH : semanticCanvasH / 2 - nodeHeights[i] / 2);
     } else {
-      const col = i % cols;
+      const col = autoIndex % cols;
       x = left + col * (cardW + gapX);
       ny = rowTop;
     }
@@ -198,6 +228,11 @@ export async function renderMemory(input: RenderInput): Promise<RenderResult> {
     addItem(group.id, `<rect x="${minX}" y="${groupTop}" width="${maxX - minX}" height="${maxY - groupTop}" rx="15" fill="#f5f8fa" stroke="#afbfca" stroke-dasharray="7 5"/>${textLines(group.label, minX + 12, groupTop + 20, labelChars, 16, "group")}`);
   }
 
+  const endpointPairCounts = new Map<string, number>();
+  for (const relation of input.graph.relations) {
+    const pairKey = [relation.source_id, relation.target_id].sort().join("\u0000");
+    endpointPairCounts.set(pairKey, (endpointPairCounts.get(pairKey) ?? 0) + 1);
+  }
   for (const relation of input.graph.relations) {
     const a = nodeBoxes.get(relation.source_id); const b = nodeBoxes.get(relation.target_id);
     if (!a || !b) { markUnsupported(relation.id, "relation endpoint is not rendered"); continue; }
@@ -213,9 +248,26 @@ export async function renderMemory(input: RenderInput): Promise<RenderResult> {
     const startDistance = rectExit(a); const endDistance = rectExit(b);
     const start = { x: p1.x + ux * (startDistance + 1), y: p1.y + uy * (startDistance + 1) };
     const end = { x: p2.x - ux * (endDistance + 3), y: p2.y - uy * (endDistance + 3) };
+    const pairKey = [relation.source_id, relation.target_id].sort().join("\u0000");
+    if ((endpointPairCounts.get(pairKey) ?? 0) > 1) {
+      markUnsupported(relation.id, "multiple relations share this endpoint pair; edge lines may overlap");
+    }
+    for (const node of nodes) {
+      if (node.id === relation.source_id || node.id === relation.target_id) continue;
+      const box = nodeBoxes.get(node.id)!;
+      if (segmentIntersectsBox(start, end, box)) {
+        markUnsupported(relation.id, `edge line crosses non-endpoint node ${node.label}`);
+      }
+    }
     const stroke = relation.kind === "promotes" ? COLORS.greenStroke : relation.kind === "inhibits" ? COLORS.redStroke : COLORS.blueStroke;
+    if (relation.kind === "unknown") markUnsupported(relation.id, "relation kind is unknown; edge is shown without an inferred meaning");
+    if (relation.direction === "unknown") markUnsupported(relation.id, "relation direction is unknown; edge is shown without an arrow");
+    if (relation.line_style === "unknown") markUnsupported(relation.id, "relation line style is unknown; dotted line is used");
+    if (relation.evidence_status === "unknown" || relation.evidence_status === "hypothesized" || relation.evidence_status === "not_shown") {
+      warnings.push(`${relation.id}: relation evidence status is ${certaintyLabel(relation.evidence_status)}`);
+    }
     const dash = relation.line_style === "dashed" ? ` stroke-dasharray="8 6"` : relation.line_style === "unknown" ? ` stroke-dasharray="2 5"` : "";
-    let line = `<line x1="${start.x}" y1="${start.y}" x2="${end.x}" y2="${end.y}" stroke="${stroke}" stroke-width="2.5"${dash}/>`;
+    let line = `<g data-relation-kind="${esc(relation.kind)}" data-direction="${esc(relation.direction)}" data-evidence-status="${esc(relation.evidence_status)}"><line x1="${start.x}" y1="${start.y}" x2="${end.x}" y2="${end.y}" stroke="${stroke}" stroke-width="2.5"${dash}/>`;
     const directed = relation.direction === "directed";
     if (directed && relation.kind === "inhibits") {
       // Inhibition is a blunt T bar, never a positive arrow.
@@ -227,8 +279,10 @@ export async function renderMemory(input: RenderInput): Promise<RenderResult> {
     }
     const relationText = relation.label || relation.kind;
     const mx = (start.x + end.x) / 2; const my = (start.y + end.y) / 2 - 9;
-    const shortLabel = relationText.length > 24 ? `${relationText.slice(0, 21)}…` : relationText;
-    addItem(relation.id, `${line}<rect x="${mx - 80}" y="${my - 14}" width="160" height="20" rx="8" fill="white" fill-opacity="0.96"/><text class="edge" ${TEXT_FONT.edge} x="${mx}" y="${my}" text-anchor="middle">${esc(shortLabel)}</text>`);
+    const relationLines = wrap(relationText, 24);
+    const labelHeight = Math.max(20, relationLines.length * 15 + 4);
+    const labelText = relationLines.map((text, index) => `<text class="edge" ${TEXT_FONT.edge} x="${mx}" y="${my + (index - (relationLines.length - 1) / 2) * 15}" text-anchor="middle">${esc(text)}</text>`).join("");
+    addItem(relation.id, `${line}<rect x="${mx - 90}" y="${my - labelHeight / 2}" width="180" height="${labelHeight}" rx="8" fill="white" fill-opacity="0.96"/>${labelText}</g>`);
   }
 
   for (const node of nodes) {
@@ -246,18 +300,6 @@ export async function renderMemory(input: RenderInput): Promise<RenderResult> {
     addItem(notice.id, `<rect x="58" y="${y}" width="1084" height="42" rx="9" fill="#fff5d8" stroke="#d6ad47"/><text class="body" ${TEXT_FONT.body} x="76" y="${y + 26}">Self relation not drawn: ${esc(notice.text)}</text>`);
     y += 52;
   }
-  if (input.graph.relations.length) {
-    pieces.push(`<text class="section" ${TEXT_FONT.section} x="58" y="${y + 8}">Relations</text>`); y += 22;
-    for (const relation of input.graph.relations) {
-      const source = itemLabels.get(relation.source_id) ?? "unresolved source";
-      const target = itemLabels.get(relation.target_id) ?? "unresolved target";
-      const details = `${source} → ${target} · ${relation.label || relation.kind} · kind: ${relation.kind} · direction: ${relation.direction} · certainty: ${certaintyLabel(relation.evidence_status)} · line style: ${relation.line_style}`;
-      const lines = wrap(details, 112); const h = Math.max(52, 20 + lines.length * 18);
-      addItem(relation.id, `<rect x="58" y="${y}" width="1084" height="${h}" rx="9" fill="#f1f6f9" stroke="#c4d2dc"/>${textLines(details, 76, y + 23, 112, 18, "body")}`);
-      y += h + 8;
-    }
-  }
-
   // Explicit condition cards retain scope and target association in visible text.
   for (const condition of input.graph.conditions) {
     const targetNames = condition.target_ids.map(id => itemLabels.get(id) ?? "unresolved target");

@@ -1,0 +1,15 @@
+{
+  "scope": "Offline reassessment of unchanged private development records; no image or extracted user content included; no new model calls",
+  "old_status": { "retained_a": 5, "retained_b": 5, "total": 5, "unresolved": 0 },
+  "new_status": { "retained_a": 0, "retained_b": 0, "total": 5, "unresolved": 5 },
+  "new_graph_comparison": { "matched_nodes": 11, "removed_edges": 2, "added_edges": 1 },
+  "private_versions_retained": ["v1 initial layout-overlap audit", "v2 order-preserving layout", "v3 edge-occlusion audit"],
+  "source_records_overwritten": false,
+  "evaluation_policy": "evidence-0.3.0",
+  "limitations": [
+    "Uncertain is a verification limit, not proof that the original figure is unclear or incorrect.",
+    "Graph comparison checks extracted records under unique exact label matching, not original-image truth.",
+    "The 4B reader still misreads arrows; these changes do not establish improved model accuracy.",
+    "Explicit structured facts, directed claims and numerical checks can receive bounded deterministic checks; ordinary free-text suggestions cannot."
+  ]
+}

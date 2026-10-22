@@ -1,0 +1,53 @@
+{
+  "scope": "Two fixed development runs; private user records not included. All outcomes retained. New protocol not part of original 8/12. Free-text suggestions remain unverified; completed does not mean correct.",
+  "cases": [
+    {
+      "id": "user-development-counterexample",
+      "status": "completed",
+      "duration_seconds": 104,
+      "prompt_version": "reader-0.2.3",
+      "renderer": "0.2.2",
+      "evaluation_version": "evidence-0.3.0",
+      "error_code": null,
+      "error_stage": null,
+      "a_nodes": 11,
+      "b_nodes": 11,
+      "a_edges": 14,
+      "b_edges": 13,
+      "summary": {
+        "retained_a": 0,
+        "retained_b": 0,
+        "total": 5,
+        "unresolved": 5,
+        "renderer_warnings": 6
+      },
+      "graph_added": 1,
+      "graph_removed": 2,
+      "renderer_warnings": 6
+    },
+    {
+      "id": "public-materials",
+      "status": "completed",
+      "duration_seconds": 30,
+      "prompt_version": "reader-0.2.3",
+      "renderer": "0.2.2",
+      "evaluation_version": "evidence-0.3.0",
+      "error_code": null,
+      "error_stage": null,
+      "a_nodes": 3,
+      "b_nodes": 3,
+      "a_edges": 2,
+      "b_edges": 2,
+      "summary": {
+        "retained_a": 0,
+        "retained_b": 0,
+        "total": 4,
+        "unresolved": 4,
+        "renderer_warnings": 0
+      },
+      "graph_added": 0,
+      "graph_removed": 0,
+      "renderer_warnings": 0
+    }
+  ]
+}

@@ -1,5 +1,7 @@
 # Delivery validation · 2026-10-22
 
+T15增量（最新）：124项/19测试文件、typecheck/lint/build通过；18项最终浏览器检查通过，真实A/B记录与裁判建议分离，实际引用/图差异/覆盖/手机弹窗均验证。固定两例开发运行完成（用户图104秒、公开材料30秒），reader-0.2.3 / renderer-0.2.2 / evidence-0.3.0；用户图仍有箭头读错，新策略不再将其5/5确认保留，保留裁判原建议和证据，5项待核验，A/B图比较少2多1，渲染6警告。公开材料4项也待核验，不将一致性等同正确。证据T15-live-v1.json及T15-browser-final.json；不更改旧8/12或原用户报告。此前浏览器v1是标题定位不一致的脚本失败，已保留，不当产品通过。自由文本蕴含验证和可靠读图未解决，不能用工程测试代替模型能力。详见T15交接。
+
 T14增量：固定网页接入受限本机分析服务。正式流水线通过HTTPS接受一张公开材料图并完成；首次浏览器GET发生ECONNRESET，同任务恢复领取报告/重建，未重新提交或重跑，T14-live-first-recovered.json保留限制。显存峰值6627MiB，GPU外部观察96%、采样窗口75%；最低空闲RAM289MiB与开发构建重叠，不作隔离基准或日常流畅保证。暂停/恢复真实操作通过，空闲显存恢复约12MiB。免费临时隧道实际自动轮换，独立service-status公告分支和原网页发现当前地址；不能承诺SLA。最终validate 16文件104项、lint/typecheck/build通过；HTTP边界4项、队列6项均计入总数。新证据不混入旧8/12。用户选择手动启动，不添加系统启动项。T14首次完整浏览器验收因轮换过期域名中断，v2发现Close文本不一致与favicon404，失败证据均保留；最终状态见T14交接和后续v3证据。
 
 T13增量（最新）：公开案例站 https://figure-relay.chicchair5.chatgpt.site 已成功部署。`T13-public-online.json`外网Edge13/13、无console/page错误；静态v3本地13/13，早期失败保留。图片关闭/手机交互和作者预期信息的首页目标已修。最终`npm run validate`：14文件94测试、typecheck/lint/build通过。首次沙箱构建EPERM，同命令完整复验通过。Python relay6项通过；HF候选入口只做语法检查。首次新relay真实本地测试A阶段失败，见`T13-local-relay-live.json`，不混入旧8/12。HF创建被PRO限制拒绝，用户截图确认Gradio/Docker均为Paid，线上新图推理未接通。发布版本、失败和待办见`handoffs/T13-publication.md`。

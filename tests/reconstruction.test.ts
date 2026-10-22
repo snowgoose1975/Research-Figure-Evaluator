@@ -55,8 +55,8 @@ describe("controlled memory renderer", () => {
     expect(result.rendered_item_ids).toEqual(expect.arrayContaining([
       "node-a", "node-b", "promote", "inhibit", "condition-1", "plot-1", "series-1", "fact-1", "uncertainty-1",
     ]));
-    expect(result.unsupported_item_ids).toEqual([]);
-    expect(result.structural_audit).toBe("complete");
+    expect(result.unsupported_item_ids).toEqual(expect.arrayContaining(["promote", "inhibit"]));
+    expect(result.structural_audit).toBe("incomplete");
     expect(result.visual_review).toBe("not_reviewed");
   });
 
@@ -103,7 +103,7 @@ describe("controlled memory renderer", () => {
     expect(result.png.subarray(0, 8).toString("hex")).toBe("89504e470d0a1a0a");
     expect(result.width).toBe(1200);
     expect(result.height).toBeGreaterThan(240);
-    expect(result.renderer_version).toBe("0.2.1");
+    expect(result.renderer_version).toBe("0.2.2");
     expect(result.svg).toContain('font-size="27px"');
     expect(result.svg).toContain('font-family="Arial, Segoe UI, sans-serif"');
     expect(result.svg).toContain('width="1084" height="540"');
@@ -153,9 +153,11 @@ describe("controlled memory renderer", () => {
     expect(result.svg).toContain("TITLETAIL");
     expect(result.svg).toContain("GROUPTAIL");
     expect(result.svg).toContain("CONDITIONTAIL");
-    expect(result.svg).toContain("style: unknown");
-    expect(result.svg).toContain("kind: inhibits");
-    expect(result.unsupported_item_ids).toEqual([]);
+    expect(result.svg).not.toMatch(/>Relations<\/text>/);
+    expect(result.svg).toContain("inhibits");
+    expect(result.svg).toContain('stroke-width="4"');
+    expect(result.unsupported_item_ids).toContain("inhibit");
+    expect(result.warnings.join(" ")).toContain("unknown");
   });
 
   it("fails structural audit when the memory contains no semantic items", async () => {

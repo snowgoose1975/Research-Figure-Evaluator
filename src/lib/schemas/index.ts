@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const SCHEMA_VERSION = "0.2.0" as const;
-export const PROMPT_VERSION = "reader-0.2.2";
+export const PROMPT_VERSION = "reader-0.2.3";
 export const LIMITS = { imageBytes: 10 * 1024 * 1024, imagePixels: 25_000_000, nodes: 96, relations: 160, facts: 80 };
 export const DomainSchema = z.enum(["physics", "materials", "mathematics", "other"]);
 export const FigureTypeSchema = z.enum(["mechanism", "structure", "plot", "geometry", "mixed"]);
@@ -72,7 +72,10 @@ export type Keypoint = z.infer<typeof KeypointSchema>;
 export type IntentSet = z.infer<typeof IntentSetSchema>;
 
 export const JudgmentSchema = z.object({ status: z.enum(["retained", "partial", "omitted", "contradicted", "uncertain"]), issue_types: z.array(z.enum(["identity", "direction", "relation_type", "condition", "scope", "evidence_status", "value", "unit", "scale", "geometry"])), matched_item_ids: z.array(z.string()), rationale: z.string(), method: z.enum(["rule", "semantic_assist", "manual"]), review_required: z.boolean() }).strict();
-export type Judgment = z.infer<typeof JudgmentSchema>;
+export interface EvidenceAudit { requested_status: z.infer<typeof JudgmentSchema>["status"]; suggestion_rationale?: string; status: "verified" | "unverified" | "invalid"; reasons: string[]; citations: { id: string; type: string; text: string }[] }
+export type Judgment = z.infer<typeof JudgmentSchema> & { evidence_audit?: EvidenceAudit };
+export interface GraphEdgeRecord { source: string; target: string; kind: string; direction: string; line_style: string; evidence_status: string }
+export interface GraphAudit { executed: boolean; matched_nodes: number; unmatched_a_nodes: string[]; unmatched_b_nodes: string[]; unchanged_edges: number; removed_edges: GraphEdgeRecord[]; added_edges: GraphEdgeRecord[]; ambiguous_nodes: string[]; note: string }
 export const JudgeOutputSchema = z.object({ results: z.array(z.object({ keypoint_id: z.string(), in_a: JudgmentSchema, in_b: JudgmentSchema }).strict()) }).strict();
 export type JudgeOutput = z.infer<typeof JudgeOutputSchema>;
 export interface RenderInput { title: string; domain: Domain; figure_type: MemoryRecord["figure_type"]; summary: string; graph: MemoryRecord["graph"]; plots: MemoryRecord["plots"]; facts: MemoryRecord["facts"]; uncertainties: MemoryRecord["uncertainties"] }
@@ -124,6 +127,8 @@ export interface ScientificFinding {
   review_required: boolean;
 }
 export interface EvaluationReport {
+  evaluation_version?: string;
+  graph_audit?: GraphAudit;
   keypoint_results: { keypoint_id: string; text: string; in_a: Judgment; in_b: Judgment; observed_stage: "first_read" | "round_trip" | "both" | "none" | "unresolved"; recovery_in_b: boolean; render_item_status: "represented" | "unsupported" | "unknown"; suggestions: string[] }[];
   a_to_b: { a_item_id: string; b_item_ids: string[]; status: Judgment["status"]; rationale: string }[];
   unmatched_b_claims: { id: string; text: string; review_required: boolean }[];

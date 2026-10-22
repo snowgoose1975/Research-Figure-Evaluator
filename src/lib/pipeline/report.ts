@@ -5,6 +5,26 @@ export function markdownReport(run: RunSnapshot) {
   const escape = (s: string) => s.replaceAll("|", "\\|").replaceAll("\n", " ");
   const lines = ["# Figure Relay — scientific information recovery", "", `Run: ${run.id}`, `Mode: ${run.mode === "mock" ? "SCRIPTED DEMO — not model output" : "LIVE MODEL RUN"}`, `Created: ${run.created_at}`, `Model: ${run.model}`, `Schema: ${run.schema_version}; prompts: ${run.prompt_version}`, `Status: ${run.status}`, "", "## Keypoint evidence", "", "| Author statement | Reader A | Reader B | Observed stage | Evidence / rationale |", "|---|---|---|---|---|"];
   for (const r of run.report?.keypoint_results ?? []) lines.push(`| ${escape(r.text)} | ${r.in_a.status} | ${r.in_b.status} | ${r.observed_stage} | ${escape(r.in_b.rationale)} |`);
+  lines.push("", "## Assessment provenance", "", `Evaluation policy: ${run.report?.evaluation_version ?? "legacy — semantic statuses were not independently verified"}. These explanations are evaluator assessments, not quotations from readers A/B.`);
+  for (const row of run.report?.keypoint_results ?? []) {
+    lines.push("", `### ${escape(row.text)}`);
+    for (const [side, judgment] of [["A", row.in_a], ["B", row.in_b]] as const) {
+      const audit = judgment.evidence_audit;
+      lines.push(`- ${side}: ${audit?.status ?? "audit unavailable"}; evaluator suggestion: ${audit?.requested_status ?? judgment.status}.`);
+      if (audit?.suggestion_rationale) lines.push(`  - Original evaluator explanation (not reader wording): ${audit.suggestion_rationale}`);
+      for (const reason of audit?.reasons ?? []) lines.push(`  - ${reason}`);
+      for (const citation of audit?.citations ?? []) lines.push(`  - Extracted ${citation.type} ${citation.id}: ${citation.text}`);
+    }
+  }
+  lines.push("", "## Graph record comparison", "", "This compares uniquely label-matched extracted records; it does not establish original-image correctness.");
+  const graph = run.report?.graph_audit;
+  if (!graph) lines.push("Unavailable in this legacy report.");
+  else {
+    lines.push(`Executed: ${graph.executed}; matched nodes: ${graph.matched_nodes}; unchanged edges: ${graph.unchanged_edges}.`);
+    for (const [kind, edges] of [["Absent in B", graph.removed_edges], ["Added in B", graph.added_edges]] as const) for (const edge of edges) lines.push(`- ${kind}: ${edge.source} → ${edge.target}; ${edge.kind}, ${edge.direction}, ${edge.line_style}, ${edge.evidence_status}`);
+    if (graph.ambiguous_nodes.length) lines.push(`- Ambiguous matches excluded: ${graph.ambiguous_nodes.join("; ")}`);
+    if (graph.unmatched_a_nodes.length || graph.unmatched_b_nodes.length) lines.push(`- Unmatched nodes: A ${graph.unmatched_a_nodes.join("; ")}; B ${graph.unmatched_b_nodes.join("; ")}`);
+  }
   lines.push("", "## What to review first", "", "Derived from saved records; these references do not locate pixels or establish defects in the original figure.");
   const queue = buildReviewQueue(run);
   if (!queue.length) lines.push("No review items from the available records. This is not proof of full fidelity.");

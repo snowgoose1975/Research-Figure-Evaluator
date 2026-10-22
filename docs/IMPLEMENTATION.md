@@ -1,5 +1,17 @@
 # 实现合同 v0.2：跨领域科研图
 
+## T15 玉米确认全面修正评估与阅读展示（2026-10-22）
+
+针对用户双向状态图真实运行暴露的问题，按已讨论的“证据优先、实际A/B记录、机制布局”方向修复。禁止把工程通过等同模型正确。冻结：自由文本semantic判断若没有独立确定性支持，不得直接升级为retained；保留裁判原建议及引用，主状态uncertain，明确未验证，不伪造contradicted或omitted。确定性已匹配facts/显式科学检查优先，未知ID或空证据拒绝。此保守策略不是通用自然语言蕴含验证，界面必须说明自由文本支持仍依赖人工复核。
+
+报告Judgment新增可选evidence_audit {requested_status,status:verified|unverified|invalid,reasons:string[],citations:{id,type,text}[]}；不修改模型输出schema。EvaluationReport新增可选graph_audit {executed,matched_nodes,unmatched_a_nodes,unmatched_b_nodes,unchanged_edges,removed_edges,added_edges,ambiguous_nodes,note}，边对象{source,target,kind,direction,line_style,evidence_status}。只按双方唯一规范化标签匹配节点，重复/缺失不确认差异；无原图标准答案，A/B差异不归因原图。
+
+既有Keypoint.claim若明确指定flows_to/promotes/inhibits两端标签，且无facts替代记录时，允许唯一标签匹配后的定向边检查；含未检查条件、双向冲突或节点歧义返回uncertain。该规则只确认记录对应，不证明原图或科学真伪。重建中长边穿越节点或同端点多边的遮挡必须计入unsupported，不因仍输出了SVG就标完整。
+
+本机服务结果新增reader_records:{a:MemoryRecord,b:MemoryRecord}，仅返回当前访客自身提取文本/结构、不返回原图/私有路径。界面分开实际提取记录、引用、评估器建议与确定性检查。旧报告若无新字段显示legacy/unverified，不重写原运行；T15离线复验单独保存在原私有run的新增审查文件，不公开用户图片或记录，除非另获许可。
+
+所有权：主代理拥有schemas类型/evaluation/prompt/pipeline/服务executor/科学判例与集成；Luna graph只实现graph-audit.ts及对应测试，按上述冻结规则；Luna renderer只改reconstruction/index.ts与renderer专用新测试，所有有效semantic_position在机制/混合图也用于布局，保持箭头方向不变、避碰有警告，renderer版本升0.2.2；Luna UI只改local-service/public.html，围绕新增证据字段展示，保留上传/排队/关闭/暂停协议。其他本地/静态报告需标明历史判读，不静默改旧数据。真实新运行最多2次：用户图1次（若用户图仍在本机）、公开材料1次，全部保留失败，不混入原8/12，不因失败重跑补成功。先验冻结后执行，不付费、不新增系统项。
+
 ## T14 已授权本机持续服务（2026-10-22）
 
 玉米确认本机承担推理，电脑开启期间持续接单，可独立暂停/恢复，不以关机作为停止方式。实现独立受限HTTP入口，而不是公开单用户Next工作台或Ollama。单任务，最多3个等待，滚动每小时最多12次、滚动24小时最多100次；公开PNG/JPEG不超过10MB/25MP，3–5条确认的作者信息。公网只有状态/提交/持随机会话能力ID获取自己的结果，无历史列表/任意文件/任意模型参数。管理端只监听回环独立端口，验证Origin；暂停立即拒绝新任务、取消等待项，当前项结束后卸载模型。暂停偏好保存在忽略的runs/service-control，不存密钥。
