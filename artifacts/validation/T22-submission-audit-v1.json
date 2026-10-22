@@ -1,0 +1,32 @@
+{
+  "outcome": "failed",
+  "checks": [
+    {
+      "name": "canonical and form write-ups identical",
+      "pass": true
+    },
+    {
+      "name": "concise form text, not a pagination claim",
+      "pass": true
+    },
+    {
+      "name": "README relative documentation links resolve",
+      "pass": true
+    },
+    {
+      "name": "historical protocol agrees with write-up",
+      "pass": true
+    },
+    {
+      "name": "current prompt version distinguished from protocol",
+      "pass": false
+    }
+  ],
+  "failure": "current prompt version distinguished from protocol",
+  "writeup_sha256": "198ccd654f874f99a0c15fa524315ab0299669e7b20d138bb7f536d56d10f05a",
+  "writeup_words": 465,
+  "public_access": null,
+  "model_calls": 0,
+  "code_test_rerun": false,
+  "note": "Documentation-only change. Runtime validation remains T21; no claim of anonymous social-post access or competition submission."
+}

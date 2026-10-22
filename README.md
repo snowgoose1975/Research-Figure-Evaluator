@@ -4,7 +4,7 @@
 
 Figure Relay helps researchers inspect whether a figure communicates the message they intend. It gives a scientific figure to an AI-simulated reader, reconstructs an image from that reader’s saved reading, and asks a second reader to interpret the reconstruction. The report highlights information that may be missed, changed, or left uncertain.
 
-A research-software project built for the 2026 Open Scientific Intelligence Hackathon.
+An exploratory research-software prototype built for the 2026 Open Scientific Intelligence Hackathon.
 
 [Open the public demo](https://figure-relay.chicchair5.chatgpt.site) · [Read the project write-up](docs/submission/WRITEUP.md) · [Browse the source repository](https://github.com/snowgoose1975/Research-Figure-Evaluator)
 
@@ -15,7 +15,7 @@ A research-software project built for the 2026 Open Scientific Intelligence Hack
 3. **Reconstruct from memory.** A deterministic renderer turns Reader A’s saved observations into an approximate diagram, without printing A’s prose summary into the image.
 4. **Read again and compare.** Reader B uses its own fixed prompt in a separate image-only request. The report compares the two reader accounts with the intended points and marks areas that were not checked.
 
-The report separates possible first-read omissions from reconstruction differences and second-read changes. It is a review aid, not an overall figure-quality score.
+The report exposes the records from different stages for inspection; it does not automatically establish which stage caused an error. It is a review aid, not an overall figure-quality score. A “needs verification” assessment is unresolved, rather than a failed-figure grade.
 
 Upload a figure and describe three to five intended messages in ordinary language. The report shows the two AI readings and their cited records; technical checks are available in a collapsed section. No connection syntax is required. Existing structured checks remain supported by the evaluation engine for reproducible experiments; they verify recorded content, not the source figure or every clause of an unrestricted natural-language statement.
 
@@ -31,11 +31,11 @@ Online analysis runs on the author’s computer through a limited free trial. On
 
 ## Evidence and limitations
 
-The fixed local-model protocol covers four published figures and twelve attempts across physics, materials, and mathematics. Eight attempts completed; four ended during Reader A and remain counted as failures. Completion is not accuracy, and this small sample does not establish generalization.
+The historical fixed local-model protocol covers four published figures and twelve attempts across physics, materials, and mathematics, using Qwen3-VL 4B and reader-0.2.2. Eight attempts completed; four ended during Reader A and remain counted as failures. Completion is not accuracy, and this small sample does not establish generalization. The protocol has not been rerun with the current reader-0.2.4 prompts; later development runs are recorded separately.
 
 Observed cases show why the comparison can be useful and why its output needs review: a reconstructed threshold curve changed shape, lattice geometry was lost, and the model has misread arrow direction. Example checkpoints were curated by the project and marked by the protocol; they were not independently confirmed by the paper authors.
 
-Figure Relay does not measure human understanding, establish scientific correctness, or prove that a figure is defective. The same model is used for separate reader requests, so their errors are not statistically independent. Free-text scientific interpretation, reliable arrow reading, and several geometric details remain outside the validated coverage.
+Figure Relay does not measure human understanding, establish scientific correctness, or prove that a figure is defective. The same model is used for separate reader requests, so their errors are not statistically independent. Free-text scientific interpretation, reliable arrow reading, and several geometric details remain outside the validated coverage. Repeated node labels can prevent unique branch matching. An advantage over direct figure checking and improvements to human communication have not yet been demonstrated.
 
 ## Run locally
 

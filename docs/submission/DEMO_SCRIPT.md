@@ -1,40 +1,65 @@
-# 演示脚本与提交检查（草稿，不是已提交材料，尚未录制）
+# Video narration · user recording · 2026-10-23
 
-目录约定：此目录只放非敏感参赛文字和录制提纲；数字须与 `docs/DELIVERY_VALIDATION.md` 一致。本机没有 ffmpeg，未安装（安装需玉米授权），因此本轮只交付脚本和真实截图，没有视频文件。真实截图须核查上传许可，发布前询问玉米。
+玉米自行录屏和配音。以下约2分半至3分钟；方括号是操作提示，不念。没有启动自动录制。旧T19无声演示仍保留，但不是当前界面的新视频。最终录制文件/公开URL尚未收到。
 
-## 2 分钟核心版本
+## Script
 
-- 0:00–0:15：问题。“作者知道图想表达什么，读者不一定。Figure Relay 把 AI 读者的理解重画出来，方便检查。”
-- 0:15–0:35：选数学 metric 图（PLOS ONE，CC BY 4.0，界面显示署名与许可），确认 4 条检查点。说明 A/B 都看不到检查点、图注或旧报告。
-- 0:35–1:05：展示实时运行 `1792609657136-e85156a8` 的 A 记忆、重建图、B 记忆。该次为 live、耗时 70 秒。若录制时现场等待太久，可展示同一次运行的历史回放，但必须标注 run ID 和“回放”。
-- 1:05–1:35：看一条保留和一条偏差。实测例子：4 条旧检查点按标签仍 A/B 均 retained，但 T09 项目整理 alpha 阈值检查使用源图刻度冻结的容差依据，判 A 记录为平坦 y=0、B 记录为 `(0,1)→(3,0)`，两次阅读都 contradicted；原图 alpha 参考线约 0.05，重建图实际画的是 y=0。T08 的 0.05 容差会把 A 的 y=0 误判 retained，已由 T09 替代并保留旧证据。另展示“Detection coverage”面板：真实运行 A 的 facts 为空，因此逐项事实比对明确标为 NOT EXECUTED，而不是零变化。原图置信带没有对应 schema 字段、重建中消失；A 的摘要仍提到阴影区域。指出这些是“记忆与重建之间的缺口”，需要人工复核。
-- 1:35–1:50：展示导出与同检查点、同设置下的比较。材料图重建仍是同样结果：检查点 4/4，但晶格几何被简化成三个方框（run `1792608686957-9d86b9df`）。
-- 1:50–2:00：限制及下一步：AI 模拟读者、语义匹配需人工复核、样本小、直接检查基线也可能出错（物理基线把 k1 判 contradicted 且理由自相矛盾）。
+[Show the homepage]
 
-## 4 分钟扩展
+Hi, this is Figure Relay, a tool for exploring how AI readers interpret scientific figures.
 
-在核心版增加：
+When researchers create a figure, they already know what it is supposed to mean. But readers may interpret it differently, and the author may never notice that gap.
 
-- 固定协议：4 张图 × 3 次，8/12 完成；失败全部是 Reader A 输出超过 10000 token 的 `incomplete`，没有重跑替换。物理 2/3（157/184 秒），材料 3/3（30–36 秒），数学 metric 3/3（57–73 秒），数学网络 holdout 0/3（154–157 秒）。
-- 检查隔离与 renderer 审计：白名单投影、`visual_review` 仍为 `not_reviewed`。
-- 独立直接检查基线：8 个完成主链路运行各 1 次、单独请求；4 个 Reader A 失败运行未执行基线。材料/数学 4/4，物理 3/4 且含自相矛盾理由；不回流主链路。
-- 逐请求审计：A/B/judge 是名义三段；首次校验失败、语义修复和临时重试会产生额外 HTTP 请求。报告把每次尝试单独记录并标明 usage 是否完整，不把重试合并成一次。
-- 提示词 0.2.0→0.2.2 的有界迭代：只澄清 `completeness` 语义，不放宽门槛；中途 0.2.1 导致材料回归并回退。
+Figure Relay makes an AI reader’s interpretation visible, so authors can inspect what was captured, missed, or changed.
 
-不新增没有数据支持的准确率或跨领域泛化结论。
+[Open Check my figure]
 
-## 录制清单（未执行）
+To use it, upload a figure and write three to five messages you want readers to understand. No special formatting is required.
 
-1. 启动：在 PowerShell 运行 `npm run build`（已有构建可跳过），再运行 `npm start`；本地默认模型已是 `qwen3-vl:4b-instruct-16k`、输出上限 10000，无需内联环境变量。确认 `/api/status` 为 `configured: true`。
-2. 浏览器全屏 1440 宽；先展示选择页的论文署名/许可，再展示运行。
-3. 录制真实运行或明确标注的回放；不要剪掉失败运行。
-4. 结尾展示限制页与导出文件。
-5. 截图可用 `artifacts/validation/live-browser-math-setup.png`、`live-browser-math-result.png` 作分镜参考。
+[Explain the reading and reconstruction process]
 
-## 发布前
+Here is how it works.
 
-1. 真实闭环已完成（4 图、8/12）；人工复核仍只有助手级检查，发布前最好由玉米至少看一遍物理与材料重建，但不强制。
-2. 确认最终提交入口、视频时长、账号/标签、队伍注册。官网新旧页面冲突，见 `docs/COMPETITION.md`；当前记录的北京时间截止为 2026-10-23 08:00。
-3. WRITEUP 已换为实测证据并控制在约一页；发布前检查排版。
-4. 核查论文图署名、许可链接、改动说明；私图、密钥、内部地址不出现在视频或仓库。
-5. 可审查的 Git 变更、说明和截图交玉米；取得明确授权后才 push、发布、部署或提交。准备材料不等于发布许可。
+Reader A sees only the original figure and saves structured notes about what it understands. The system then reconstructs a new image using only those notes.
+
+Reader B sees only the reconstructed image, in a separate request.
+
+Neither reader receives the author’s intended messages. We compare their saved readings with those messages afterward, so users can inspect possible misunderstandings and changes along the way.
+
+A difference does not automatically mean the original figure is unclear—it could also come from the model or the reconstruction.
+
+[Open a recorded case, showing its original, reconstruction, and report]
+
+Here are recorded examples using figures from published research papers. These are historical runs, rather than live analyses.
+
+You can compare the original figure with the reconstruction, inspect what each reader actually recorded, and review the evidence behind each assessment.
+
+The goal is to support your review, rather than give your figure a single quality score.
+
+[Show Saved checks]
+
+For your own completed checks, reports are saved in this browser. You can reopen them through Saved checks without running the analysis again.
+
+[Show the actual service status]
+
+The online trial currently runs on my own computer using a small local vision-language model.
+
+It can miss important details and make mistakes, especially with complex connections and layouts. Its results need human review.
+
+I plan to keep the host online for about two days after submission. Please check the service status before uploading. Green means the service is currently accepting requests; processing may still take time or involve a queue.
+
+[Show the GitHub repository]
+
+The source code is public. You can run it locally and configure a supported model endpoint, including a more powerful model if you have access to one.
+
+This is an early prototype. The next step is to test whether its feedback actually helps researchers improve their figures.
+
+Thank you for watching.
+
+## Recording checks
+
+- Show recorded cases as historical replays. If showing a current result, identify it as a saved completed check; do not stage a success as live inference.
+- Show the actual online/busy/offline state. Green is admission availability, not a completion guarantee.
+- Avoid private desktop content, credentials, user images without publication permission, and internal audit details.
+- Use the current WRITEUP.md for the submission form. Old PDFs and the T19 video have their own historical versions.
+- No social publishing, video upload, or competition submission has been performed by this script preparation.

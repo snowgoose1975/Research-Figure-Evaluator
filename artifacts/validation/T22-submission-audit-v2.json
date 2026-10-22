@@ -1,0 +1,80 @@
+{
+  "outcome": "passed",
+  "checks": [
+    {
+      "name": "canonical and form write-ups identical",
+      "pass": true
+    },
+    {
+      "name": "concise form text, not a pagination claim",
+      "pass": true
+    },
+    {
+      "name": "README relative documentation links resolve",
+      "pass": true
+    },
+    {
+      "name": "historical protocol agrees with write-up",
+      "pass": true
+    },
+    {
+      "name": "current prompt version distinguished from protocol",
+      "pass": true
+    },
+    {
+      "name": "no private run or environment files tracked",
+      "pass": true
+    },
+    {
+      "name": "runtime and lockfile available",
+      "pass": true
+    },
+    {
+      "name": "visitor UI and documentation agree",
+      "pass": true
+    },
+    {
+      "name": "post no longer claims automatic error attribution",
+      "pass": true
+    },
+    {
+      "name": "narration reflects user recording and no fabricated uploaded video",
+      "pass": true
+    },
+    {
+      "name": "anonymous GET https://figure-relay.chicchair5.chatgpt.site",
+      "pass": true
+    },
+    {
+      "name": "anonymous GET https://figure-relay.chicchair5.chatgpt.site/?workspace=1",
+      "pass": true
+    },
+    {
+      "name": "anonymous GET https://github.com/snowgoose1975/Research-Figure-Evaluator",
+      "pass": true
+    }
+  ],
+  "failure": null,
+  "writeup_sha256": "198ccd654f874f99a0c15fa524315ab0299669e7b20d138bb7f536d56d10f05a",
+  "writeup_words": 465,
+  "public_access": [
+    {
+      "url": "https://figure-relay.chicchair5.chatgpt.site",
+      "status": 200,
+      "final_url": "https://figure-relay.chicchair5.chatgpt.site/"
+    },
+    {
+      "url": "https://figure-relay.chicchair5.chatgpt.site/?workspace=1",
+      "status": 200,
+      "final_url": "https://figure-relay.chicchair5.chatgpt.site/?workspace=1"
+    },
+    {
+      "url": "https://github.com/snowgoose1975/Research-Figure-Evaluator",
+      "status": 200,
+      "final_url": "https://github.com/snowgoose1975/Research-Figure-Evaluator"
+    }
+  ],
+  "model_calls": 0,
+  "code_test_rerun": false,
+  "note": "Documentation-only change. Runtime validation remains T21; no claim of anonymous social-post access or competition submission."
+}
