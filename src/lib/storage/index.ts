@@ -1,7 +1,7 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { createHash, randomUUID } from "node:crypto";
-import type { ModelAttemptAudit, RunSnapshot } from "../schemas";
+import type { ModelAttemptAudit, RunHistorySummary, RunSnapshot } from "../schemas";
 
 const ROOT = path.resolve(process.cwd(), "runs");
 const safe = (id: string) => /^[a-zA-Z0-9][a-zA-Z0-9_-]{0,100}$/.test(id);
@@ -47,6 +47,74 @@ export async function listRuns(): Promise<RunSnapshot[]> {
     try { return await getRun(n.name); } catch { return null; }
   }));
   return rows.filter((r): r is RunSnapshot => r !== null).sort((a, b) => b.created_at.localeCompare(a.created_at)).slice(0, 50);
+}
+function memorySearchText(memory: RunSnapshot["a"]): string {
+  if (!memory) return "";
+  return [
+    memory.title, memory.domain, memory.figure_type, memory.summary,
+    ...memory.graph.nodes.flatMap(node => [node.label, ...node.aliases]),
+    ...memory.graph.relations.flatMap(relation => [relation.kind, relation.direction, relation.label]),
+    ...memory.graph.groups.map(group => group.label),
+    ...memory.graph.conditions.map(condition => condition.text),
+    ...memory.facts.flatMap(fact => [fact.subject, fact.predicate, fact.object, fact.certainty, ...fact.qualifiers]),
+    ...memory.plots.flatMap(plot => [plot.title, plot.x_axis.label, plot.x_axis.unit, plot.y_axis.label, plot.y_axis.unit, ...plot.notes, ...plot.series.map(series => series.label)]),
+    ...memory.uncertainties.map(item => item.note),
+    ...memory.evidence.flatMap(item => [item.visible_text, item.note]),
+  ].filter(Boolean).join(" ");
+}
+function runSearchText(run: RunSnapshot): string {
+  const report = run.report;
+  const reportText = report ? [
+    ...report.keypoint_results.flatMap(item => [item.text, item.in_a.status, item.in_a.rationale, item.in_b.status, item.in_b.rationale, item.observed_stage, item.render_item_status, ...item.suggestions]),
+    ...report.a_to_b.flatMap(item => [item.status, item.rationale]),
+    ...report.unmatched_b_claims.map(item => item.text),
+    ...report.limitations,
+    ...(report.scientific_findings ?? []).map(item => item.summary),
+    report.graph_audit?.note,
+    ...(report.graph_audit?.unmatched_a_nodes ?? []),
+    ...(report.graph_audit?.unmatched_b_nodes ?? []),
+    ...(report.graph_audit?.removed_edges ?? []).flatMap(edge => [edge.source, edge.target, edge.kind]),
+    ...(report.graph_audit?.added_edges ?? []).flatMap(edge => [edge.source, edge.target, edge.kind]),
+  ] : [];
+  return [
+    run.id, run.created_at, run.completed_at, run.mode, run.status, run.example_id, run.example_version,
+    run.model, run.error?.code, run.error?.message, run.error?.stage,
+    ...run.keypoints.map(point => point.text), memorySearchText(run.a), memorySearchText(run.b), ...reportText,
+  ].filter(Boolean).join(" ").toLocaleLowerCase();
+}
+export async function searchRunHistory(query: string, offset: number, limit: number): Promise<{ runs: RunHistorySummary[]; total: number; offset: number; limit: number; has_more: boolean }> {
+  await fs.mkdir(ROOT, { recursive: true });
+  const names = await fs.readdir(ROOT, { withFileTypes: true });
+  const needle = query.trim().toLocaleLowerCase();
+  const matches: RunHistorySummary[] = [];
+  const directories = names.filter(entry => entry.isDirectory() && safe(entry.name));
+  for (let start = 0; start < directories.length; start += 32) {
+    const batch = await Promise.all(directories.slice(start, start + 32).map(async entry => {
+      try {
+        const raw = await fs.readFile(path.join(ROOT, entry.name, "manifest.json"), "utf8");
+        const run = JSON.parse(raw) as RunSnapshot;
+        if (run.id !== entry.name || typeof run.created_at !== "string" || !Array.isArray(run.keypoints)) return null;
+        if (needle && !runSearchText(run).includes(needle)) return null;
+        const summary: RunHistorySummary = {
+          id: run.id,
+          created_at: run.created_at,
+          completed_at: run.completed_at,
+          mode: run.mode,
+          status: run.status,
+          example_id: run.example_id,
+          example_version: run.example_version,
+          model: run.model || null,
+          error: run.error ? [run.error.code, run.error.message].filter(Boolean).join(": ") : null,
+          keypoint_count: run.keypoints.length,
+        };
+        return summary;
+      } catch { return null; }
+    }));
+    matches.push(...batch.filter((row): row is RunHistorySummary => row !== null));
+  }
+  matches.sort((a, b) => b.created_at.localeCompare(a.created_at));
+  const page = matches.slice(offset, offset + limit);
+  return { runs: page, total: matches.length, offset, limit, has_more: offset + page.length < matches.length };
 }
 export async function saveAsset(runId: string, assetId: string, bytes: Buffer | string) {
   if (!/^(original\.(png|jpg)|reconstruction\.(png|svg)|reader-a\.json|reader-b\.json|baseline\.json)$/.test(assetId)) throw new Error("Unregistered asset name.");

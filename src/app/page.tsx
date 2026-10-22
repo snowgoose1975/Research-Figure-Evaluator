@@ -1,10 +1,23 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import Image from "next/image";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import type { CaseIndex, CaseSummary, PublicCase } from "@/lib/examples/case-studies";
 import styles from "@/components/entry.module.css";
+import {
+  clearPendingVisitorJob,
+  clearVisitorResults,
+  consumePendingVisitorExpiryNotice,
+  deleteVisitorResult,
+  listVisitorResults,
+  readPendingVisitorJob,
+  savePendingVisitorJob,
+  saveVisitorResult,
+  type PendingVisitorJob,
+  type VisitorResult,
+} from "@/components/visitor-history";
 
 const Workbench = dynamic(() => import("@/components/workbench"), {
   ssr: false,
@@ -15,7 +28,118 @@ const asset = (path: string) => `${base}${path.startsWith("/") ? path : `/${path
 const demoOnly = process.env.NEXT_PUBLIC_RFE_DEMO_ONLY === "1";
 const onlineAnalysisUrl = process.env.NEXT_PUBLIC_RFE_ANALYSIS_URL || "";
 const githubUrl = "https://github.com/snowgoose1975/Research-Figure-Evaluator";
+const stableSiteOrigin = "https://figure-relay.chicchair5.chatgpt.site";
+const discoveryUrl = "https://raw.githubusercontent.com/snowgoose1975/Research-Figure-Evaluator/service-status/endpoint.json";
 const domainNames: Record<string, string> = { physics: "Physics", materials: "Materials", mathematics: "Mathematics" };
+
+function validTunnelUrl(value: unknown): string | null {
+  if (typeof value !== "string") return null;
+  try {
+    const url = new URL(value);
+    if (url.protocol !== "https:" || url.username || url.password || url.port || url.search || url.hash || url.pathname !== "/") return null;
+    return /^(?:[a-z0-9-]+\.)+(?:lhr\.life|localhost\.run)$/i.test(url.hostname) ? url.origin : null;
+  } catch {
+    return null;
+  }
+}
+
+function safeReportProjection(value: unknown): unknown {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return value;
+  const input = value as Record<string, unknown>;
+  const allowed = new Set(["model", "prompt_version", "reader_records", "report", "render_audit", "reconstruction_data_url", "limitations"]);
+  const excluded = new Set(["image_base64", "original_image", "original_image_data_url", "uploaded_image", "filename", "file_name"]);
+  const clean = (item: unknown, depth = 0): unknown => {
+    if (depth > 40) throw new Error("The report is too deeply nested to save safely.");
+    if (Array.isArray(item)) {
+      if (item.length > 5000) throw new Error("The report contains too many items to save safely.");
+      return item.map(child => clean(child, depth + 1));
+    }
+    if (!item || typeof item !== "object") return item;
+    const result: Record<string, unknown> = Object.create(null) as Record<string, unknown>;
+    for (const [key, child] of Object.entries(item as Record<string, unknown>)) {
+      if (!excluded.has(key.toLowerCase())) result[key] = clean(child, depth + 1);
+    }
+    return result;
+  };
+  return Object.fromEntries(Object.entries(input).filter(([key]) => allowed.has(key)).map(([key, item]) => [key, clean(item)]));
+}
+
+function safeSearchText(record: VisitorResult): string {
+  const result = record.result && typeof record.result === "object" ? record.result as Record<string, unknown> : {};
+  const readers = result.reader_records && typeof result.reader_records === "object" ? result.reader_records as Record<string, unknown> : {};
+  const values: string[] = [record.status, record.createdAt, record.error || "", String(result.model || ""), String(result.prompt_version || "")];
+  for (const reader of Object.values(readers)) {
+    if (!reader || typeof reader !== "object") continue;
+    const entry = reader as Record<string, unknown>;
+    values.push(String(entry.title || ""), String(entry.summary || ""));
+    for (const fact of Array.isArray(entry.facts) ? entry.facts : []) values.push(typeof fact === "string" ? fact : JSON.stringify(fact));
+    const graph = entry.graph && typeof entry.graph === "object" ? entry.graph as Record<string, unknown> : {};
+    for (const node of Array.isArray(graph.nodes) ? graph.nodes : []) values.push(typeof node === "string" ? node : JSON.stringify(node));
+    for (const relation of Array.isArray(graph.relations) ? graph.relations : []) values.push(typeof relation === "string" ? relation : JSON.stringify(relation));
+    for (const uncertainty of Array.isArray(entry.uncertainties) ? entry.uncertainties : []) values.push(typeof uncertainty === "string" ? uncertainty : JSON.stringify(uncertainty));
+  }
+  return values.join(" ").toLocaleLowerCase();
+}
+
+function historyTitle(record: VisitorResult): string {
+  const result = record.result && typeof record.result === "object" ? record.result as Record<string, unknown> : {};
+  const readers = result.reader_records && typeof result.reader_records === "object" ? result.reader_records as Record<string, unknown> : {};
+  const readerA = readers.a && typeof readers.a === "object" ? readers.a as Record<string, unknown> : {};
+  return typeof readerA.title === "string" && readerA.title.trim() ? readerA.title : "Figure check";
+}
+
+function downloadVisitorResult(record: VisitorResult) {
+  const blob = new Blob([JSON.stringify(record, null, 2)], { type: "application/json" });
+  const href = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = href;
+  anchor.download = `figure-relay-check-${record.createdAt.slice(0, 10)}.json`;
+  anchor.click();
+  window.setTimeout(() => URL.revokeObjectURL(href), 1000);
+}
+
+function SavedVisitorReport({ record }: { record: VisitorResult }) {
+  const result = record.result && typeof record.result === "object" ? record.result as Record<string, unknown> : {};
+  const report = result.report && typeof result.report === "object" ? result.report as Record<string, unknown> : {};
+  const readers = result.reader_records && typeof result.reader_records === "object" ? result.reader_records as Record<string, unknown> : {};
+  const rows = Array.isArray(report.keypoint_results) ? report.keypoint_results as Record<string, unknown>[] : [];
+  const reader = (side: "a" | "b") => readers[side] && typeof readers[side] === "object" ? readers[side] as Record<string, unknown> : null;
+  const reconstruction = typeof result.reconstruction_data_url === "string" && /^data:image\/(?:png|jpeg);base64,/i.test(result.reconstruction_data_url) ? result.reconstruction_data_url : "";
+  const facts = (entry: Record<string, unknown> | null) => entry && Array.isArray(entry.facts) ? entry.facts : [];
+  const nodes = (entry: Record<string, unknown> | null) => {
+    const graph = entry?.graph && typeof entry.graph === "object" ? entry.graph as Record<string, unknown> : {};
+    return Array.isArray(graph.nodes) ? graph.nodes : [];
+  };
+  const relations = (entry: Record<string, unknown> | null) => {
+    const graph = entry?.graph && typeof entry.graph === "object" ? entry.graph as Record<string, unknown> : {};
+    return Array.isArray(graph.relations) ? graph.relations : [];
+  };
+  const renderList = (items: unknown[]) => items.map(item => typeof item === "string" ? item : JSON.stringify(item));
+  return <section className={styles.savedReport} aria-label="Saved report details">
+    <div className={styles.savedReportHead}><div><p className={styles.kicker}>SAVED IN THIS BROWSER</p><h2>{historyTitle(record)}</h2><p>{new Date(record.createdAt).toLocaleString()} · {String(result.model || "Model not reported")} · {record.status}</p></div></div>
+    {record.error && <p className={styles.storageWarning}>{record.error}</p>}
+    {Boolean(record.result) && <>
+      <h3>What readers A and B recorded</h3>
+      <div className={styles.savedReaderGrid}>{(["a", "b"] as const).map(side => {
+        const entry = reader(side);
+        return <article key={side}><h4>Reader {side.toUpperCase()} · {side === "a" ? "original figure" : "reconstruction"}</h4>
+          {entry ? <><b>{String(entry.title || "Untitled reading")}</b><p>{String(entry.summary || "No summary was saved.")}</p>
+            {facts(entry).length > 0 && <><strong>Recorded facts</strong><ul>{renderList(facts(entry)).map((text, index) => <li key={`f-${index}`}>{text}</li>)}</ul></>}
+            {nodes(entry).length > 0 && <><strong>Nodes</strong><ul>{renderList(nodes(entry)).map((text, index) => <li key={`n-${index}`}>{text}</li>)}</ul></>}
+            {relations(entry).length > 0 && <><strong>Relations</strong><ul>{renderList(relations(entry)).map((text, index) => <li key={`r-${index}`}>{text}</li>)}</ul></>}
+          </> : <p>Reader extraction is unavailable in this saved report.</p>}
+        </article>;
+      })}</div>
+      {rows.length > 0 && <><h3>Author statements and evidence review</h3><div className={styles.savedFindings}>{rows.map((row, index) => {
+        const a = row.in_a && typeof row.in_a === "object" ? row.in_a as Record<string, unknown> : {};
+        const b = row.in_b && typeof row.in_b === "object" ? row.in_b as Record<string, unknown> : {};
+        return <article key={String(row.keypoint_id || index)}><b>{String(row.text || row.keypoint_id || "Statement")}</b><span>A: {String(a.status || "unknown")} · B: {String(b.status || "unknown")}</span><small>{String((a.evidence_audit as Record<string, unknown> | undefined)?.status || "Evidence unverified")} / {String((b.evidence_audit as Record<string, unknown> | undefined)?.status || "Evidence unverified")}</small></article>;
+      })}</div></>}
+      {reconstruction && <><h3>Reconstruction</h3><Image className={styles.savedReconstruction} src={reconstruction} width={1400} height={1000} unoptimized alt="Saved reconstruction image" /></>}
+      <details className={styles.savedJson}><summary>Downloadable report contents</summary><pre>{JSON.stringify(result, null, 2)}</pre></details>
+    </>}
+  </section>;
+}
 
 function Figure({ src, alt, priority = false }: { src: string; alt: string; priority?: boolean }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -81,6 +205,220 @@ function Figure({ src, alt, priority = false }: { src: string; alt: string; prio
       </div>
     </dialog>
   </>;
+}
+
+function VisitorWorkspace({ onHome }: { onHome: () => void }) {
+  const [serviceUrl, setServiceUrl] = useState("");
+  const [serviceMessage, setServiceMessage] = useState("Finding the current free host address…");
+  const [records, setRecords] = useState<VisitorResult[]>([]);
+  const [pending, setPending] = useState<PendingVisitorJob | null>(null);
+  const [pendingExpired, setPendingExpired] = useState(false);
+  const [search, setSearch] = useState("");
+  const [selectedId, setSelectedId] = useState("");
+  const [storageMessage, setStorageMessage] = useState("");
+  const [iframeReady, setIframeReady] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const serviceUrlRef = useRef("");
+  const serviceOrigin = serviceUrl ? new URL(serviceUrl).origin : "";
+
+  const reloadHistory = useCallback(async () => {
+    try {
+      setRecords(await listVisitorResults());
+      setStorageMessage("");
+    } catch (error) {
+      setStorageMessage(error instanceof Error ? error.message : "Could not read this browser’s saved reports.");
+    }
+  }, []);
+
+  const refreshEndpoint = useCallback(async () => {
+    if (window.location.origin !== stableSiteOrigin) {
+      setServiceMessage("Live analysis is available from the fixed public site. Saved reports on this browser remain available here.");
+      setServiceUrl("");
+      setIframeReady(false);
+      return;
+    }
+    try {
+      const response = await fetch(`${discoveryUrl}?t=${Math.floor(Date.now() / 10000)}`, { cache: "no-store" });
+      if (!response.ok) throw new Error("The host is not reachable right now.");
+      const current = await response.json() as { url?: unknown; online?: unknown; updated_at?: unknown };
+      const origin = validTunnelUrl(current.url);
+      const updated = typeof current.updated_at === "string" ? Date.parse(current.updated_at) : NaN;
+      if (current.online !== true || !origin || !Number.isFinite(updated) || Date.now() - updated > 6 * 60 * 60 * 1000 || updated > Date.now() + 60_000) {
+        setServiceMessage("The computer host is offline or its temporary address has expired. Saved reports remain available here.");
+        serviceUrlRef.current = "";
+        setServiceUrl("");
+        setIframeReady(false);
+        return;
+      }
+      setServiceMessage("Connected to the current temporary host. It may pause or change address.");
+      if (serviceUrlRef.current !== origin) setIframeReady(false);
+      serviceUrlRef.current = origin;
+      setServiceUrl(origin);
+    } catch {
+      setServiceMessage("The computer host is temporarily unreachable. Saved reports remain available here.");
+      serviceUrlRef.current = "";
+      setServiceUrl("");
+      setIframeReady(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    const historyTimer = window.setTimeout(() => void reloadHistory(), 0);
+    const pendingTimer = window.setTimeout(() => {
+      setPending(readPendingVisitorJob());
+      if (consumePendingVisitorExpiryNotice()) setPendingExpired(true);
+    }, 0);
+    const endpointTimer = window.setTimeout(() => void refreshEndpoint(), 0);
+    const timer = window.setInterval(() => void refreshEndpoint(), 30_000);
+    return () => { window.clearTimeout(historyTimer); window.clearTimeout(pendingTimer); window.clearTimeout(endpointTimer); window.clearInterval(timer); };
+  }, [reloadHistory, refreshEndpoint]);
+
+  useEffect(() => {
+    const frame = iframeRef.current;
+    if (!frame || !serviceOrigin) return;
+    const onMessage = (event: MessageEvent<unknown>) => {
+      if (window.location.origin !== stableSiteOrigin || event.source !== frame.contentWindow || event.origin !== serviceOrigin || !event.data || typeof event.data !== "object") return;
+      const message = event.data as Record<string, unknown>;
+      if (message.type === "rfe:ready") {
+        setIframeReady(true);
+        const pendingJob = pending || readPendingVisitorJob();
+        if (pendingJob) {
+          setPending(pendingJob);
+          frame.contentWindow?.postMessage({ type: "rfe:restore-job", jobId: pendingJob.capability || pendingJob.jobId }, serviceOrigin);
+        } else {
+          if (consumePendingVisitorExpiryNotice()) setPendingExpired(true);
+          const record = records.find(item => item.id === selectedId);
+          if (record) frame.contentWindow?.postMessage({ type: "rfe:show-saved", record }, serviceOrigin);
+        }
+        return;
+      }
+      if (message.type === "rfe:job-accepted") {
+        if (typeof message.jobId !== "string" || !/^[a-f0-9]{64}$/i.test(message.jobId)) return;
+        const capability = typeof message.capability === "string" && message.capability ? message.capability : message.jobId;
+        if (!/^[a-f0-9]{64}$/i.test(capability)) return;
+        const acceptedAt = typeof message.acceptedAt === "string" && Number.isFinite(Date.parse(message.acceptedAt)) ? message.acceptedAt : new Date().toISOString();
+        const current = pending?.jobId === message.jobId ? pending : null;
+        const next: PendingVisitorJob = { localId: current?.localId || crypto.randomUUID(), jobId: message.jobId, capability, createdAt: current?.createdAt || acceptedAt };
+        try {
+          savePendingVisitorJob(next);
+          setPending(next);
+          setPendingExpired(false);
+          setStorageMessage("");
+        } catch {
+          setStorageMessage("Browser storage is unavailable. Keep this tab open until the result is saved; the check cannot be recovered after a refresh.");
+        }
+        return;
+      }
+      if (message.type === "rfe:job-finished") {
+        const jobId = typeof message.jobId === "string" ? message.jobId : "";
+        const capability = typeof message.capability === "string" ? message.capability : "";
+        const current = pending && (pending.jobId === jobId || pending.capability === capability || pending.capability === jobId) ? pending : null;
+        if (!current) return;
+        const status = message.status === "completed" ? "completed" : message.status === "cancelled" ? "cancelled" : "failed";
+        const rawResult = message.result;
+        if (rawResult && (typeof rawResult !== "object" || Array.isArray(rawResult))) return;
+        if (rawResult) {
+          try {
+            const serialized = JSON.stringify(rawResult);
+            if (!serialized || serialized.length > 12 * 1024 * 1024) {
+              setStorageMessage("The report is too large to save in this browser. Download or keep the result available in the open analysis tab.");
+              return;
+            }
+          } catch {
+            setStorageMessage("The report payload could not be read safely; no browser copy was saved.");
+            return;
+          }
+        }
+        let projected: unknown;
+        try { projected = rawResult ? safeReportProjection(rawResult) : undefined; }
+        catch (error) {
+          setStorageMessage(error instanceof Error ? error.message : "The report payload could not be saved safely.");
+          return;
+        }
+        if (status === "completed" && rawResult && (!projected || typeof projected !== "object" || !("report" in projected))) {
+          setStorageMessage("The completed result did not contain a readable report. The pending capability was kept so you can check again.");
+          return;
+        }
+        const safeError = typeof message.error === "string"
+          ? message.error.replaceAll(current.capability, "[redacted]").replaceAll(current.jobId, "[redacted]").replace(/(?:[A-Za-z]:\\|\/)(?:[^\s:]+[\\/])+[^\s:]*/g, "[private path]").slice(0, 500)
+          : "";
+        const record: VisitorResult = {
+          id: current.localId,
+          createdAt: current.createdAt,
+          status: status === "completed" && rawResult ? "completed" : status === "cancelled" ? "cancelled" : "failed",
+          ...(status === "completed" && rawResult ? { result: projected } : {}),
+          ...(safeError ? { error: safeError } : status === "completed" && !rawResult ? { error: "The service returned no report." } : {}),
+        };
+        void saveVisitorResult(record).then(() => {
+          clearPendingVisitorJob(current.jobId);
+          setPending(null);
+          setSelectedId(record.id);
+          setStorageMessage("");
+          void reloadHistory();
+        }).catch(error => {
+          setStorageMessage(`The result is visible in this tab but could not be saved locally: ${error instanceof Error ? error.message : "storage error"}. Keep this page open and retry by refreshing only after saving succeeds.`);
+        });
+      }
+    };
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, [serviceOrigin, pending, records, selectedId, reloadHistory]);
+
+  const visibleRecords = records.filter(record => !search.trim() || safeSearchText(record).includes(search.trim().toLocaleLowerCase()));
+  const selectedRecord = records.find(record => record.id === selectedId) || null;
+  const openRecord = (record: VisitorResult) => {
+    setSelectedId(record.id);
+    if (iframeReady && iframeRef.current && serviceOrigin) iframeRef.current.contentWindow?.postMessage({ type: "rfe:show-saved", record }, serviceOrigin);
+    else setServiceMessage("Saved report selected. It will open in the analysis panel when the host page is ready.");
+  };
+  const removeRecord = async (id: string) => {
+    try {
+      await deleteVisitorResult(id);
+      if (selectedId === id) setSelectedId("");
+      await reloadHistory();
+    } catch (error) {
+      setStorageMessage(error instanceof Error ? error.message : "Could not remove the local report.");
+    }
+  };
+  const removeAll = async () => {
+    try {
+      await clearVisitorResults();
+      setSelectedId("");
+      await reloadHistory();
+    } catch (error) {
+      setStorageMessage(error instanceof Error ? error.message : "Could not clear local reports.");
+    }
+  };
+
+  return <main className={styles.site}>
+    <header className={styles.header}>
+      <Link href="/" className={styles.brand} onClick={event => { event.preventDefault(); onHome(); }}><span className={styles.brandMark}>FR</span>Figure Relay</Link>
+      <nav aria-label="Workspace navigation"><button onClick={onHome}>View cases</button><a href={githubUrl} target="_blank" rel="noreferrer">GitHub ↗</a></nav>
+    </header>
+    <section className={`${styles.section} ${styles.visitorWorkspace}`}>
+      <div className={styles.visitorHeading}><div><p className={styles.kicker}>PRIVATE TO THIS BROWSER</p><h1>Your figure checks</h1><p>Submit a public figure to the author’s computer, then return to reports saved in this browser—even after the temporary tunnel changes.</p></div><span className={styles.runBadge}>{records.length} saved</span></div>
+      <div className={styles.visitorGrid}>
+        <section className={styles.analysisPanel} aria-label="Live analysis">
+          <div className={styles.analysisPanelHead}><div><b>Check a figure</b><p>{serviceMessage}</p></div><button className={styles.smallButton} onClick={() => void refreshEndpoint()}>Refresh connection</button></div>
+          {selectedRecord && (!serviceUrl || !iframeReady) && <SavedVisitorReport record={selectedRecord} />}
+          {serviceUrl ? <iframe key={serviceOrigin} ref={iframeRef} className={styles.analysisFrame} src={serviceUrl} title="Figure Relay live figure analysis" sandbox="allow-scripts allow-forms allow-same-origin" referrerPolicy="no-referrer" onLoad={() => setIframeReady(false)} /> : <div className={styles.offlinePanel}><b>Live analysis is unavailable</b><span>You can still search and open reports already saved on this device.</span></div>}
+          <p className={styles.privacyNote}>Only the result report, A/B reader extractions, reconstruction and time are saved here. The original image and its filename are not stored in this history. Clearing a browser copy does not delete private audit records retained on the host computer.</p>
+        </section>
+        <section className={styles.historyPanel} aria-label="Saved visitor reports">
+          <div className={styles.historyHead}><div><b>Saved checks</b><p>Stored only in this browser</p></div>{records.length > 0 && <button className={styles.textButton} onClick={() => void removeAll()}>Clear all</button>}</div>
+          <label className={styles.historySearch}>Search reports<input type="search" value={search} onChange={event => setSearch(event.target.value)} placeholder="Search reader notes or date" /></label>
+          {pending && <div className={styles.pendingCard}><b>Check in progress</b><span>Trying to reconnect your saved request. It will not be submitted again.</span><small>The recovery link stays in this browser for up to six hours.</small>{!serviceUrl && <small>Reconnect the host or return later to check again.</small>}</div>}
+          {pendingExpired && <div className={styles.pendingCard}><b>Pending recovery expired</b><span>The local recovery link expired after six hours and has been removed. If the run had not reached a terminal result, it can no longer be recovered. No duplicate check was submitted.</span></div>}
+          {visibleRecords.length ? <ul className={styles.historyList}>{visibleRecords.map(record => <li key={record.id} className={selectedId === record.id ? styles.historySelected : ""}>
+            <button className={styles.historyOpen} onClick={() => openRecord(record)}><span className={styles.cardMeta}><span>{new Date(record.createdAt).toLocaleString()}</span><b className={record.status === "completed" ? styles.completed : styles.failed}>{record.status}</b></span><strong>{historyTitle(record)}</strong><small>{record.error || (record.result && typeof record.result === "object" ? String((record.result as Record<string, unknown>).model || "Saved analysis report") : "No report payload was returned")}</small></button>
+            <div className={styles.historyActions}><button onClick={() => downloadVisitorResult(record)}>Download JSON</button><button onClick={() => void removeRecord(record.id)}>Remove local copy</button></div>
+          </li>)}</ul> : <div className={styles.historyEmpty}>{search ? "No saved reports match this search." : "No checks saved in this browser yet."}</div>}
+          {storageMessage && <p className={styles.storageWarning} role="status">{storageMessage}</p>}
+        </section>
+      </div>
+    </section>
+    <footer className={styles.footer}><Link href="/" className={styles.brand} onClick={event => { event.preventDefault(); onHome(); }}>Figure Relay</Link><span>Host-computer analysis may pause or become unavailable · AI reader feedback requires human review</span><button onClick={onHome}>Return to cases</button></footer>
+  </main>;
 }
 
 export default function Home() {
@@ -155,24 +493,15 @@ export default function Home() {
 
   const enterWorkbench = async () => {
     if (demoOnly) {
-      if (onlineAnalysisUrl) {
-        try {
-          const response = await fetch(`https://raw.githubusercontent.com/snowgoose1975/Research-Figure-Evaluator/service-status/endpoint.json?t=${Math.floor(Date.now() / 10000)}`, { cache: "no-store" });
-          const current = await response.json();
-          if (response.ok && current.online !== false && /^https:\/\/[a-z0-9-]+\.(?:lhr\.life|localhost\.run)$/.test(current.url) && Date.now() - Date.parse(current.updated_at) < 6 * 60 * 60 * 1000) {
-            window.location.assign(current.url); return;
-          }
-        } catch { /* Do not silently navigate to a known potentially expired URL. */ }
-        setError("The live host is temporarily unreachable. Please return to the recorded cases and try later.");
-      }
-      setShowDemoInfo(true); setActive(false); return;
+      setShowDemoInfo(false); setCaseData(null); setActive(true); syncUrl({ workspace: true }); return;
     }
     setShowDemoInfo(false); setCaseData(null); setActive(true); syncUrl({ workspace: true });
   };
   const selectCase = (item: CaseSummary) => { setActive(false); setShowDemoInfo(false); syncUrl({ caseId: item.id }); void openCase(item); };
   const retryIndex = () => { setError(""); window.location.reload(); };
 
-  if (active && !demoOnly) return <main className={styles.workspace}><div className={styles.workspaceBar}><a className={styles.brand} href={asset("/")} onClick={event => { event.preventDefault(); goHome(); }}>Figure Relay</a><button className={styles.backButton} onClick={goHome}>← Back to home</button></div><Workbench /></main>;
+  if (active && demoOnly) return <VisitorWorkspace onHome={goHome} />;
+  if (active) return <main className={styles.workspace}><div className={styles.workspaceBar}><a className={styles.brand} href={asset("/")} onClick={event => { event.preventDefault(); goHome(); }}>Figure Relay</a><button className={styles.backButton} onClick={goHome}>← Back to home</button></div><Workbench /></main>;
 
   const selected = index?.cases.find(item => item.id === requestedCase) || null;
   const showDetail = Boolean(selected && (caseData || loading || error));

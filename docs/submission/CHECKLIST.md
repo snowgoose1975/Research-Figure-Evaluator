@@ -6,7 +6,7 @@
 
 | 项 | 状态 | 位置 / 证据 |
 |---|---|---|
-| 可运行应用（生产构建） | 就绪 | `npm run validate` 通过；本地 `npm start` 于 127.0.0.1:3000 |
+| 可运行应用（生产构建） | 就绪 | typecheck/lint、19个测试文件125项（`npm test -- --maxWorkers=4`）、生产构建均通过；本地 `npm start` 于 127.0.0.1:3000 |
 | 真实模型闭环 | 就绪 | 固定协议 8/12 完成，见 `docs/DELIVERY_VALIDATION.md` |
 | 历史回放与深链接 | 就绪 | 24/24 检查通过（含 LIVE 筛选、全 ID 打开旧 baseline run）；`artifacts/validation/T10-history-browser-r2.json` |
 | 浏览器证据 | 就绪 | 16/16 界面 + 24/24 历史/深链接 + 7/7 旧 coverage；0 unexpected console error（仅有 1 条故意请求不存在 ID 的预期 404） |
@@ -15,6 +15,9 @@
 | T09/T10 边界修复 | 就绪 | 语义不覆盖科学规则；双侧歧义不产生确定匹配；小量级 `1e-10` 对 `1e-12` 容差不被固定 epsilon 吞掉；B-only 面板与系列列入 unmatched；partial usage 标不完整 |
 | 证据防覆盖 | 就绪 | 证据脚本支持 `--label`，默认拒绝覆盖同名文件；`scripts/lib/evidence.mjs`、`tests/evidence-guard.test.ts` |
 | 真实运行经界面完成 | 就绪 | run `1792609657136-e85156a8`；`live-browser-math-*.png` |
+| T16 固定公开入口与访客历史 | 有条件就绪 | 固定站v4已部署；访客history在production page上的受控集成验证12/12（stub worker；真实报告数据；保存、搜索、刷新、离线打开、删除、隐私检查）。真实live证据仍记录13次HTTP 502且无saved ID，所以真实隧道闭环未确认。见 `T16-visitor-history-resilience-v2.json`、`T16-visitor-history-e2e-v4.json` |
+| T16 机主全量运行历史 | 就绪 | 本机API/UI按真实run ID检索并打开报告7/7；`T16-owner-history-e2e-v3.json` |
+| Sponsor Tracks | 不勾选 | 当前代码未使用 Valency MCP Bond、Marimo 或 Adaption；不满足截图中对应赛道的使用条件 |
 | 一页英文说明 | 就绪 | `docs/submission/WRITEUP.md`；A4 PDF 实测 1 页、内容 998/1020px（41505 bytes）；`artifacts/validation/T10-final2-writeup-one-page.pdf`、`.json`、`T10-final2-writeup-preview.png` |
 | 视频脚本（2 分钟 / 4 分钟） | 草稿就绪 | `docs/submission/DEMO_SCRIPT.md` |
 | 论文图来源与许可 | 就绪 | 应用内署名 + `docs/REAL_FIGURES.md`（CC BY 4.0） |
@@ -26,7 +29,7 @@
 |---|---|---|
 | 演示视频文件（平台选填） | 尚未录制 | 可用现有录屏准备演示；视频≤4分钟并放公开帖子中，不因缺ffmpeg阻塞必需提交 |
 | 人工视觉复核 | 现仅有助手级检查，`visual_review` 仍为 `not_reviewed` | 玉米或独立人员看物理、材料重建 |
-| 公开仓库 / push（必需） | 已由玉米授权并推送至公开仓库 main，含 README 和完整运行 API | 仓库：https://github.com/snowgoose1975/Research-Figure-Evaluator ；后续改动验证后同步 |
+| 公开仓库 / push（必需） | 既有版本已推送；T16全量历史和访客历史新增代码仍只在本地，未push | 仓库：https://github.com/snowgoose1975/Research-Figure-Evaluator ；新push仍需符合AGENTS授权红线 |
 | 公开社交帖子链接（必需） | 草稿已准备，尚未发布 | 核对公开账号和正文，授权后发布并保存链接 |
 | Moment队伍条目、账号与规则确认（必需） | 活动入口已确认；项目48匿名访问仍为队伍私有条目，草稿字段不可见 | 登录正确账号，核对队伍归属、write-up、仓库/帖子链接及规则确认 |
 | 公开发布/提交 | 红线操作 | 玉米明确授权后执行 |

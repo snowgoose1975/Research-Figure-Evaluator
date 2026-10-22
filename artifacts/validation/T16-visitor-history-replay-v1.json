@@ -1,0 +1,56 @@
+{
+  "label": "T16-visitor-history-replay-v1",
+  "site": "https://figure-relay.chicchair5.chatgpt.site",
+  "outcome": "passed",
+  "mode": "controlled browser bridge replay; no image submission or model request",
+  "source_run_id": "1792674795248-f18f993e",
+  "source_model": "qwen3-vl:4b-instruct-16k",
+  "source_prompt_version": "reader-0.2.3",
+  "report_contains_no_original_image": true,
+  "offline_readback": true,
+  "deleted_from_indexeddb": true,
+  "checks": [
+    {
+      "name": "new visitor browser starts with empty local history",
+      "pass": true
+    },
+    {
+      "name": "a completed result delivered over the exact-origin bridge is saved",
+      "pass": true
+    },
+    {
+      "name": "saved report retains the selected real run model",
+      "pass": true
+    },
+    {
+      "name": "browser-local report contains no uploaded image or filename",
+      "pass": true
+    },
+    {
+      "name": "terminal result clears its temporary capability",
+      "pass": true
+    },
+    {
+      "name": "saved report can be searched by model metadata",
+      "pass": true
+    },
+    {
+      "name": "saved report survives a page reload",
+      "pass": true
+    },
+    {
+      "name": "saved reading opens after service requests are blocked",
+      "pass": true
+    },
+    {
+      "name": "remove local copy deletes the IndexedDB result",
+      "pass": true
+    },
+    {
+      "name": "no unexpected browser errors occurred before the offline step",
+      "pass": true
+    }
+  ],
+  "unexpected_browser_errors": [],
+  "expected_offline_failures": 2
+}

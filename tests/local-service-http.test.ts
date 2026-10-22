@@ -17,6 +17,16 @@ async function setup(execute = async () => ({ report: { safe: true } }), resourc
 const post = (root: string, route: string, payload: unknown, origin = root) => fetch(root + route, { method: "POST", headers: { "content-type": "application/json", origin }, body: JSON.stringify(payload) });
 
 describe("public local worker boundaries", () => {
+  it("frames only the public analysis page in the fixed site and keeps admin unframeable", async () => {
+    const { pub, admin } = await setup();
+    const publicPage = await fetch(pub);
+    const publicCsp = publicPage.headers.get("content-security-policy") || "";
+    expect(publicCsp).toContain("frame-ancestors 'self' https://figure-relay.chicchair5.chatgpt.site");
+    expect(publicPage.headers.get("x-frame-options")).toBeNull();
+    const adminPage = await fetch(admin);
+    expect(adminPage.headers.get("content-security-policy")).toContain("frame-ancestors 'none'");
+    expect(adminPage.headers.get("x-frame-options")).toBe("DENY");
+  });
   it("rejects new work when host memory is low without invoking the model", async () => {
     let calls = 0;
     const { pub } = await setup(async () => { calls++; return { report: { safe: true } }; }, () => false);

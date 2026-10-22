@@ -1,0 +1,32 @@
+{
+  "label": "T16-poll-retry-smoke-v2",
+  "outcome": "passed",
+  "mode": "controlled local HTTP stub; no model call and no persistent run",
+  "post_count": 1,
+  "status_poll_count": 3,
+  "transient_http_502_responses": 2,
+  "checks": [
+    {
+      "name": "first HTTP 502 is shown as a temporary status issue",
+      "pass": true
+    },
+    {
+      "name": "the existing job completes after two transient HTTP 502 responses",
+      "pass": true
+    },
+    {
+      "name": "the image is submitted only once while status GET is retried",
+      "pass": true
+    },
+    {
+      "name": "the result is rendered after polling recovers",
+      "pass": true
+    },
+    {
+      "name": "no unexpected browser errors",
+      "pass": true
+    }
+  ],
+  "unexpected_browser_errors": [],
+  "expected_transient_browser_errors": 2
+}

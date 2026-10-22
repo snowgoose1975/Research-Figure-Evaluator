@@ -1,0 +1,16 @@
+{
+  "label": "T16-owner-history-e2e-v1",
+  "outcome": "failed",
+  "base_url": "http://127.0.0.1:3000",
+  "run_id": "1792674795248-f18f993e",
+  "api_total": null,
+  "history_total_text": "",
+  "checks": [],
+  "unexpected_browser_errors": [
+    "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+    "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+    "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+    "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+    "Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
+  ]
+}

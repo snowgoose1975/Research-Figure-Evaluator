@@ -1,0 +1,27 @@
+{
+  "label": "T16-owner-history-e2e-v2",
+  "outcome": "failed",
+  "base_url": "http://127.0.0.1:3000",
+  "run_id": "1792674795248-f18f993e",
+  "api_total": 1,
+  "history_total_text": "1 matching run · showing 1–1",
+  "checks": [
+    {
+      "name": "owner history API responds successfully",
+      "pass": true
+    },
+    {
+      "name": "full searchable manifest finds this completed run",
+      "pass": true
+    },
+    {
+      "name": "history API returns a summary rather than assets or full memory",
+      "pass": true
+    },
+    {
+      "name": "owner workbench search returns the requested run",
+      "pass": true
+    }
+  ],
+  "unexpected_browser_errors": []
+}

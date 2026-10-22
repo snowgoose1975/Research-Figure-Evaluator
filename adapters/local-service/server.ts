@@ -13,9 +13,12 @@ const folder = path.dirname(fileURLToPath(import.meta.url));
 const stateFile = path.resolve("runs/service-control/state.json");
 const Input = z.object({ image_base64: z.string().min(1).max(14_000_000), keypoints: z.array(z.object({ id: z.string().min(1).max(40), text: z.string().min(3).max(1200), claim: z.null(), author_confirmed: z.literal(true) }).strict()).min(3).max(5), consent: z.literal(true) }).strict();
 const CSP = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'";
+const PUBLIC_FRAME_CSP = CSP.replace("frame-ancestors 'none'", "frame-ancestors 'self' https://figure-relay.chicchair5.chatgpt.site");
 
-function reply(res: ServerResponse, code: number, data: unknown, html = false) {
-  res.writeHead(code, { "content-type": html ? "text/html; charset=utf-8" : "application/json", "cache-control": "no-store", "referrer-policy": "no-referrer", "x-content-type-options": "nosniff", "content-security-policy": CSP, "x-frame-options": "DENY" });
+function reply(res: ServerResponse, code: number, data: unknown, html = false, options: { frameable?: boolean } = {}) {
+  const headers: Record<string, string> = { "content-type": html ? "text/html; charset=utf-8" : "application/json", "cache-control": "no-store", "referrer-policy": "no-referrer", "x-content-type-options": "nosniff", "content-security-policy": options.frameable ? PUBLIC_FRAME_CSP : CSP };
+  if (!options.frameable) headers["x-frame-options"] = "DENY";
+  res.writeHead(code, headers);
   res.end(html ? data as string : JSON.stringify(data));
 }
 function sameOrigin(req: IncomingMessage) {
@@ -55,7 +58,7 @@ export async function startService(options: { publicPort?: number; adminPort?: n
   const publicServer = createServer(async (req, res) => {
     const route = (req.url || "").split("?")[0];
     try {
-      if (req.method === "GET" && route === "/") return reply(res, 200, publicHtml, true);
+      if (req.method === "GET" && route === "/") return reply(res, 200, publicHtml, true, { frameable: true });
       if (req.method === "GET" && route === "/favicon.ico") { res.writeHead(204, { "cache-control": "public, max-age=3600" }); res.end(); return; }
       if (req.method === "GET" && route === "/status") return reply(res, 200, view());
       if (req.method === "GET" && /^\/jobs\/[a-f0-9]{64}$/.test(route)) {

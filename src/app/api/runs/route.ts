@@ -2,9 +2,27 @@ import { initialize, listRuns, startRun } from "@/lib/pipeline";
 import { ModelAdapterError } from "@/lib/model";
 import { LIMITS, RunRequestSchema } from "@/lib/schemas";
 import { sameOrigin } from "@/lib/pipeline/origin";
+import { searchRunHistory } from "@/lib/storage";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-export async function GET() { await initialize(); return Response.json({ runs: await listRuns() }); }
+function integerParam(value: string | null, fallback: number, maximum: number) {
+  if (value === null || value === "") return fallback;
+  if (!/^\d+$/.test(value)) return null;
+  const parsed = Number(value);
+  return Number.isSafeInteger(parsed) && parsed <= maximum ? parsed : null;
+}
+export async function GET(request: Request) {
+  await initialize();
+  const url = new URL(request.url);
+  if (url.searchParams.get("history") !== "1") return Response.json({ runs: await listRuns() }, { headers: { "cache-control": "no-store" } });
+  const query = url.searchParams.get("q") ?? "";
+  const offset = integerParam(url.searchParams.get("offset"), 0, 1_000_000);
+  const limit = integerParam(url.searchParams.get("limit"), 20, 50);
+  if (query.length > 120 || offset === null || limit === null || limit < 1) {
+    return Response.json({ error: "History query must be at most 120 characters; offset and limit must be valid integers (limit 1–50)." }, { status: 400, headers: { "cache-control": "no-store" } });
+  }
+  return Response.json(await searchRunHistory(query, offset, limit), { headers: { "cache-control": "no-store" } });
+}
 export async function POST(request: Request) {
   if (!sameOrigin(request)) return Response.json({ error: "Cross-origin writes are not allowed." }, { status: 403 });
   if (Number(request.headers.get("content-length") || 0) > LIMITS.imageBytes + 65536) return Response.json({ error: "Upload exceeds the 10 MB image limit." }, { status: 413 });

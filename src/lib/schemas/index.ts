@@ -152,6 +152,18 @@ export interface RunSnapshot {
   baseline: { result: DirectOutput | null; meta: ModelCallMeta | null; error: string | null } | null;
   error: { code: string; message: string; stage: string } | null;
 }
+export interface RunHistorySummary {
+  id: string;
+  created_at: string;
+  completed_at: string | null;
+  mode: RunSnapshot["mode"];
+  status: RunSnapshot["status"];
+  example_id: string | null;
+  example_version: string | null;
+  model: string | null;
+  error: string | null;
+  keypoint_count: number;
+}
 export interface ServiceStatus { configured: boolean; model: string | null; protocol: "responses" | "chat"; base_url_host: string; active_run_id: string | null; limits: typeof LIMITS }
 export const RunRequestSchema = z.object({ mode: z.enum(["live", "mock"]), intents: IntentSetSchema, example_id: z.string().nullable(), example_version: z.enum(["clear", "challenged"]).nullable(), parent_run_id: z.string().nullable(), include_baseline: z.boolean() }).strict();
 export type RunRequest = z.infer<typeof RunRequestSchema>;

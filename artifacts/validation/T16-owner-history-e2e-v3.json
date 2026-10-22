@@ -1,0 +1,39 @@
+{
+  "label": "T16-owner-history-e2e-v3",
+  "outcome": "passed",
+  "base_url": "http://127.0.0.1:3000",
+  "run_id": "1792674795248-f18f993e",
+  "api_total": 1,
+  "history_total_text": "1 matching run · showing 1–1",
+  "checks": [
+    {
+      "name": "owner history API responds successfully",
+      "pass": true
+    },
+    {
+      "name": "full searchable manifest finds this completed run",
+      "pass": true
+    },
+    {
+      "name": "history API returns a summary rather than assets or full memory",
+      "pass": true
+    },
+    {
+      "name": "owner workbench search returns the requested run",
+      "pass": true
+    },
+    {
+      "name": "selecting a history result opens its full report",
+      "pass": true
+    },
+    {
+      "name": "opened report remains marked as a live model run",
+      "pass": true
+    },
+    {
+      "name": "no unexpected browser errors",
+      "pass": true
+    }
+  ],
+  "unexpected_browser_errors": []
+}

@@ -1,0 +1,68 @@
+{
+  "label": "T16-visitor-history-resilience-v2",
+  "site": "https://figure-relay.chicchair5.chatgpt.site",
+  "outcome": "passed",
+  "mode": "controlled tunnel / HTTP stub; no model call; report fields copied from one completed local public-materials run",
+  "source_run_id": "1792674795248-f18f993e",
+  "source_model": "qwen3-vl:4b-instruct-16k",
+  "source_prompt_version": "reader-0.2.3",
+  "submission_count": 1,
+  "status_poll_count": 3,
+  "controlled_http_502_responses": 2,
+  "report_contains_no_original_image": true,
+  "offline_readback": true,
+  "deleted_from_indexeddb": true,
+  "checks": [
+    {
+      "name": "visitor workspace starts empty",
+      "pass": true
+    },
+    {
+      "name": "first transient tunnel error is displayed as a retry",
+      "pass": true
+    },
+    {
+      "name": "form submits valid consent and exactly three checkpoints to the controlled endpoint",
+      "pass": true
+    },
+    {
+      "name": "two HTTP 502 status failures recover through bounded GET polling",
+      "pass": true
+    },
+    {
+      "name": "real completed run report reaches browser-local history",
+      "pass": true
+    },
+    {
+      "name": "browser history stores no original image or filename",
+      "pass": true
+    },
+    {
+      "name": "terminal result clears its temporary job capability",
+      "pass": true
+    },
+    {
+      "name": "saved report is searchable by model",
+      "pass": true
+    },
+    {
+      "name": "saved report survives reload",
+      "pass": true
+    },
+    {
+      "name": "saved report opens after tunnel requests are blocked",
+      "pass": true
+    },
+    {
+      "name": "deleting the local copy clears IndexedDB",
+      "pass": true
+    },
+    {
+      "name": "only expected transient and offline errors occurred",
+      "pass": true
+    }
+  ],
+  "unexpected_browser_errors": [],
+  "expected_transient_errors": 2,
+  "expected_offline_failures": 2
+}

@@ -24,7 +24,7 @@
           <span class="field-label">What should a reader understand?</span>
           <div id="keypoints" class="keypoints" aria-live="polite"></div>
           <button id="add-keypoint" class="text-button" type="button">+ Add another statement</button>
-          <label class="consent"><input id="consent" type="checkbox" required><span>I confirm these are my intended statements, and I agree to share this figure publicly. The image will be processed on the author's local computer and retained as part of a private run record. Do not upload confidential or unpublished images.</span></label>
+          <label class="consent"><input id="consent" type="checkbox" required><span>I confirm these are my intended statements, and I agree to share this figure publicly. The image will be processed on the author's local computer and retained as part of a private run record. When you use the fixed Figure Relay entry, a copy of the result is saved in this browser; you can review or clear it there. Do not upload confidential or unpublished images.</span></label>
           <button id="submit" class="primary" type="submit" disabled>Agree and submit figure</button>
           <p class="privacy">Your original image is sent only when you submit this form. A failed submission is never retried automatically.</p>
         </form>
@@ -50,14 +50,48 @@
       const stateEl = document.querySelector('#job-state');
       const resultBody = document.querySelector('#result-body');
       const dialog = document.querySelector('#image-dialog');
+      const PARENT_ORIGIN = 'https://figure-relay.chicchair5.chatgpt.site';
+      const embedded = window.parent !== window;
       let imageDataUrl = null;
       let jobId = null;
       let pollTimer = null;
+      let pollFailures = 0;
+      const MAX_POLL_RETRIES = 5;
       let stoppedLocally = false;
       let serviceAccepting = false;
       let submitted = false;
       let dialogTrigger = null;
       let previousBodyOverflow = '';
+      const announcedTerminalJobs = new Set();
+
+      function postToParent(message) {
+        if (!embedded) return;
+        window.parent.postMessage(message, PARENT_ORIGIN);
+      }
+
+      function hideEntryForHistoryView() {
+        document.querySelector('#service-status').hidden = true;
+        document.querySelector('.layout').hidden = true;
+        resultSection.classList.add('show');
+      }
+
+      function appendReturnToSavedChecks() {
+        const link = document.createElement('a');
+        link.className = 'secondary';
+        link.href = `${PARENT_ORIGIN}/?workspace=1`;
+        link.target = '_top';
+        link.textContent = 'Return to saved checks';
+        resultBody.append(link);
+      }
+
+      function notifyTerminal(job) {
+        if (!jobId || !['completed', 'failed', 'cancelled'].includes(job.status) || announcedTerminalJobs.has(jobId)) return;
+        announcedTerminalJobs.add(jobId);
+        const message = { type: 'rfe:job-finished', jobId, capability: jobId, finishedAt: new Date().toISOString(), status: job.status };
+        if (job.status === 'completed' && job.result) message.result = job.result;
+        if (job.status === 'failed' && job.error) message.error = typeof job.error === 'string' ? job.error : String(job.error.message || 'The job failed.');
+        postToParent(message);
+      }
 
       function addKeypoint(value = '') {
         const row = document.createElement('div');
@@ -99,7 +133,11 @@
         const response = await fetch(path, { cache: 'no-store', credentials: 'same-origin', ...options });
         const raw = await response.text(); let data;
         try { data = raw ? JSON.parse(raw) : {}; } catch { data = { message: raw || `HTTP ${response.status}` }; }
-        if (!response.ok) throw new Error(data.message || (typeof data.error === 'string' ? data.error : data.error?.message) || `Request failed (HTTP ${response.status})`);
+        if (!response.ok) {
+          const error = new Error(data.message || (typeof data.error === 'string' ? data.error : data.error?.message) || `Request failed (HTTP ${response.status})`);
+          error.httpStatus = response.status;
+          throw error;
+        }
         return data;
       }
 
@@ -274,12 +312,53 @@
         else if (job.status === 'failed') { clearInterval(pollTimer); pollTimer = null; showState(`This run failed${job.error ? `: ${typeof job.error === 'string' ? job.error : job.error.message || 'No report was produced.'}` : '. No report was produced.'}`, 'error'); appendNewCheckButton(); }
         else if (job.status === 'cancelled') { clearInterval(pollTimer); pollTimer = null; showState('The service cancelled this waiting job.', 'error'); appendNewCheckButton(); }
         else showState(`Job status: ${job.status || 'unknown'}`);
+        notifyTerminal(job);
       }
       async function poll() {
         if (!jobId || stoppedLocally) return;
-        try { const job = await request(`/jobs/${encodeURIComponent(jobId)}`); renderJob(job); }
-        catch (error) { clearInterval(pollTimer); pollTimer = null; showState(`Could not check this job: ${error.message}. No new job was submitted; use Check again to resume status checks.`, 'error'); const again = document.createElement('button'); again.type = 'button'; again.className = 'secondary'; again.textContent = 'Check again'; again.addEventListener('click', () => { stoppedLocally = false; poll(); if (!pollTimer) pollTimer = setInterval(poll, 3000); }); resultBody.replaceChildren(again); }
+        try {
+          const job = await request(`/jobs/${encodeURIComponent(jobId)}`);
+          pollFailures = 0;
+          renderJob(job);
+        } catch (error) {
+          const transient = error instanceof TypeError || [502, 503, 504].includes(error?.httpStatus);
+          pollFailures++;
+          if (transient && pollFailures <= MAX_POLL_RETRIES) {
+            showState(`Temporary connection issue (${pollFailures}/${MAX_POLL_RETRIES}). Checking this existing job again in 3 seconds; the image will not be submitted again.`, 'review');
+            return;
+          }
+          clearInterval(pollTimer); pollTimer = null;
+          showState(`This pending check is unavailable: ${error.message}. The service may have restarted or its 30-minute pending window may have expired. It was not resubmitted.`, 'error');
+          const again = document.createElement('button'); again.type = 'button'; again.className = 'secondary'; again.textContent = 'Check again';
+          again.addEventListener('click', () => { stoppedLocally = false; pollFailures = 0; poll(); if (!pollTimer) pollTimer = setInterval(poll, 3000); });
+          resultBody.replaceChildren(again);
+        }
       }
+
+      window.addEventListener('message', event => {
+        if (!embedded || event.source !== window.parent || event.origin !== PARENT_ORIGIN) return;
+        const message = event.data;
+        if (!message || typeof message !== 'object') return;
+        if (message.type === 'rfe:restore-job') {
+          if (typeof message.jobId !== 'string' || !/^[a-f0-9]{64}$/i.test(message.jobId)) return;
+          clearInterval(pollTimer); pollTimer = null; stoppedLocally = false; pollFailures = 0; jobId = message.jobId;
+          hideEntryForHistoryView(); document.querySelector('#result-title').textContent = 'Recover your pending check'; resultBody.replaceChildren();
+          showState('Checking the existing job. This does not submit the image again.'); poll(); pollTimer = setInterval(poll, 3000);
+          return;
+        }
+        if (message.type === 'rfe:show-saved') {
+          const record = message.record;
+          if (!record || typeof record !== 'object') return;
+          clearInterval(pollTimer); pollTimer = null; jobId = null; stoppedLocally = false;
+          hideEntryForHistoryView(); document.querySelector('#result-title').textContent = 'Saved check'; resultBody.replaceChildren();
+          const result = record.result ?? record.payload?.result ?? record.payload ?? record;
+          if (record.finishedAt) appendText(resultBody, 'p', `Finished ${new Date(record.finishedAt).toLocaleString()}`, 'small-note');
+          else if (record.createdAt) appendText(resultBody, 'p', `Saved ${new Date(record.createdAt).toLocaleString()}`, 'small-note');
+          if (record.status === 'failed' || record.status === 'cancelled') showState(record.status === 'failed' ? `This saved check failed: ${label(record.error, 'No report was produced.')}` : 'This saved check was cancelled.', 'error');
+          else showResult({ result });
+          appendReturnToSavedChecks();
+        }
+      });
       form.addEventListener('submit', async event => {
         event.preventDefault(); if (submitButton.disabled || !imageDataUrl) return;
         const statements = [...keypointsEl.querySelectorAll('input')].map(input => input.value.trim());
@@ -287,7 +366,9 @@
         const payload = { image_base64: imageDataUrl.slice(imageDataUrl.indexOf(',') + 1), keypoints: statements.map((text, index) => ({ id: `author-${index + 1}`, text, claim: null, author_confirmed: true })), consent: true };
         try {
           const job = await request('/jobs', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-          jobId = job.id; stoppedLocally = false; renderJob(job); if (job.status === 'queued' || job.status === 'running') pollTimer = setInterval(poll, 3000);
+          jobId = job.id; stoppedLocally = false; pollFailures = 0;
+          postToParent({ type: 'rfe:job-accepted', jobId, capability: jobId, acceptedAt: new Date().toISOString() });
+          renderJob(job); if (job.status === 'queued' || job.status === 'running') pollTimer = setInterval(poll, 3000);
           if (jobId && (job.status === 'queued' || job.status === 'running')) {
             const stop = document.createElement('button'); stop.type = 'button'; stop.className = 'secondary'; stop.textContent = 'Stop waiting on this page'; stop.addEventListener('click', () => { stoppedLocally = true; clearInterval(pollTimer); pollTimer = null; showState('Status checks stopped. The server job may continue in the queue; this action does not cancel it. Keep this page open to check again, or submit no duplicate request.'); resultBody.replaceChildren(); const resume = document.createElement('button'); resume.type = 'button'; resume.className = 'secondary'; resume.textContent = 'Resume status checks'; resume.addEventListener('click', () => { stoppedLocally = false; poll(); pollTimer = setInterval(poll, 3000); }); resultBody.append(resume); });
             resultBody.append(stop);
@@ -311,6 +392,7 @@
       });
       dialog.addEventListener('close', () => { document.body.style.overflow = previousBodyOverflow; if (dialogTrigger?.isConnected) dialogTrigger.focus(); dialogTrigger = null; });
       refreshStatus(); setInterval(refreshStatus, 10000);
+      postToParent({ type: 'rfe:ready' });
     })();
   </script>
 </body>

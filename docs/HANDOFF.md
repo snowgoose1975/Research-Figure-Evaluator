@@ -1,5 +1,15 @@
 # 接续交接 · 2026-10-22
 
+## T16 历史功能收尾与续办入口（最新）
+
+本机历史新增全量摘要搜索和分页，不再限于最近50条；公网访客报告存入当前固定站点origin的IndexedDB，支持搜索、刷新后回看、离线打开、下载和删除。访客历史不回传服务端，也不暴露机主runs。固定公开站已部署T16 v4：`https://figure-relay.chicchair5.chatgpt.site`（Sites version `appgver_132cff8c1f308191955a4fe9af33b429`，deployment `appgdep_6ad9f8794a188191aa8125da23af0606`）。项目实现与安全边界见 `docs/IMPLEMENTATION.md` T16节。
+
+真实访客入口提交了一次公开材料图，完成run `1792674795248-f18f993e`（`qwen3-vl:4b-instruct-16k`、`reader-0.2.3`）；不并入原固定协议8/12。实际live浏览器证据 `T16-visitor-history-e2e-v4.json` 记录结果轮询中13次HTTP 502，且没有取得已保存记录ID；脚本还使用过CSS Modules会改名的类选择器，不能将失败单归因于选择器或宣称真实公网闭环。已增加状态GET有限重试。除5/5独立poll smoke外，又在已发布站点进行12/12综合受控浏览器验证：两次stub HTTP 502后恢复，只POST一次；用真实完成run报告验证访客IndexedDB保存、模型搜索、刷新、阻断隧道后的离线打开、删除、原图/文件名不入库及临时能力清理，见 `T16-visitor-history-resilience-v2.json` 和两张截图。此测试拦截并替代了隧道worker响应，没有真实模型请求或实际公网worker调用；因此验证了生产站点访客UI和存储行为，不等同于真实公网传输闭环。另有10/10桥接回放证据 `T16-visitor-history-replay-v1.json`。机主全量历史API与界面检索/打开该run 7/7通过，见 `T16-owner-history-e2e-v3.json`。
+
+发现并修正本机Next进程仍引用旧构建、导致静态chunk返回500的问题；确认没有运行/排队任务后重启了项目网页进程。重启后机主历史浏览器检查通过。临时隧道地址会自动轮换；最后一次公开发现文件检查为online。刚才本机worker只读检查为`accepting=true, active=false, waiting=0, model_ready=true`，served HTML中的CSP允许固定站嵌入，且有限GET重试代码已加载。服务只在玉米手动启动时运行，没有创建开机启动项。
+
+此前T16源代码完整检查为typecheck/lint/build通过、19个测试文件125项通过。本轮首次在受限环境遇到loopback EACCES，放开本地验证后全量测试第一次有一个并行超时；降至4 workers复跑后19个文件/125项全部通过，typecheck、lint分别通过，生产构建成功。综合访客浏览器验证12/12通过。访客记录只属于提交时使用的浏览器；清除站点数据或换浏览器不会同步。真人视觉复核仍待玉米或独立人员完成；演示视频仍未录制；根仓库改动未push；社交帖子与比赛条目未发布/提交。20:00自动续办并未被系统自动化，本轮由玉米手动续接。
+
 ## T15 证据优先修正（最新）
 
 修复用户双向状态图中5/5假保留与A/B解释冒充读者原话。自由文本semantic建议没有独立规则支持时降为待核验，同时保存原建议、解释与可读引用；显式facts/作者结构化定向连接/数值科学检查仍可确定性核对。新增唯一标签图比较与重复标签拒配；机制位置保序布局，长边遮挡/双向重叠计入unsupported，不再默认为完整。网页分开真实A/B记录、裁判建议、图差异和覆盖范围，本地工作台/Markdown也同步；历史报告只标legacy，不改写。

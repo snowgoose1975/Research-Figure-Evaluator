@@ -1,0 +1,24 @@
+{
+  "label": "T16-visitor-history-e2e-v1",
+  "site": "https://figure-relay.chicchair5.chatgpt.site",
+  "outcome": "failed",
+  "scope": "One live submission of a published public materials figure to the user's free local model service; browser-local history, reload, deliberate tunnel outage, offline report view and deletion. This is product-path evidence, not model-accuracy evidence.",
+  "sample": "materials-lattice-design",
+  "submission_count": 0,
+  "submission_hosts": [],
+  "actual_model": null,
+  "saved_record_id": null,
+  "stored_report_has_no_original_image": false,
+  "offline_request_failures": 0,
+  "offline_readback": false,
+  "deleted_from_indexeddb": false,
+  "checks": [
+    {
+      "name": "published T16 visitor workspace loads with an empty local history",
+      "pass": true
+    }
+  ],
+  "unexpected_browser_errors": [
+    "Framing 'https://f8ac6999aa74bf.lhr.life/' violates the following Content Security Policy directive: \"frame-ancestors 'none'\". The request has been blocked.\n"
+  ]
+}
